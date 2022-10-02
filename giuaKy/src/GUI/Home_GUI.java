@@ -1,24 +1,31 @@
 
 package GUI;
+import DTO.Ban;
+import DTO.ThucDon;
 import UserControl.JButtonCustom;
 import UserControl.tableObject;
 import UserControl.WrapLayout;
+import Util.dbUtil;
 import java.awt.Color;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Home_GUI extends javax.swing.JFrame {
-
+    int current;
     public Home_GUI() {
         initComponents();
+        dbUtil conn = new dbUtil();
+        dbUtil.getConnection();
+        List<Ban> l = conn.GetBan();
         pnlListTables.setLayout(new WrapLayout(WrapLayout.LEFT,20,10));
-        for(int i=1;i<=20;i++){
+        for(Ban item : l){
             tableObject btn = new tableObject();
-            btn.setIDTable(String.valueOf(i));
-            btn.setSlot(5);
+            btn.setIDTable(item.getMaBan());
+            btn.setSlot(item.getSoLuongGhe());
             btn.setStatusTable("Có khách");
             pnlListTables.add(btn);
         }
@@ -133,7 +140,7 @@ public class Home_GUI extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAcount)
                     .addComponent(btnManagement))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setOpaque(false);
@@ -151,10 +158,20 @@ public class Home_GUI extends javax.swing.JFrame {
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAdd.setRound(30);
         btnAdd.setStyle(UserControl.JButtonCustom.ButtonStyle.DESTRUCTIVE);
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         lblTableID.setFont(new java.awt.Font("UTM Alexander", 1, 18)); // NOI18N
         lblTableID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTableID.setText("Bàn số : 1 (Khu A)");
+        lblTableID.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTableIDMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -195,7 +212,6 @@ public class Home_GUI extends javax.swing.JFrame {
             }
         ));
         tbBill.setSelectionBackground(new java.awt.Color(242, 66, 77));
-        tbBill.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tbBill.setShowGrid(true);
         jScrollPane2.setViewportView(tbBill);
 
@@ -399,6 +415,15 @@ public class Home_GUI extends javax.swing.JFrame {
     private void btnAcountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcountMouseExited
         btnAcount.setForeground(Color.BLACK);
     }//GEN-LAST:event_btnAcountMouseExited
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+     Menu_GUI menu = new Menu_GUI();
+     menu.setVisible(true);
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void lblTableIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTableIDMouseClicked
+       
+    }//GEN-LAST:event_lblTableIDMouseClicked
 
     /**
      * @param args the command line arguments

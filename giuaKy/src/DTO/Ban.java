@@ -11,7 +11,26 @@ package DTO;
 public class Ban {
     String maBan;
     String loaiBan;
-    String soLuongGhe;
+    int tinhTrang;
+    int soLuongGhe;
+
+    public Ban(String maBan, String loaiBan, int tinhTrang, int soLuongGhe) {
+        this.maBan = maBan;
+        this.loaiBan = loaiBan;
+        this.tinhTrang = tinhTrang;
+        this.soLuongGhe = soLuongGhe;
+    }
+
+  
+    
+    public int getTinhTrang() {
+        return tinhTrang;
+    }
+
+    public void setTinhTrang(int tinhTrang) {
+        this.tinhTrang = tinhTrang;
+    }
+   
 
     public String getMaBan() {
         return maBan;
@@ -29,32 +48,25 @@ public class Ban {
         this.loaiBan = loaiBan;
     }
 
-    public String getSoLuongGhe() {
+    public int getSoLuongGhe() {
         return soLuongGhe;
     }
 
-    public void setSoLuongGhe(String soLuongGhe) {
+    public void setSoLuongGhe(int soLuongGhe) {
         this.soLuongGhe = soLuongGhe;
     }
 
     public Ban() {
     }
 
-    public Ban(String maBan, String loaiBan, String soLuongGhe) {
+    public Ban(String maBan, String loaiBan, int soLuongGhe) {
         this.maBan = maBan;
         this.loaiBan = loaiBan;
         this.soLuongGhe = soLuongGhe;
     }
 
-    public String GetTenBan() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    public String GetMaBan() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+  
 
-    public String GetTrangThai() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+  
 }

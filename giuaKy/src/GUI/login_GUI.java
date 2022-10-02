@@ -3,6 +3,11 @@ package GUI;
 
 import java.io.IOException;
 import UserControl.PasswordField;
+import Util.dbUtil;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
@@ -78,7 +83,7 @@ public class login_GUI extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(34, 34, 34))
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -143,6 +148,11 @@ public class login_GUI extends javax.swing.JFrame {
         btnLogin.setText("Login");
         btnLogin.setFont(new java.awt.Font("Sitka Text", 0, 24)); // NOI18N
         btnLogin.setRound(20);
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -200,6 +210,41 @@ public class login_GUI extends javax.swing.JFrame {
             System.exit(0);
         }   
     }//GEN-LAST:event_btnCloseMouseClicked
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        try {
+            Connection conn = dbUtil.getConnection();
+            String name = txtUsername.getText();
+            String pass = new String(passwordField1.getPassword());
+            String SQL = "select * from NhanVien where MaNhanVien = ? and PassWordd = ?";
+            PreparedStatement ps = conn.prepareCall(SQL);
+            StringBuilder sb = new StringBuilder();
+            ps.setString(1, txtUsername.getText());
+            ps.setString(2, passwordField1.getText());
+            ResultSet rs = ps.executeQuery();
+                    
+                    if(txtUsername.getText().equals("")){
+                        sb.append("Khong dc de trong ten \n");
+                    }
+                    if(passwordField1.getText().equals("")){
+                        sb.append("Khong dc de trong mat khau \n");
+                    }
+                    if(sb.length()>0){
+                        JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation",JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if(rs.next()){
+                    Home_GUI home = new Home_GUI();
+                    home.setVisible(true);
+                    this.dispose();
+                    JOptionPane.showMessageDialog(this,"Dang nhap thanh cong");
+                    }
+                    else{
+                       JOptionPane.showMessageDialog(this,"Mat khau khong chinh xac");
+                    }
+        } catch (Exception e) {
+            System.err.println("loi");
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     
 

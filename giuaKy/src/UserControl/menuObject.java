@@ -8,6 +8,7 @@ import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,8 +16,10 @@ import javax.swing.JLabel;
  */
 public class menuObject extends javax.swing.JPanel {
     private String srcImage;
-    private String gia;
+    private int gia;
     private String nameMenu;
+    int soLuongMon;
+    
     public menuObject() {
         initComponents();
     }   
@@ -31,7 +34,7 @@ public class menuObject extends javax.swing.JPanel {
         this.imgMenu.setIcon(new ImageIcon(newimg));
     }
 
-    public String getGia() {
+    public int getGia() {
         return gia;
     }
 
@@ -93,6 +96,11 @@ public class menuObject extends javax.swing.JPanel {
         btnAddtoBill.setText("Thêm vào hóa đơn");
         btnAddtoBill.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddtoBill.setStyle(UserControl.JButtonCustom.ButtonStyle.DESTRUCTIVE);
+        btnAddtoBill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddtoBillActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -144,6 +152,15 @@ public class menuObject extends javax.swing.JPanel {
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddtoBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddtoBillActionPerformed
+       soLuongMon = (int) nbSL.getValue();
+        if(soLuongMon <= 0){
+            JOptionPane.showMessageDialog(this,"Mời chọn số lượng món");
+       return;
+       }
+        
+    }//GEN-LAST:event_btnAddtoBillActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
