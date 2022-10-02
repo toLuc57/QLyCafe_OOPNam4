@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/lenha/OneDrive/Máy%20tính/giuaKy/src/DAO/Run.java</file>
-            <file>file:/C:/Users/lenha/OneDrive/Máy%20tính/giuaKy/src/DTO/Ban.java</file>
-            <file>file:/C:/Users/lenha/OneDrive/Máy%20tính/giuaKy/src/DAO/Do.java</file>
-            <file>file:/C:/Users/lenha/OneDrive/Máy%20tính/giuaKy/src/GUI/jMenu.java</file>
-            <file>file:/C:/Users/lenha/OneDrive/Máy%20tính/giuaKy/src/DTO/ThucDon.java</file>
-            <file>file:/C:/Users/lenha/OneDrive/Máy%20tính/giuaKy/src/Util/dbUtil.java</file>
-            <file>file:/C:/Users/lenha/OneDrive/Máy%20tính/giuaKy/src/GUI/login_GUI.java</file>
-            <file>file:/C:/Users/lenha/OneDrive/Máy%20tính/giuaKy/src/GUI/Home_GUI.java</file>
+            <file>file:/C:/Users/trant/Documents/NetBeansProjects/giuaKy/src/GUI/Management_Menu_GUI.java</file>
+            <file>file:/C:/Users/trant/Documents/NetBeansProjects/giuaKy/src/GUI/Management_Staff_GUI.java</file>
+            <file>file:/C:/Users/trant/Documents/NetBeansProjects/giuaKy/src/GUI/Management_GUI.java</file>
+            <file>file:/C:/Users/trant/Documents/NetBeansProjects/giuaKy/src/UserControl/Menu.java</file>
         </group>
     </open-files>
 </project-private>
