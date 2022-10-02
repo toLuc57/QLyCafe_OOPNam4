@@ -5,13 +5,22 @@
  */
 package DTO;
 
+import Util.dbUtil;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author ThangIKCU
  */
 public class ThucDon {
-    private String MaMon, TenMon, MaLoai, DVT;
+    private String MaMon;
+    private String TenMon;
+    private String MaLoai; 
     private int DonGia;
+    private String DVT;
+   
     
     public ThucDon(){
         this.MaMon="";
@@ -65,4 +74,6 @@ public class ThucDon {
     }
     
     
+
+
 }
