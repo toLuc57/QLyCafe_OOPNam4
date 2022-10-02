@@ -16,11 +16,9 @@ public class dbUtil {
     public static Connection getConnection() {
      Connection conn = null;
      String url = "jdbc:sqlserver://localhost:1433;databaseName=qlcafe";
-     String user = "sa";
-     String password ="sa";
      try {
   Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-    conn = DriverManager.getConnection(url,user,password);
+    conn = DriverManager.getConnection(url);
   if (conn != null)
   {
       System.out.println("Ket noi thanh cong");
