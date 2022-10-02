@@ -1,7 +1,7 @@
 
 package GUI;
 
-import UserControl.Menu;
+import UserControl.menuObject;
 import UserControl.WrapLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -16,7 +16,7 @@ public class Menu_GUI extends javax.swing.JFrame {
         initComponents();
         pnlShowMenu.setLayout(new WrapLayout());
         for(int i=1;i<=20;i++){
-            Menu t = new Menu();
+            menuObject t = new menuObject();
             t.setNameMenu("Bạc Xỉu");
             t.setSrcImage("/Images/bacxiu.jpg");
             t.setGia("25,000 VND");

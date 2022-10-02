@@ -1,7 +1,7 @@
 
 package GUI;
 import UserControl.JButtonCustom;
-import UserControl.Table;
+import UserControl.tableObject;
 import UserControl.WrapLayout;
 import java.awt.Color;
 import java.io.IOException;
@@ -14,9 +14,9 @@ public class Home_GUI extends javax.swing.JFrame {
 
     public Home_GUI() {
         initComponents();
-        pnlListTables.setLayout(new WrapLayout(WrapLayout.LEFT,10,10));
+        pnlListTables.setLayout(new WrapLayout(WrapLayout.LEFT,20,10));
         for(int i=1;i<=20;i++){
-            Table btn = new Table();
+            tableObject btn = new tableObject();
             btn.setIDTable(String.valueOf(i));
             btn.setSlot(5);
             btn.setStatusTable("Có khách");
@@ -309,7 +309,7 @@ public class Home_GUI extends javax.swing.JFrame {
 
         srctable.setViewportView(pnlListTables);
 
-        pnlShowTable.add(srctable, java.awt.BorderLayout.CENTER);
+        pnlShowTable.add(srctable, java.awt.BorderLayout.LINE_END);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
