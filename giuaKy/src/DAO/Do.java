@@ -23,7 +23,6 @@ public class Do {
         } catch (SQLException ex) {
             System.out.println("Loi truy van");
         }
-
         return null;
     }
 }

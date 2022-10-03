@@ -19,15 +19,21 @@ import javax.swing.JOptionPane;
  * @author tranbathien
  */
 public class dbUtil {
+<<<<<<< HEAD
+    public static Connection getConnection() {
+     Connection conn = null;
+     String url = "jdbc:sqlserver://localhost:1433;databaseName=qlcafe";
+=======
     public static Connection conn = null;
      public static Connection getConnection() {
      
      String url = "jdbc:sqlserver://localhost:1433;databaseName=Coffee2";
      String user = "sa";
      String password ="sa";
+>>>>>>> Cafe/master
      try {
   Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-    conn = DriverManager.getConnection(url,user,password);
+    conn = DriverManager.getConnection(url);
   if (conn != null)
   {
       System.out.println("Ket noi thanh cong");
