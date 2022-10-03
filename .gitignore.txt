@@ -1,0 +1,102 @@
+
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
+
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# default application storage directory used by the IDE Performance Cache feature
+.data/
+
+# used for ADF styles caching
+temp/
+
+# default output directories
+classes/
+deploy/
+javadoc/
+
+# lock file, a part of Oracle Credential Store Framework
+cwallet.sso.lck
+
+# gitignore for JBoss v4 projects
+
+/server/all/data
+/server/all/log
+/server/all/tmp
+/server/all/work
+/server/default/data
+/server/default/log
+/server/default/tmp
+/server/default/work
+/server/minimal/data
+/server/minimal/log
+/server/minimal/tmp
+/server/minimal/work
+
+# Note:
+# there may be other directories that contain *.xml.failed or *.war.failed files
+/server/default/deploy/*.xml.failed
+/server/default/deploy/*.war.failed
+
+# gitignore for JBoss v6 projects
+#
+# Note: to ensure empty directories remain part of the repository, like
+# `/server/minimal/lib`, you should add an empty `.gitignore` or `.gitkeep` file
+# to the directory - otherwise you may have issues when starting the service.
+
+/server/all/data
+/server/all/log
+/server/all/tmp
+/server/all/work
+/server/default/data
+/server/default/log
+/server/default/tmp
+/server/default/work
+/server/minimal/data
+/server/minimal/log
+/server/minimal/tmp
+/server/minimal/work
+/server/jbossweb-standalone/data
+/server/jbossweb-standalone/log
+/server/jbossweb-standalone/tmp
+/server/jbossweb-standalone/work
+/server/standard/data
+/server/standard/log
+/server/standard/tmp
+/server/standard/work
+/server/default/deploy/*.jar.failed
+/server/default/deploy/*.jar.dodeploy
+/server/default/deploy/*.xml.failed
+/server/default/deploy/*.xml.dodeploy
+/server/default/deploy/*.war.failed
+/server/default/deploy/*.war.dodeploy
