@@ -14,7 +14,7 @@ public class Home_GUI extends javax.swing.JFrame {
 
     public Home_GUI() {
         initComponents();
-        pnlListTables.setLayout(new WrapLayout(WrapLayout.LEFT,20,10));
+        pnlListTables.setLayout(new WrapLayout(WrapLayout.LEFT,25,10));
         for(int i=1;i<=20;i++){
             tableObject btn = new tableObject();
             btn.setIDTable(String.valueOf(i));
@@ -40,8 +40,8 @@ public class Home_GUI extends javax.swing.JFrame {
         btnAdd = new UserControl.JButtonCustom();
         lblTableID = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbBill = new UserControl.TableCustom();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbBill = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         lblTotalMoney = new javax.swing.JLabel();
         btnDiscount = new javax.swing.JSpinner();
@@ -50,7 +50,7 @@ public class Home_GUI extends javax.swing.JFrame {
         btnSurchange = new UserControl.JButtonCustom();
         btnCheckout = new UserControl.JButtonCustom();
         pnlShowTable = new javax.swing.JPanel();
-        srctable = new javax.swing.JScrollPane();
+        srcTable = new javax.swing.JScrollPane();
         pnlListTables = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -183,23 +183,48 @@ public class Home_GUI extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
+        tbBill.setBackground(new java.awt.Color(204, 255, 255));
+        tbBill.setFont(new java.awt.Font("Segoe UI Historic", 0, 12)); // NOI18N
         tbBill.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Tên món", "Số lượng"
+                "ID", "Tên món", "Số lượng", "Đơn giá"
             }
-        ));
-        tbBill.setSelectionBackground(new java.awt.Color(242, 66, 77));
-        tbBill.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        tbBill.setShowGrid(true);
-        jScrollPane2.setViewportView(tbBill);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false
+            };
 
-        jPanel7.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbBill.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tbBill.setGridColor(new java.awt.Color(0, 51, 51));
+        tbBill.setOpaque(false);
+        tbBill.setRowHeight(30);
+        tbBill.setSelectionBackground(new java.awt.Color(255, 51, 51));
+        tbBill.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        tbBill.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbBill.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbBill.setShowGrid(true);
+        tbBill.setShowVerticalLines(false);
+        tbBill.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tbBill);
+
+        jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -291,8 +316,10 @@ public class Home_GUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pnlShowTable.setBackground(new java.awt.Color(255, 255, 255));
+        pnlShowTable.setBackground(new java.awt.Color(0, 153, 153));
         pnlShowTable.setLayout(new java.awt.BorderLayout());
+
+        srcTable.setBackground(new java.awt.Color(102, 102, 0));
 
         pnlListTables.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -300,16 +327,16 @@ public class Home_GUI extends javax.swing.JFrame {
         pnlListTables.setLayout(pnlListTablesLayout);
         pnlListTablesLayout.setHorizontalGroup(
             pnlListTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 931, Short.MAX_VALUE)
+            .addGap(0, 853, Short.MAX_VALUE)
         );
         pnlListTablesLayout.setVerticalGroup(
             pnlListTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 621, Short.MAX_VALUE)
         );
 
-        srctable.setViewportView(pnlListTables);
+        srcTable.setViewportView(pnlListTables);
 
-        pnlShowTable.add(srctable, java.awt.BorderLayout.LINE_END);
+        pnlShowTable.add(srcTable, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -452,13 +479,13 @@ public class Home_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField lblSurcharge;
     private javax.swing.JLabel lblTableID;
     private javax.swing.JLabel lblTotalMoney;
     private javax.swing.JPanel pnlListTables;
     private javax.swing.JPanel pnlShowTable;
-    private javax.swing.JScrollPane srctable;
-    private UserControl.TableCustom tbBill;
+    private javax.swing.JScrollPane srcTable;
+    private javax.swing.JTable tbBill;
     // End of variables declaration//GEN-END:variables
 }
