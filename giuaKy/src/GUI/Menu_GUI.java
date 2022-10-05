@@ -1,8 +1,12 @@
 
 package GUI;
 
+import DTO.ThucDon;
 import UserControl.menuObject;
 import UserControl.WrapLayout;
+import Util.dbUtil;
+import java.sql.Connection;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -14,14 +18,18 @@ import javax.swing.JOptionPane;
 public class Menu_GUI extends javax.swing.JFrame {
     public Menu_GUI() {
         initComponents();
+        dbUtil conn = new dbUtil();
+        dbUtil.getConnection();
+        List<ThucDon> l = conn.GetThucDon();
         pnlShowMenu.setLayout(new WrapLayout());
-        for(int i=1;i<=20;i++){
+        for(ThucDon item : l){
             menuObject t = new menuObject();
-            t.setNameMenu("Bạc Xỉu");
+            t.setNameMenu(item.GetTenMon());
             t.setSrcImage("/Images/bacxiu.jpg");
-            t.setGia("25,000 VND");
+            t.setGia(String.valueOf(item.GetDonGia()));
             pnlShowMenu.add(t);
         }
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
