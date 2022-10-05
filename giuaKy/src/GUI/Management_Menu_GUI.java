@@ -26,27 +26,48 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        Top = new javax.swing.JPanel();
+        Bottom = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(0, 0, 0));
         setOpaque(false);
+        setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setText("ádasdasdasdsadasdasdasdada");
+        Top.setBackground(new java.awt.Color(0, 102, 102));
+        Top.setOpaque(false);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
+        javax.swing.GroupLayout TopLayout = new javax.swing.GroupLayout(Top);
+        Top.setLayout(TopLayout);
+        TopLayout.setHorizontalGroup(
+            TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 898, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+        TopLayout.setVerticalGroup(
+            TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 59, Short.MAX_VALUE)
         );
+
+        add(Top, java.awt.BorderLayout.PAGE_START);
+
+        Bottom.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout BottomLayout = new javax.swing.GroupLayout(Bottom);
+        Bottom.setLayout(BottomLayout);
+        BottomLayout.setHorizontalGroup(
+            BottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 898, Short.MAX_VALUE)
+        );
+        BottomLayout.setVerticalGroup(
+            BottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 459, Short.MAX_VALUE)
+        );
+
+        add(Bottom, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel Bottom;
+    private javax.swing.JPanel Top;
     // End of variables declaration//GEN-END:variables
 }
