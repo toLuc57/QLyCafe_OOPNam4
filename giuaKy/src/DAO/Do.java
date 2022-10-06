@@ -15,7 +15,7 @@ import java.sql.Statement;
  * @author lenha
  */
 public class Do {
-     public static ResultSet ThucThiLenhSelect(String SQL) {
+     public static ResultSet ThucThiLenhSelect(String SQL) throws ClassNotFoundException {
         try {
             Connection conn = dbUtil.getConnection();
             Statement st = conn.createStatement();

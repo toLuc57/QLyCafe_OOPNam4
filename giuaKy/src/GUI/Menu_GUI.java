@@ -40,14 +40,9 @@ public class Menu_GUI extends javax.swing.JFrame {
         pnlLogo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pnlOption = new javax.swing.JPanel();
-        cbbType = new UserControl.JComboboxCustom();
-        cbbTypeCat = new UserControl.JComboboxCustom();
-        btnMenuHot = new UserControl.JButtonCustom();
         barRight = new javax.swing.JPanel();
         rightTop = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        txtFind = new UserControl.TextField();
-        btnFind = new UserControl.JButtonCustom();
         btnClose = new javax.swing.JLabel();
         rightBottom = new javax.swing.JPanel();
         rightBottomRight = new javax.swing.JPanel();
@@ -84,40 +79,15 @@ public class Menu_GUI extends javax.swing.JFrame {
 
         pnlOption.setBackground(new java.awt.Color(0, 51, 51));
 
-        cbbType.setFocusable(false);
-        cbbType.setLabeText("Chọn loại");
-
-        cbbTypeCat.setFocusable(false);
-        cbbTypeCat.setLabeText("Chọn chi tiết");
-
-        btnMenuHot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_hot_springs_60px.png"))); // NOI18N
-        btnMenuHot.setText("Món hot");
-        btnMenuHot.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
-        btnMenuHot.setRound(20);
-        btnMenuHot.setStyle(UserControl.JButtonCustom.ButtonStyle.DESTRUCTIVE);
-
         javax.swing.GroupLayout pnlOptionLayout = new javax.swing.GroupLayout(pnlOption);
         pnlOption.setLayout(pnlOptionLayout);
         pnlOptionLayout.setHorizontalGroup(
             pnlOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlOptionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbbTypeCat, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                    .addComponent(cbbType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMenuHot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addGap(0, 211, Short.MAX_VALUE)
         );
         pnlOptionLayout.setVerticalGroup(
             pnlOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlOptionLayout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(cbbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(cbbTypeCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(btnMenuHot, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 328, Short.MAX_VALUE)
         );
 
         barLeft.add(pnlOption, java.awt.BorderLayout.CENTER);
@@ -131,10 +101,6 @@ public class Menu_GUI extends javax.swing.JFrame {
         rightTop.setForeground(new java.awt.Color(255, 255, 255));
 
         jPanel7.setLayout(new java.awt.BorderLayout());
-
-        txtFind.setLabelText("Tìm món");
-
-        btnFind.setText("Tìm kiếm");
 
         btnClose.setBackground(new java.awt.Color(255, 255, 255));
         btnClose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -156,15 +122,8 @@ public class Menu_GUI extends javax.swing.JFrame {
         rightTopLayout.setHorizontalGroup(
             rightTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightTopLayout.createSequentialGroup()
-                .addGroup(rightTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rightTopLayout.createSequentialGroup()
-                        .addGap(624, 624, 624)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rightTopLayout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(624, 624, 624)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 475, Short.MAX_VALUE)
                 .addComponent(btnClose)
                 .addContainerGap())
@@ -175,13 +134,8 @@ public class Menu_GUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(rightTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(rightTopLayout.createSequentialGroup()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(rightTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(24, 24, 24))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(62, 62, 62))
         );
 
         barRight.add(rightTop, java.awt.BorderLayout.PAGE_START);
@@ -224,7 +178,6 @@ public class Menu_GUI extends javax.swing.JFrame {
         tbBill.setIntercellSpacing(new java.awt.Dimension(0, 10));
         tbBill.setRowHeight(30);
         tbBill.setSelectionBackground(new java.awt.Color(255, 51, 51));
-        tbBill.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tbBill.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tbBill.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tbBill.setShowGrid(true);
@@ -338,10 +291,6 @@ public class Menu_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel barLeft;
     private javax.swing.JPanel barRight;
     private javax.swing.JLabel btnClose;
-    private UserControl.JButtonCustom btnFind;
-    private UserControl.JButtonCustom btnMenuHot;
-    private UserControl.JComboboxCustom cbbType;
-    private UserControl.JComboboxCustom cbbTypeCat;
     private javax.swing.JScrollPane formShowMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel7;
@@ -357,7 +306,6 @@ public class Menu_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel rightBottomRight;
     private javax.swing.JPanel rightTop;
     private javax.swing.JTable tbBill;
-    private UserControl.TextField txtFind;
     private javax.swing.JLabel txtTotalmoney;
     // End of variables declaration//GEN-END:variables
 }

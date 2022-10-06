@@ -4,10 +4,12 @@ package GUI;
 import java.io.IOException;
 import UserControl.PasswordField;
 import Util.dbUtil;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
@@ -241,7 +243,7 @@ public class login_GUI extends javax.swing.JFrame {
                     else{
                        JOptionPane.showMessageDialog(this,"Mat khau khong chinh xac");
                     }
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             System.err.println("loi");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
