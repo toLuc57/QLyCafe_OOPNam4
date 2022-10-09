@@ -2,17 +2,14 @@
 package GUI;
 
 import java.io.IOException;
-import UserControl.PasswordField;
 import Util.dbUtil;
 import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JRootPane;
 /**
  *
  * @author tranbathien
@@ -146,6 +143,11 @@ public class login_GUI extends javax.swing.JFrame {
         passwordField1.setForeground(new java.awt.Color(255, 255, 255));
         passwordField1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
         passwordField1.setLabelText("Password");
+        passwordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordField1ActionPerformed(evt);
+            }
+        });
 
         btnLogin.setText("Login");
         btnLogin.setFont(new java.awt.Font("Sitka Text", 0, 24)); // NOI18N
@@ -241,12 +243,16 @@ public class login_GUI extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this,"Dang nhap thanh cong");
                     }
                     else{
-                       JOptionPane.showMessageDialog(this,"Mat khau khong chinh xac");
+                       JOptionPane.showMessageDialog(this,"Nhap sai UserName hoac Password");
                     }
         } catch (HeadlessException | SQLException e) {
             System.err.println("loi");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void passwordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordField1ActionPerformed
+        btnLoginActionPerformed(evt);
+    }//GEN-LAST:event_passwordField1ActionPerformed
 
     
 

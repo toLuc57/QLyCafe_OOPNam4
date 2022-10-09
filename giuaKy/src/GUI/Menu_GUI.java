@@ -199,18 +199,7 @@ public class Menu_GUI extends javax.swing.JFrame {
         formShowMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         pnlShowMenu.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout pnlShowMenuLayout = new javax.swing.GroupLayout(pnlShowMenu);
-        pnlShowMenu.setLayout(pnlShowMenuLayout);
-        pnlShowMenuLayout.setHorizontalGroup(
-            pnlShowMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1334, Short.MAX_VALUE)
-        );
-        pnlShowMenuLayout.setVerticalGroup(
-            pnlShowMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 484, Short.MAX_VALUE)
-        );
-
+        pnlShowMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         formShowMenu.setViewportView(pnlShowMenu);
 
         rightBottomLeft.add(formShowMenu);
@@ -225,7 +214,7 @@ public class Menu_GUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(main, javax.swing.GroupLayout.DEFAULT_SIZE, 1350, Short.MAX_VALUE)
+            .addComponent(main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

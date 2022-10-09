@@ -22,7 +22,7 @@ public class dbUtil {
         try {
             String hostName = "localhost";
             String sqlInstanceName = "SQLEXPRESS";
-            String database = "Coffee";
+            String database = "TheCoffee";
             String userName = "sa";
             String password = "1234";
             

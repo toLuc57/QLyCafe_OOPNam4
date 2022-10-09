@@ -1,25 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package UserControl;
 
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 
-/**
- *
- * @author tranbathien
- */
 public class tableObject extends javax.swing.JPanel {
 
-    private static final String CO_KHACH = "Có khách";
-    private static final String TRONG = "Trống";
-    private static final String DAT = "Đặt trước";
+    public static final String CO_KHACH = "Có khách";
+    public static final String TRONG = "Trống";
+    public static final String DAT = "Đặt trước";
     private static final String SRC_CO_KHACH = "/Images/icons8_table_top_view_100px_1.png";
     private static final String SRC_TRONG = "/Images/icons8_table_top_view_100px.png";
     private static final String SRC_DAT = "/Images/icons8_table_top_view_100px_2.png";

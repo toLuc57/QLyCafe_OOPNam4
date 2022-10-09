@@ -1,12 +1,12 @@
 
 package GUI;
 import DTO.Ban;
-import DTO.ThucDon;
-import UserControl.JButtonCustom;
 import UserControl.tableObject;
 import UserControl.WrapLayout;
 import Util.dbUtil;
 import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,7 +26,40 @@ public class Home_GUI extends javax.swing.JFrame {
             tableObject btn = new tableObject();
             btn.setIDTable(item.getMaBan());
             btn.setSlot(item.getSoLuongGhe());
-            btn.setStatusTable("Có khách");
+            switch(item.getTinhTrang()){
+                case 0 -> {
+                    btn.setStatusTable(tableObject.TRONG);
+                }
+                case 1 -> {
+                    btn.setStatusTable(tableObject.CO_KHACH);
+                }
+                case 2 -> {
+                    btn.setStatusTable(tableObject.DAT);
+                }
+            }
+            btn.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JOptionPane.showMessageDialog(Home_GUI.this,"Dang nhan chuot vao ban " + item.getMaBan());
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                }
+            });
             pnlListTables.add(btn);
         }
     }
