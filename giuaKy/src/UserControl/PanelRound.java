@@ -64,7 +64,7 @@ public class PanelRound extends JPanel{
     protected void paintComponent(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setPaint(new GradientPaint(0, 0, new Color(1, 44, 61), getWidth(), 0, new Color(120, 189, 196)));
+        g2.setPaint(new GradientPaint(0, 0, new Color(254,201,149), getWidth(), 0, new Color(255, 132, 116)));
         Area area = new Area(createRoundTopLeft());
         if (roundTopRight > 0) {
             area.intersect(new Area(createRoundTopRight()));
