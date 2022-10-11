@@ -1,24 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package DTO;
 
-/**
- *
- * @author lenha
- */
-public class Ban {
-    String maBan;
-    String loaiBan;
-    int tinhTrang;
-    int soLuongGhe;
 
-    public Ban(String maBan, String loaiBan, int tinhTrang, int soLuongGhe) {
+public class Ban {
+    int maBan=0;
+    String loaiBan="";
+    int tinhTrang;
+    int soLuongGhe=0;
+  
+
+
+
+
+    public Ban(int maBan, String loaiBan, int tinhTrang, int soLuongGhe) {
         this.maBan = maBan;
         this.loaiBan = loaiBan;
         this.tinhTrang = tinhTrang;
         this.soLuongGhe = soLuongGhe;
+      
     }
 
   
@@ -32,11 +31,11 @@ public class Ban {
     }
    
 
-    public String getMaBan() {
+    public int getMaBan() {
         return maBan;
     }
 
-    public void setMaBan(String maBan) {
+    public void setMaBan(int maBan) {
         this.maBan = maBan;
     }
 
@@ -59,7 +58,7 @@ public class Ban {
     public Ban() {
     }
 
-    public Ban(String maBan, String loaiBan, int soLuongGhe) {
+    public Ban(int maBan, String loaiBan, int soLuongGhe) {
         this.maBan = maBan;
         this.loaiBan = loaiBan;
         this.soLuongGhe = soLuongGhe;

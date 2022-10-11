@@ -1,36 +1,186 @@
-
 package GUI;
+
 import DTO.Ban;
+import DTO.HoaDon;
+import DTO.NhanVien;
 import DTO.ThucDon;
 import UserControl.JButtonCustom;
 import UserControl.tableObject;
 import UserControl.WrapLayout;
 import Util.dbUtil;
+import static Util.dbUtil.conn;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
+import com.sun.org.apache.xerces.internal.xs.ItemPSVI;
 import java.awt.Color;
+import java.awt.Frame;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Home_GUI extends javax.swing.JFrame {
-    int current;
+    int idtable = 0;
+    int mahd= 0;
+   
+    
     public Home_GUI() {
         initComponents();
+        NhanVien nv = new NhanVien();
+        lbMaNV.setText(nv.getMaNhanVien());
         dbUtil conn = new dbUtil();
         dbUtil.getConnection();
         List<Ban> l = conn.GetBan();
-        pnlListTables.setLayout(new WrapLayout(WrapLayout.LEFT,20,10));
-        for(Ban item : l){
+        pnlListTables.setLayout(new WrapLayout(WrapLayout.LEFT, 20, 10));
+        for (Ban item : l) {
             tableObject btn = new tableObject();
             btn.setIDTable(item.getMaBan());
             btn.setSlot(item.getSoLuongGhe());
-            btn.setStatusTable("Có khách");
+            btn.setStatusTable(String.valueOf(item.getTinhTrang()));
+            btn.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    idtable = btn.getIDTable();
+                    GetMaHD(idtable);
+                    clear_Table();
+                    try {
+                        LoadHoaDonBan();
+                      
+                    } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Lỗi thêm món");
+                    }
+                    try {
+                        if(TonTaiBill(idtable)){
+                    lblTableID.setText("Bàn số: "+ idtable+" --- "+ "Mã hóa đơn: " + String.valueOf(mahd));
+                         
+                        }else{
+                                     
+                    lblTableID.setText("Bàn số: "+ idtable +" --- " +"Không có hóa đơn");
+                        }
+                        
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Loi ton tai");
+                    }
+                }
+            
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+            });
             pnlListTables.add(btn);
         }
+        btnAdd.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                 System.out.println(idtable);
+                 if(idtable > 0){
+                  Menu_GUI menu = new Menu_GUI(idtable);
+                   menu.setVisible(true);
+                 }
+                 else{
+                 Menu_GUI menu = new Menu_GUI(idtable);
+                   menu.setVisible(false);
+                   JOptionPane.showMessageDialog(new JFrame(), "Vui long chon ban!");
+                 }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                 // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+              // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
     }
 
+    
+    private void clear_Table(){
+        DefaultTableModel tbModel = (DefaultTableModel) tbBill.getModel();
+        tbModel.setNumRows(0);
+    }
+    public void LoadHoaDonBan() throws SQLException {
+        Connection conn = dbUtil.getConnection();
+        String sql = "select p.IDThucDon, p.GiaTien from HoaDon as hd,ChiTietHoaDon as ct, ThucDon as p where hd.SoBan = "+ idtable +"and ct.MaHoaDon = hd.MaHoaDon and ct.IDThucDon = p.IDThucDon;";
+        ResultSet rs = dbUtil.ThucThiSelect(sql);
+        DefaultTableModel tbModel = (DefaultTableModel) tbBill.getModel();
+        Object[] obj = new Object[3];
+        try {
+            while (rs.next()) {
+                obj[0] = tbBill.getRowCount();
+                obj[1] = rs.getString(1);
+                obj[2] = rs.getInt(2);
+                tbModel.addRow(obj);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(new JFrame(), "Loi load Ban");
+        }
+
+    }
+     public boolean TonTaiBill(int Ban) throws SQLException{
+    String sql = "select * from HoaDon where SoBan= '" + Ban + "' and TrangThai=0";
+    Connection conn = dbUtil.getConnection();
+    ResultSet rs = dbUtil.ThucThiSelect(sql); 
+    if(rs.next()){
+        return true;
+    }else{
+        return false;
+    }
+}
+  public int GetMaHD(int idtable){
+      Connection conn = dbUtil.getConnection();
+      String sql = "Select * from HoaDon where SoBan = "+ idtable;
+        try {
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+             mahd = rs.getInt("MaHoaDon");
+            }
+           
+            
+        } catch (SQLException ex) {
+            System.out.println("Loi GetMaHD");
+        }
+        return mahd;
+  }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -41,14 +191,15 @@ public class Home_GUI extends javax.swing.JFrame {
         btnAcount = new javax.swing.JLabel();
         btnManagement = new javax.swing.JLabel();
         btnClose = new javax.swing.JLabel();
+        lbMaNV = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         btnSwitch = new UserControl.JButtonCustom();
         btnAdd = new UserControl.JButtonCustom();
         lblTableID = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbBill = new UserControl.TableCustom();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbBill = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         lblTotalMoney = new javax.swing.JLabel();
         btnDiscount = new javax.swing.JSpinner();
@@ -118,6 +269,8 @@ public class Home_GUI extends javax.swing.JFrame {
             }
         });
 
+        lbMaNV.setText("Mã nhân viên");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -127,6 +280,8 @@ public class Home_GUI extends javax.swing.JFrame {
                 .addComponent(btnManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAcount, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(177, 177, 177)
+                .addComponent(lbMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnClose))
         );
@@ -139,7 +294,8 @@ public class Home_GUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAcount)
-                    .addComponent(btnManagement))
+                    .addComponent(btnManagement)
+                    .addComponent(lbMaNV))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -202,20 +358,16 @@ public class Home_GUI extends javax.swing.JFrame {
 
         tbBill.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "ID", "Tên món", "Số lượng"
+                "STT", "Tên Món", "Số lượng", "Giá"
             }
         ));
-        tbBill.setSelectionBackground(new java.awt.Color(242, 66, 77));
-        tbBill.setShowGrid(true);
-        jScrollPane2.setViewportView(tbBill);
+        tbBill.setRowHeight(30);
+        jScrollPane1.setViewportView(tbBill);
 
-        jPanel7.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -316,7 +468,7 @@ public class Home_GUI extends javax.swing.JFrame {
         pnlListTables.setLayout(pnlListTablesLayout);
         pnlListTablesLayout.setHorizontalGroup(
             pnlListTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 931, Short.MAX_VALUE)
+            .addGap(0, 943, Short.MAX_VALUE)
         );
         pnlListTablesLayout.setVerticalGroup(
             pnlListTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,9 +531,9 @@ public class Home_GUI extends javax.swing.JFrame {
 
         try {
             int select = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn đăng xuất không?");
-            if(select==0){
+            if (select == 0) {
                 this.dispose();
-                new login_GUI().setVisible(true);
+                new login_GUI().setVisible(false);
             }
         } catch (IOException ex) {
             Logger.getLogger(Home_GUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -417,12 +569,13 @@ public class Home_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAcountMouseExited
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-     Menu_GUI menu = new Menu_GUI();
-     menu.setVisible(true);
+        
+        
+        
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void lblTableIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTableIDMouseClicked
-       
+
     }//GEN-LAST:event_lblTableIDMouseClicked
 
     /**
@@ -455,7 +608,8 @@ public class Home_GUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Home_GUI().setVisible(true);
+                 JFrame h = new Home_GUI();
+                h.setVisible(true);
             }
         });
     }
@@ -477,13 +631,14 @@ public class Home_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbMaNV;
     private javax.swing.JTextField lblSurcharge;
     private javax.swing.JLabel lblTableID;
     private javax.swing.JLabel lblTotalMoney;
     private javax.swing.JPanel pnlListTables;
     private javax.swing.JPanel pnlShowTable;
     private javax.swing.JScrollPane srctable;
-    private UserControl.TableCustom tbBill;
+    private javax.swing.JTable tbBill;
     // End of variables declaration//GEN-END:variables
 }

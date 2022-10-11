@@ -1,6 +1,7 @@
 
 package GUI;
 
+import DTO.NhanVien;
 import java.io.IOException;
 import UserControl.PasswordField;
 import Util.dbUtil;
@@ -8,6 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
@@ -16,9 +19,12 @@ import javax.swing.JRootPane;
  * @author tranbathien
  */
 public class login_GUI extends javax.swing.JFrame {
-
+            
+   
+  
     public login_GUI() throws IOException {
         initComponents();
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -216,7 +222,7 @@ public class login_GUI extends javax.swing.JFrame {
             Connection conn = dbUtil.getConnection();
             String name = txtUsername.getText();
             String pass = new String(passwordField1.getPassword());
-            String SQL = "select * from NhanVien where MaNhanVien = ? and PassWordd = ?";
+            String SQL = "select * from NhanVien where MaNhanVien = ? and Matkhau = ?";
             PreparedStatement ps = conn.prepareCall(SQL);
             StringBuilder sb = new StringBuilder();
             ps.setString(1, txtUsername.getText());
@@ -233,18 +239,21 @@ public class login_GUI extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation",JOptionPane.ERROR_MESSAGE);
                     }
                     else if(rs.next()){
+                    NhanVien nv = new NhanVien();
+                    nv.setMaNhanVien(name);
                     Home_GUI home = new Home_GUI();
                     home.setVisible(true);
-                    this.dispose();
-                    JOptionPane.showMessageDialog(this,"Dang nhap thanh cong");
+                    this.dispose();   
+                    JOptionPane.showMessageDialog(this,"Đăng nhập thành công với tài khoản: "+ txtUsername.getText());
                     }
                     else{
                        JOptionPane.showMessageDialog(this,"Mat khau khong chinh xac");
                     }
         } catch (Exception e) {
-            System.err.println("loi");
+            System.err.println("Loi Dang Nhap");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+
 
     
 

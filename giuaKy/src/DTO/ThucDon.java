@@ -17,23 +17,21 @@ import java.sql.Statement;
 public class ThucDon {
     private String MaMon;
     private String TenMon;
-    private String MaLoai; 
+    private String Loai; 
     private int DonGia;
-    private String DVT;
+   
    
     
     public ThucDon(){
         this.MaMon="";
         this.TenMon="";
-        this.MaLoai="";
-        this.DVT="";
+        this.Loai="";
         this.DonGia=0;
     }
     public ThucDon(String mamon, String ten, String maloai, int gia, String dvt){
         this.MaMon=mamon;
         this.TenMon=ten;
-        this.MaLoai=maloai;
-        this.DVT=dvt;
+        this.Loai=maloai;
         this.DonGia=gia;       
     }
 
@@ -55,10 +53,10 @@ public class ThucDon {
         return this.TenMon;
     }
     public void SetMaLoai(String maloai){
-        this.MaLoai=maloai;
+        this.Loai=maloai;
     }
     public String GetMaLoai(){
-        return this.MaLoai;
+        return this.Loai;
     }
     public void SetDonGia(int gia){
         this.DonGia=gia;
@@ -66,14 +64,12 @@ public class ThucDon {
     public int GetDonGia(){
         return this.DonGia;
     }
-    public void SetDVT(String dvt){
-        this.DVT=dvt;
-    }
-    public String GetDVT(){
-        return this.DVT;
-    }
-    
-    
+ 
 
-
+    
+public static void AddMon(String maHoaDon){
+    Connection conn = dbUtil.getConnection();
+  
+ 
+}    
 }
