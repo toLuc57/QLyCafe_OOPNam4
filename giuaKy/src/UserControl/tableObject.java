@@ -1,19 +1,29 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
 package UserControl;
 
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
+/**
+ *
+ * @author tranbathien
+ */
 public class tableObject extends javax.swing.JPanel {
 
-    public static final String CO_KHACH = "Có khách";
-    public static final String TRONG = "Trống";
-    public static final String DAT = "Đặt trước";
+    private static final String CO_KHACH = "1";
+    private static final String TRONG = "0";
+    private static final String DAT = "2";
     private static final String SRC_CO_KHACH = "/Images/icons8_table_top_view_100px_1.png";
     private static final String SRC_TRONG = "/Images/icons8_table_top_view_100px.png";
     private static final String SRC_DAT = "/Images/icons8_table_top_view_100px_2.png";
-    private String IDTable;
+    private int IDTable;
     private int slot;
     private int freeSlot;
     public tableObject() {
@@ -22,7 +32,7 @@ public class tableObject extends javax.swing.JPanel {
         setFocusable(true);
     }
 
-    public String getIDTable() {
+    public int getIDTable() {
         return IDTable;
     }
     private void setImage(String src){
@@ -48,10 +58,11 @@ public class tableObject extends javax.swing.JPanel {
             }
         }
     }
-    public void setIDTable(String IDTable) {
+
+    public void setIDTable(int IDTable) {
         this.IDTable = IDTable;
-        txtIdTable.setText(IDTable);
     }
+   
 
     public int getSlot() {
         return slot;
@@ -69,6 +80,7 @@ public class tableObject extends javax.swing.JPanel {
     public void setFreeSlot(int customer) {
         this.freeSlot = this.slot - customer;
     }
+
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

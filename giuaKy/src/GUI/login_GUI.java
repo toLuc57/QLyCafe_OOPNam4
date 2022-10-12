@@ -1,23 +1,30 @@
 
 package GUI;
 
+import DTO.NhanVien;
 import java.io.IOException;
+import UserControl.PasswordField;
 import Util.dbUtil;
-import java.awt.HeadlessException;
-import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 /**
  *
  * @author tranbathien
  */
 public class login_GUI extends javax.swing.JFrame {
-
+            
+   
+  
     public login_GUI() throws IOException {
         initComponents();
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -116,6 +123,7 @@ public class login_GUI extends javax.swing.JFrame {
         );
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_close_30px_1.png"))); // NOI18N
+        btnClose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnClose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCloseMouseClicked(evt);
@@ -143,11 +151,6 @@ public class login_GUI extends javax.swing.JFrame {
         passwordField1.setForeground(new java.awt.Color(255, 255, 255));
         passwordField1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
         passwordField1.setLabelText("Password");
-        passwordField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordField1ActionPerformed(evt);
-            }
-        });
 
         btnLogin.setText("Login");
         btnLogin.setFont(new java.awt.Font("Sitka Text", 0, 24)); // NOI18N
@@ -220,7 +223,7 @@ public class login_GUI extends javax.swing.JFrame {
             Connection conn = dbUtil.getConnection();
             String name = txtUsername.getText();
             String pass = new String(passwordField1.getPassword());
-            String SQL = "select * from NhanVien where MaNhanVien = ? and PassWordd = ?";
+            String SQL = "select * from NhanVien where MaNhanVien = ? and Matkhau = ?";
             PreparedStatement ps = conn.prepareCall(SQL);
             StringBuilder sb = new StringBuilder();
             ps.setString(1, txtUsername.getText());
@@ -237,22 +240,21 @@ public class login_GUI extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation",JOptionPane.ERROR_MESSAGE);
                     }
                     else if(rs.next()){
+                    NhanVien nv = new NhanVien();
+                    nv.setMaNhanVien(name);
                     Home_GUI home = new Home_GUI();
                     home.setVisible(true);
-                    this.dispose();
-                    JOptionPane.showMessageDialog(this,"Dang nhap thanh cong");
+                    this.dispose();   
+                    JOptionPane.showMessageDialog(this,"Đăng nhập thành công với tài khoản: "+ txtUsername.getText());
                     }
                     else{
-                       JOptionPane.showMessageDialog(this,"Nhap sai UserName hoac Password");
+                       JOptionPane.showMessageDialog(this,"Mat khau khong chinh xac");
                     }
-        } catch (HeadlessException | SQLException e) {
-            System.err.println("loi");
+        } catch (Exception e) {
+            System.err.println("Loi Dang Nhap");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void passwordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordField1ActionPerformed
-        btnLoginActionPerformed(evt);
-    }//GEN-LAST:event_passwordField1ActionPerformed
 
     
 

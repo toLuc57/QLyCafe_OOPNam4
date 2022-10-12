@@ -1,69 +1,168 @@
-
 package GUI;
+
 import DTO.Ban;
+import DTO.HoaDon;
+import DTO.NhanVien;
+import DTO.ThucDon;
+import UserControl.JButtonCustom;
 import UserControl.tableObject;
 import UserControl.WrapLayout;
 import Util.dbUtil;
+import static Util.dbUtil.conn;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
+import com.sun.org.apache.xerces.internal.xs.ItemPSVI;
 import java.awt.Color;
+import java.awt.Frame;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Home_GUI extends javax.swing.JFrame {
-    int current;
+    int idtable = 0;
+    int mahd= 0;
+   
+    
     public Home_GUI() {
         initComponents();
+        NhanVien nv = new NhanVien();
+        lbMaNV.setText(nv.getMaNhanVien());
         dbUtil conn = new dbUtil();
         dbUtil.getConnection();
         List<Ban> l = conn.GetBan();
-        pnlListTables.setLayout(new WrapLayout(WrapLayout.LEFT,20,10));
-        for(Ban item : l){
+        pnlListTables.setLayout(new WrapLayout(WrapLayout.LEFT, 20, 10));
+        for (Ban item : l) {
             tableObject btn = new tableObject();
             btn.setIDTable(item.getMaBan());
             btn.setSlot(item.getSoLuongGhe());
-            switch(item.getTinhTrang()){
-                case 0 -> {
-                    btn.setStatusTable(tableObject.TRONG);
-                }
-                case 1 -> {
-                    btn.setStatusTable(tableObject.CO_KHACH);
-                }
-                case 2 -> {
-                    btn.setStatusTable(tableObject.DAT);
-                }
-            }
+            btn.setStatusTable(String.valueOf(item.getTinhTrang()));
             btn.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    JOptionPane.showMessageDialog(Home_GUI.this,"Dang nhan chuot vao ban " + item.getMaBan());
+                    idtable = btn.getIDTable();
+                    GetMaHD(idtable);
+                    clear_Table();
+                    try {
+                        LoadHoaDonBan();
+                      
+                    } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Lỗi thêm món");
+                    }
+                   
                 }
-
+            
                 @Override
                 public void mousePressed(MouseEvent e) {
+
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    
+                    // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
                 }
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
+                    // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
+                    // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
                 }
             });
             pnlListTables.add(btn);
         }
+        btnAdd.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                 System.out.println(idtable);
+                 if(idtable > 0){
+                  Menu_GUI menu = new Menu_GUI(idtable);
+                   menu.setVisible(true);
+                 }
+                 else{
+                 Menu_GUI menu = new Menu_GUI(idtable);
+                   menu.setVisible(false);
+                   JOptionPane.showMessageDialog(new JFrame(), "Vui long chon ban!");
+                 }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                 // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+              // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
     }
 
+    
+    private void clear_Table(){
+        DefaultTableModel tbModel = (DefaultTableModel) tbBill.getModel();
+        tbModel.setNumRows(0);
+    }
+    public void LoadHoaDonBan() throws SQLException {
+        Connection conn = dbUtil.getConnection();
+        String sql = "select p.TenThucDon,ct.SoLuong , p.GiaTien from HoaDon as hd,ChiTietHoaDon as ct, ThucDon as p where hd.SoBan = "+ idtable +"and ct.MaHoaDon = hd.MaHoaDon and ct.IDThucDon = p.IDThucDon;";
+        ResultSet rs = dbUtil.ThucThiSelect(sql);
+        DefaultTableModel tbModel = (DefaultTableModel) tbBill.getModel();
+        Object[] obj = new Object[4];
+        try {
+            while (rs.next()) {
+     
+                obj[0] = tbBill.getRowCount()+1;  
+                obj[1] = rs.getString("TenThucDon");
+                obj[2] = rs.getInt("SoLuong");
+                obj[3] = rs.getInt("GiaTien");
+                tbModel.addRow(obj);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(new JFrame(), "Loi load Ban");
+        }
+
+    }
+ 
+  public int GetMaHD(int idtable){
+      Connection conn = dbUtil.getConnection();
+      String sql = "Select * from HoaDon where SoBan = "+ idtable;
+        try {
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+             mahd = rs.getInt("MaHoaDon");
+            }
+           
+            
+        } catch (SQLException ex) {
+            System.out.println("Loi GetMaHD");
+        }
+        return mahd;
+  }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -74,15 +173,22 @@ public class Home_GUI extends javax.swing.JFrame {
         btnAcount = new javax.swing.JLabel();
         btnManagement = new javax.swing.JLabel();
         btnClose = new javax.swing.JLabel();
+        lbMaNV = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
+        btnSwitch = new UserControl.JButtonCustom();
+        btnAdd = new UserControl.JButtonCustom();
         lblTableID = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbBill = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         lblTotalMoney = new javax.swing.JLabel();
         btnDiscount = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
         lblSurcharge = new javax.swing.JTextField();
+        btnSurchange = new UserControl.JButtonCustom();
+        btnCheckout = new UserControl.JButtonCustom();
         pnlShowTable = new javax.swing.JPanel();
         srctable = new javax.swing.JScrollPane();
         pnlListTables = new javax.swing.JPanel();
@@ -145,6 +251,8 @@ public class Home_GUI extends javax.swing.JFrame {
             }
         });
 
+        lbMaNV.setText("Mã nhân viên");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -154,6 +262,8 @@ public class Home_GUI extends javax.swing.JFrame {
                 .addComponent(btnManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAcount, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(177, 177, 177)
+                .addComponent(lbMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnClose))
         );
@@ -166,13 +276,31 @@ public class Home_GUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAcount)
-                    .addComponent(btnManagement))
+                    .addComponent(btnManagement)
+                    .addComponent(lbMaNV))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setOpaque(false);
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+
+        btnSwitch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Switch_50px_3.png"))); // NOI18N
+        btnSwitch.setText("Chuyển bàn");
+        btnSwitch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSwitch.setRound(30);
+        btnSwitch.setStyle(UserControl.JButtonCustom.ButtonStyle.DESTRUCTIVE);
+
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Add_Property_50px.png"))); // NOI18N
+        btnAdd.setText("Thêm món");
+        btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAdd.setRound(30);
+        btnAdd.setStyle(UserControl.JButtonCustom.ButtonStyle.DESTRUCTIVE);
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         lblTableID.setFont(new java.awt.Font("UTM Alexander", 1, 18)); // NOI18N
         lblTableID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -188,20 +316,40 @@ public class Home_GUI extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(lblTableID, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
-                .addGap(61, 61, 61))
+                .addContainerGap()
+                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblTableID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSwitch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTableID, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSwitch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTableID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setLayout(new java.awt.BorderLayout());
+
+        tbBill.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Tên Món", "Số lượng", "Giá"
+            }
+        ));
+        tbBill.setRowHeight(30);
+        jScrollPane1.setViewportView(tbBill);
+
+        jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -218,33 +366,59 @@ public class Home_GUI extends javax.swing.JFrame {
         lblSurcharge.setText("0.00 VND");
         lblSurcharge.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
+        btnSurchange.setText("Phụ thu");
+        btnSurchange.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        btnSurchange.setRound(10);
+        btnSurchange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSurchangeActionPerformed(evt);
+            }
+        });
+
+        btnCheckout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_checkout_50px.png"))); // NOI18N
+        btnCheckout.setText("Thanh toán");
+        btnCheckout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCheckout.setRound(40);
+        btnCheckout.setStyle(UserControl.JButtonCustom.ButtonStyle.DESTRUCTIVE);
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addContainerGap()
+                .addComponent(btnCheckout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDiscount, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
+                        .addComponent(btnDiscount))
                     .addComponent(lblTotalMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSurcharge, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSurcharge)
+                    .addComponent(btnSurchange, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addComponent(lblTotalMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblSurcharge, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTotalMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSurchange, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblSurcharge, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnCheckout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -276,7 +450,7 @@ public class Home_GUI extends javax.swing.JFrame {
         pnlListTables.setLayout(pnlListTablesLayout);
         pnlListTablesLayout.setHorizontalGroup(
             pnlListTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 931, Short.MAX_VALUE)
+            .addGap(0, 943, Short.MAX_VALUE)
         );
         pnlListTablesLayout.setVerticalGroup(
             pnlListTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,9 +513,9 @@ public class Home_GUI extends javax.swing.JFrame {
 
         try {
             int select = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn đăng xuất không?");
-            if(select==0){
+            if (select == 0) {
                 this.dispose();
-                new login_GUI().setVisible(true);
+                new login_GUI().setVisible(false);
             }
         } catch (IOException ex) {
             Logger.getLogger(Home_GUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -377,12 +551,13 @@ public class Home_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAcountMouseExited
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-     Menu_GUI menu = new Menu_GUI();
-     menu.setVisible(true);
+        
+        
+        
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void lblTableIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTableIDMouseClicked
-       
+
     }//GEN-LAST:event_lblTableIDMouseClicked
 
     /**
@@ -415,16 +590,21 @@ public class Home_GUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Home_GUI().setVisible(true);
+                 JFrame h = new Home_GUI();
+                h.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnAcount;
+    private UserControl.JButtonCustom btnAdd;
+    private UserControl.JButtonCustom btnCheckout;
     private javax.swing.JLabel btnClose;
     private javax.swing.JSpinner btnDiscount;
     private javax.swing.JLabel btnManagement;
+    private UserControl.JButtonCustom btnSurchange;
+    private UserControl.JButtonCustom btnSwitch;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -433,11 +613,14 @@ public class Home_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbMaNV;
     private javax.swing.JTextField lblSurcharge;
     private javax.swing.JLabel lblTableID;
     private javax.swing.JLabel lblTotalMoney;
     private javax.swing.JPanel pnlListTables;
     private javax.swing.JPanel pnlShowTable;
     private javax.swing.JScrollPane srctable;
+    private javax.swing.JTable tbBill;
     // End of variables declaration//GEN-END:variables
 }
