@@ -3,6 +3,7 @@ package GUI;
 
 import UserControl.EventMenu;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
@@ -19,13 +20,16 @@ public class Management_GUI extends javax.swing.JFrame {
 
     public Management_GUI() {
         initComponents();
-        menu.addEvent(new EventMenu(){
-            @Override
-            public void menuSelected(int index) {
-                if (index == 0) {
-                    showForm(new Management_Menu_GUI());
-                } else if (index == 1) {
-                    showForm(new Management_Staff_GUI());
+        menu.addEvent((int index) -> {
+            switch (index) {
+                case 0 -> showForm(new Management_Menu_GUI());
+                case 1 -> showForm(new Management_Staff_GUI());
+                case 2 -> showForm(new Management_Account_GUI());
+                case 3 -> showForm(new Management_Product_GUI());
+                case 4 -> showForm(new Management_Import_GUI());
+                case 5 -> showForm(new Management_Bill_GUI());
+                case 6 -> showForm(new Management_Statistical_GUI());
+                default -> {
                 }
             }
         });
@@ -146,6 +150,7 @@ public class Management_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseMouseClicked
 
     private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseEntered
+        btnClose.setCursor(new Cursor(HAND_CURSOR));
         ImageIcon ii = new ImageIcon(getClass().getResource("/Images/icons8_close_window_30px_1.png"));
         btnClose.setIcon(ii);
     }//GEN-LAST:event_btnCloseMouseEntered
