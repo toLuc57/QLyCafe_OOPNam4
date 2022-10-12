@@ -20,7 +20,7 @@ public class dbUtil {
     public static Connection getConnection() {
         String url = "jdbc:sqlserver://localhost:1433;databaseName=TheCoffee";
         String user = "sa";
-        String password ="1234";
+        String password ="sa";
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             conn = DriverManager.getConnection(url,user,password);
