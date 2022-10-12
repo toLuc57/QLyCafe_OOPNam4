@@ -4,8 +4,7 @@ package GUI;
 import UserControl.EventMenu;
 import java.awt.Component;
 import java.io.IOException;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;

@@ -59,18 +59,7 @@ public class Home_GUI extends javax.swing.JFrame {
                     } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(new JFrame(), "Lỗi thêm món");
                     }
-                    try {
-                        if(TonTaiBill(idtable)){
-                    lblTableID.setText("Bàn số: "+ idtable+" --- "+ "Mã hóa đơn: " + String.valueOf(mahd));
-                         
-                        }else{
-                                     
-                    lblTableID.setText("Bàn số: "+ idtable +" --- " +"Không có hóa đơn");
-                        }
-                        
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Loi ton tai");
-                    }
+                   
                 }
             
                 @Override
@@ -139,15 +128,17 @@ public class Home_GUI extends javax.swing.JFrame {
     }
     public void LoadHoaDonBan() throws SQLException {
         Connection conn = dbUtil.getConnection();
-        String sql = "select p.IDThucDon, p.GiaTien from HoaDon as hd,ChiTietHoaDon as ct, ThucDon as p where hd.SoBan = "+ idtable +"and ct.MaHoaDon = hd.MaHoaDon and ct.IDThucDon = p.IDThucDon;";
+        String sql = "select p.TenThucDon,ct.SoLuong , p.GiaTien from HoaDon as hd,ChiTietHoaDon as ct, ThucDon as p where hd.SoBan = "+ idtable +"and ct.MaHoaDon = hd.MaHoaDon and ct.IDThucDon = p.IDThucDon;";
         ResultSet rs = dbUtil.ThucThiSelect(sql);
         DefaultTableModel tbModel = (DefaultTableModel) tbBill.getModel();
-        Object[] obj = new Object[3];
+        Object[] obj = new Object[4];
         try {
             while (rs.next()) {
-                obj[0] = tbBill.getRowCount();
-                obj[1] = rs.getString(1);
-                obj[2] = rs.getInt(2);
+     
+                obj[0] = tbBill.getRowCount()+1;  
+                obj[1] = rs.getString("TenThucDon");
+                obj[2] = rs.getInt("SoLuong");
+                obj[3] = rs.getInt("GiaTien");
                 tbModel.addRow(obj);
             }
         } catch (SQLException e) {
@@ -155,16 +146,7 @@ public class Home_GUI extends javax.swing.JFrame {
         }
 
     }
-     public boolean TonTaiBill(int Ban) throws SQLException{
-    String sql = "select * from HoaDon where SoBan= '" + Ban + "' and TrangThai=0";
-    Connection conn = dbUtil.getConnection();
-    ResultSet rs = dbUtil.ThucThiSelect(sql); 
-    if(rs.next()){
-        return true;
-    }else{
-        return false;
-    }
-}
+ 
   public int GetMaHD(int idtable){
       Connection conn = dbUtil.getConnection();
       String sql = "Select * from HoaDon where SoBan = "+ idtable;

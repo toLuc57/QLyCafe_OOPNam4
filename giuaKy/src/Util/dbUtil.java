@@ -70,7 +70,7 @@ public ArrayList<ThucDon> GetThucDon(String txt, String loai){
             ResultSet rs = st.executeQuery(sql);
             arrThucDon = new ArrayList<>();
             while(rs.next()){
-                ThucDon td = new ThucDon(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
+                ThucDon td = new ThucDon(rs.getString("IDThucDon"), rs.getString("TenThucDon"), rs.getString("Loai"), rs.getInt("GiaTien"), rs.getString("HinhAnh"));
                 arrThucDon.add(td);
             }
         }catch(SQLException ex){

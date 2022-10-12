@@ -212,8 +212,8 @@
                                   <Component id="txtFind" min="-2" pref="310" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btnFind" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="384" max="32767" attributes="0"/>
-                                  <Component id="btnDelete" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="400" max="32767" attributes="0"/>
+                                  <Component id="btnXacNhan" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="176" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -234,7 +234,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="txtFind" min="-2" max="-2" attributes="0"/>
                                       <Component id="btnFind" min="-2" pref="46" max="-2" attributes="0"/>
-                                      <Component id="btnDelete" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnXacNhan" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -277,12 +277,12 @@
                     <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCloseMouseExited"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnDelete">
+                <Component class="javax.swing.JButton" name="btnXacNhan">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="B&#x1ecf; M&#xf3;n"/>
+                    <Property name="text" type="java.lang.String" value="X&#xe1;c nhan"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXacNhanActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

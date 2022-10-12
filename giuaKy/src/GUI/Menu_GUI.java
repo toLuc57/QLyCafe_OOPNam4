@@ -3,6 +3,7 @@ package GUI;
 import DTO.HoaDon;
 import DTO.NhanVien;
 import DTO.ThucDon;
+import UserControl.Spinner;
 import UserControl.WrapLayout;
 import UserControl.menuObject;
 import Util.dbUtil;
@@ -32,38 +33,104 @@ public class Menu_GUI extends javax.swing.JFrame {
 
     int table;
     NhanVien nv = new NhanVien();
+    
+    
+    
     public Menu_GUI(int tb) {
         initComponents();
         table = tb;
-          dbUtil conn = new dbUtil();
+        dbUtil conn = new dbUtil();
         dbUtil.getConnection();
-        List<String> list = conn.GetLoaiThucDon();
         
+        List<String> list = conn.GetLoaiThucDon();
+
         for (String string : list) {
             cbbType.addItem(string);
+            cbbType.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                loadMenu();
+                }
+            });
         }
+          menuObject t = new menuObject();
+          
         System.err.println("Mã nhân viên: " + nv.getMaNhanVien());
+        System.err.println("Mã bàn: " + table);
+     
+    
         loadMenu();
         
 
+    }
+    //Load Menu
+     private void loadMenu(){
+        pnlShowMenu.removeAll();
+        dbUtil conn = new dbUtil();
+        dbUtil.getConnection();
+        List<ThucDon> l = conn.GetThucDon(txtFind.getText(),cbbType.getSelectedItem().toString());
+        pnlShowMenu.setLayout(new WrapLayout(WrapLayout.LEFT, 5, 5));
+        for (ThucDon item : l) {
+            menuObject t = new menuObject();
+            t.setMaMon(item.GetMaMon());
+            t.setNameMenu(item.GetTenMon());
+            t.setSrcImage("/Images/bacxiu.jpg");
+            t.setGia(String.valueOf(item.GetDonGia()));
+            pnlShowMenu.add(t);
+            pnlShowMenu.repaint();
+            pnlShowMenu.revalidate();
+            JButton s = t.getBtnAdd();
+            s.addActionListener((ActionEvent e) -> {
+               if(t.getSoLuongMon() > 0){
+                   if(!TonTaiBill(table)){
+                   HoaDon.InsertHoaDon(table, nv.getMaNhanVien());
+                    HoaDon.InsertChiTietHoaDon(Integer.parseInt(t.getMaMon()) , t.getSoLuongMon(), item.GetDonGia());
+                   
+                    LoadHoaDonTable(table);
+                   }
+                   else{
+                     if(!TonTaiMon(item.GetTenMon(), table, "")){
+                         
+                             HoaDon.InsertHoaDon(table, nv.getMaNhanVien());
+                             HoaDon.InsertChiTietHoaDon(Integer.parseInt(t.getMaMon()) , t.getSoLuongMon(), item.GetDonGia());
+                             LoadHoaDonTable(table);
+                   }    else{
+                       UpdateSoLuong(t.getSoLuongMon(), t.getMaMon());
+                       LoadHoaDonTable(table);
+                   }    
+                   }   
+                   
+                 
+               
+               }else{
+                   JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nh?p s? lu?ng món");
+               }
+                
+                 
+                
+            });
+        }
     }
 
     private Menu_GUI() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    public void LoadHoaDonTable(int idBan, int sl) throws SQLException {
+// LoadHoaDonVaoTable
+    public void LoadHoaDonTable(int idBan)  {
+        clear_Table();
         Connection conn = dbUtil.getConnection();
-        String sql = "select td.TenThucDon,ct.SoLuong from ThucDon as td join ChiTietHoaDon as ct on td.IDThucDon = ct.IDThucDon and ct.MaHoaDon in (select hd.MaHoaDon from HoaDon as hd where SoBan =" + idBan + "and TrangThai = 0)";
+        String sql = "select td.TenThucDon,ct.SoLuong, td.GiaTien from ThucDon as td join ChiTietHoaDon as ct on td.IDThucDon = ct.IDThucDon and ct.MaHoaDon in (select hd.MaHoaDon from HoaDon as hd where SoBan =" + idBan + "and TrangThai = 0)";
+      
+        
+        try {
         ResultSet rs = dbUtil.ThucThiSelect(sql);
         DefaultTableModel tbModel = (DefaultTableModel) tbBill.getModel();
         Object[] obj = new Object[4];
-        try {
             while (rs.next()) {
                 obj[0] = tbBill.getRowCount();
-                obj[1] = rs.getString(1);
-                obj[2] = new  sl;
-                obj[3] = rs.getInt(2);
+                obj[1] = rs.getString("TenThucDon");
+                obj[2] = rs.getInt("SoLuong");
+                obj[3] = rs.getInt("GiaTien");
                 tbModel.addRow(obj);
             }
 
@@ -72,22 +139,52 @@ public class Menu_GUI extends javax.swing.JFrame {
         }
 
     }
-    
-    
-
-    public boolean TonTaiMon(int Ban, String idMon, String LoaiMon) throws SQLException {
-
-        int KT = 0;
-        String sql = "select count(IDThucDon) from ChiTietHoaDon as ct where IDThucDon  = (select IDThucDon from ThucDon where IDThucDon =" + idMon + " and Loai = 'Nước uống') and MaHoaDon in (select MaHoaDon from HoaDon where SoBan =" + Ban + "and TrangThai = 0)";
-        ResultSet kq = dbUtil.ThucThiSelect(sql);
-        KT = kq.getInt(0);
-        if (KT == 1) {
-            return true;
-        } else {
-            return false;
-        }
+      private void clear_Table(){
+        DefaultTableModel tbModel = (DefaultTableModel) tbBill.getModel();
+        tbModel.setNumRows(0);
     }
+    
+    
+//ton tai mon
+    public boolean TonTaiMon( String TenMon, int Ban, String LoaiMon)   {
+        int KT;
+    
+        Connection conn = dbUtil.getConnection();
+        String sql = "select count(IDThucDon) as count from ChiTietHoaDon as ct where ct.IDThucDon  = (select td.IDThucDon from ThucDon as td where td.TenThucDon =N'"+ TenMon +"' and td.Loai = N'Nước uống') and MaHoaDon in (select MaHoaDon from HoaDon as hd where hd.SoBan ="+Ban+" and hd.TrangThai = 0)";
+        ResultSet rs; 
+        try {
+            rs = dbUtil.ThucThiSelect(sql);
+              rs.next();
+        KT = rs.getInt("count");
+         if(KT == 1){
+            return true;
+        }
+       
+        } catch (SQLException ex) {
+         JOptionPane.showMessageDialog(new JFrame(), "Loi Ton Tai Mon");
+        }
+      return false;
+    }
+    
+    //ton tai bill
+        public boolean TonTaiBill(int Ban){
+    String sql = "select * from HoaDon where SoBan= '" + Ban + "' and TrangThai=0";
+    Connection conn = dbUtil.getConnection();
+    ResultSet rs; 
+        try {
+            rs = dbUtil.ThucThiSelect(sql);
+            if(rs.next()){
+        return true;
+    }
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  
+        return false;
+   
+}
 
+        //UpdateSoluong
     public int UpdateSoLuong(int sl, String idThucDon) {
         int update = 0;
         Connection cn = dbUtil.getConnection();
@@ -100,6 +197,7 @@ public class Menu_GUI extends javax.swing.JFrame {
         }
         return update;
     }
+     
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -119,7 +217,7 @@ public class Menu_GUI extends javax.swing.JFrame {
         txtFind = new UserControl.TextField();
         btnFind = new UserControl.JButtonCustom();
         btnClose = new javax.swing.JLabel();
-        btnDelete = new javax.swing.JButton();
+        btnXacNhan = new javax.swing.JButton();
         rightBottom = new javax.swing.JPanel();
         rightBottomRight = new javax.swing.JPanel();
         rBottomRightBottom = new javax.swing.JPanel();
@@ -227,10 +325,10 @@ public class Menu_GUI extends javax.swing.JFrame {
             }
         });
 
-        btnDelete.setText("Bỏ Món");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+        btnXacNhan.setText("Xác nhan");
+        btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
+                btnXacNhanActionPerformed(evt);
             }
         });
 
@@ -249,8 +347,8 @@ public class Menu_GUI extends javax.swing.JFrame {
                         .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 384, Short.MAX_VALUE)
-                        .addComponent(btnDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 400, Short.MAX_VALUE)
+                        .addComponent(btnXacNhan)
                         .addGap(176, 176, 176)))
                 .addComponent(btnClose)
                 .addContainerGap())
@@ -267,7 +365,7 @@ public class Menu_GUI extends javax.swing.JFrame {
                         .addGroup(rightTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDelete))))
+                            .addComponent(btnXacNhan))))
                 .addGap(24, 24, 24))
         );
 
@@ -308,6 +406,7 @@ public class Menu_GUI extends javax.swing.JFrame {
         tbBill.setIntercellSpacing(new java.awt.Dimension(0, 10));
         tbBill.setRowHeight(30);
         tbBill.setSelectionBackground(new java.awt.Color(255, 51, 51));
+        tbBill.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tbBill.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tbBill.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tbBill.setShowGrid(true);
@@ -383,44 +482,10 @@ public class Menu_GUI extends javax.swing.JFrame {
         btnClose.setIcon(ii);
     }//GEN-LAST:event_btnCloseMouseExited
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeleteActionPerformed
-    private void loadMenu(){
-        pnlShowMenu.removeAll();
-        dbUtil conn = new dbUtil();
-        dbUtil.getConnection();
-        List<ThucDon> l = conn.GetThucDon(txtFind.getText(),cbbType.getSelectedItem().toString());
-        pnlShowMenu.setLayout(new WrapLayout(WrapLayout.LEFT, 5, 5));
-        for (ThucDon item : l) {
-            menuObject t = new menuObject();
-            t.setMaMon(item.GetMaMon());
-            t.setNameMenu(item.GetTenMon());
-            t.setSrcImage("/Images/bacxiu.jpg");
-            t.setGia(String.valueOf(item.GetDonGia()));
-            pnlShowMenu.add(t);
-            pnlShowMenu.repaint();
-            pnlShowMenu.revalidate();
-            JButton s = t.getBtnAdd();
-            s.addActionListener((ActionEvent e) -> {
-                if (t.getSoLuongMon() > 0) {
-                    try {
-                        if (TonTaiMon(table, t.getMaMon(), "")) {
-                            HoaDon.InsertHoaDon(table, nv.getMaNhanVien());
-                            HoaDon.InsertChiTietHoaDon(Integer.parseInt(t.getMaMon()), t.getSoLuongMon(), 0);
-                        } else {
-                            UpdateSoLuong(t.getSoLuongMon(), t.getMaMon());
-                        }
-                        
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(new JFrame(), "L?i hóa don");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(new JFrame(), "Vui lòng thêm số lượng món");
-                }
-            });
-        }
-    }
+    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
+     HoaDon.UpdateTrangThaiHoaDon(table);
+    }//GEN-LAST:event_btnXacNhanActionPerformed
+   
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
 
         loadMenu();
@@ -464,9 +529,9 @@ public class Menu_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel barLeft;
     private javax.swing.JPanel barRight;
     private javax.swing.JLabel btnClose;
-    private javax.swing.JButton btnDelete;
     private UserControl.JButtonCustom btnFind;
     private UserControl.JButtonCustom btnMenuHot;
+    private javax.swing.JButton btnXacNhan;
     private UserControl.JComboboxCustom cbbType;
     private UserControl.JComboboxCustom cbbTypeCat;
     private javax.swing.JScrollPane formShowMenu;

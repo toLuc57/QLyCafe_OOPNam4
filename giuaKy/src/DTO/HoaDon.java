@@ -110,7 +110,7 @@ public class HoaDon {
  public static int InsertHoaDon(int soban, String manv){
         int insert = 0;
         Connection cn = dbUtil.getConnection();
-        String sql = "Insert into HoaDon (SoBan,TrangThai, MaNhanVien) values ("+soban+", 'false', "+manv+")";
+        String sql = "Insert into HoaDon (SoBan,TrangThai, MaNhanVien ) values ('"+soban+"', 0 , '"+manv+"')";
         try{
             Statement st = cn.createStatement();
             insert = st.executeUpdate(sql);
@@ -119,10 +119,10 @@ public class HoaDon {
         }
         return insert;
     }
-  public static int InsertChiTietHoaDon(int mathucdon, int soluong, int tongtien){
+  public static int InsertChiTietHoaDon(int mathucdon, int soluong, int gia){
         int insert = 0;
         Connection cn = dbUtil.getConnection();
-        String sql = "Insert into ChiTietHoaDon (MaHoaDon,IDThucDon,SoLuong,TongTien) values ((select max(MaHoaDon) from HoaDon), '"+mathucdon+"', '"+soluong+"', '"+tongtien+"') ";
+        String sql = "Insert into ChiTietHoaDon (MaHoaDon,IDThucDon,SoLuong,TongTien) values ((select max(MaHoaDon) from HoaDon), '"+mathucdon+"', '"+soluong+"', '"+gia+"') ";
         try{
             Statement st = cn.createStatement();
             insert = st.executeUpdate(sql);
@@ -131,4 +131,22 @@ public class HoaDon {
         }
         return insert;
     }
+  public static int UpdateTrangThaiHoaDon(int maBan){
+  int update = 0;
+        Connection cn = dbUtil.getConnection();
+        String sql = "update HoaDon set TrangThai = 1 where SoBan ="+ maBan;
+        try {
+            Statement st = cn.createStatement();
+            update = st.executeUpdate(sql);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "Loi Update Trang Thai Hoa Don");
+        }
+        return update;
+
+  }
+
+            
+  
+  
+  
 }
