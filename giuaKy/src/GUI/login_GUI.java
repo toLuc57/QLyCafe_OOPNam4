@@ -1,19 +1,15 @@
-
 package GUI;
 
 import DTO.NhanVien;
 import java.io.IOException;
-import UserControl.PasswordField;
 import Util.dbUtil;
+import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JRootPane;
 /**
  *
  * @author tranbathien
@@ -151,6 +147,11 @@ public class login_GUI extends javax.swing.JFrame {
         passwordField1.setForeground(new java.awt.Color(255, 255, 255));
         passwordField1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
         passwordField1.setLabelText("Password");
+        passwordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordField1ActionPerformed(evt);
+            }
+        });
 
         btnLogin.setText("Login");
         btnLogin.setFont(new java.awt.Font("Sitka Text", 0, 24)); // NOI18N
@@ -224,39 +225,40 @@ public class login_GUI extends javax.swing.JFrame {
             String name = txtUsername.getText();
             String pass = new String(passwordField1.getPassword());
             String SQL = "select * from NhanVien where MaNhanVien = ? and Matkhau = ?";
-            PreparedStatement ps = conn.prepareCall(SQL);
+            PreparedStatement ps = conn.prepareStatement(SQL);
             StringBuilder sb = new StringBuilder();
             ps.setString(1, txtUsername.getText());
             ps.setString(2, passwordField1.getText());
             ResultSet rs = ps.executeQuery();
-                    
-                    if(txtUsername.getText().equals("")){
-                        sb.append("Khong dc de trong ten \n");
-                    }
-                    if(passwordField1.getText().equals("")){
-                        sb.append("Khong dc de trong mat khau \n");
-                    }
-                    if(sb.length()>0){
-                        JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation",JOptionPane.ERROR_MESSAGE);
-                    }
-                    else if(rs.next()){
-                    NhanVien nv = new NhanVien();
-                    nv.setMaNhanVien(name);
-                    Home_GUI home = new Home_GUI();
-                    home.setVisible(true);
-                    this.dispose();   
-                    JOptionPane.showMessageDialog(this,"Đăng nhập thành công với tài khoản: "+ txtUsername.getText());
-                    }
-                    else{
-                       JOptionPane.showMessageDialog(this,"Mat khau khong chinh xac");
-                    }
+            if(txtUsername.getText().equals("")){
+                sb.append("Khong dc de trong ten \n");
+            }
+            if(passwordField1.getText().equals("")){
+                sb.append("Khong dc de trong mat khau \n");
+            }
+            if(sb.length()>0){
+                JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation",JOptionPane.ERROR_MESSAGE);
+            }
+            else if(rs.next()){
+                NhanVien nv = new NhanVien();
+                nv.setMaNhanVien(name);
+                Home_GUI home = new Home_GUI();
+                home.setVisible(true);
+                this.dispose();   
+                JOptionPane.showMessageDialog(this,"Đăng nhập thành công với tài khoản: "+ txtUsername.getText());
+            }
+            else{
+               JOptionPane.showMessageDialog(this,"Nhap sai username hoac password");
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println("Loi Dang Nhap");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
-
-    
+    private void passwordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordField1ActionPerformed
+        btnLoginActionPerformed(evt);
+    }//GEN-LAST:event_passwordField1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnClose;

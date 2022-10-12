@@ -1,19 +1,11 @@
 package GUI;
 
 import DTO.Ban;
-import DTO.HoaDon;
 import DTO.NhanVien;
-import DTO.ThucDon;
-import UserControl.JButtonCustom;
 import UserControl.tableObject;
 import UserControl.WrapLayout;
 import Util.dbUtil;
-import static Util.dbUtil.conn;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
-import com.sun.org.apache.xerces.internal.xs.ItemPSVI;
 import java.awt.Color;
-import java.awt.Frame;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -32,7 +24,6 @@ import javax.swing.table.DefaultTableModel;
 public class Home_GUI extends javax.swing.JFrame {
     int idtable = 0;
     int mahd= 0;
-   
     
     public Home_GUI() {
         initComponents();
@@ -59,7 +50,6 @@ public class Home_GUI extends javax.swing.JFrame {
                     } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(new JFrame(), "Lỗi thêm món");
                     }
-                   
                 }
             
                 @Override
@@ -589,8 +579,9 @@ public class Home_GUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                 JFrame h = new Home_GUI();
+                JFrame h = new Home_GUI();
                 h.setVisible(true);
             }
         });

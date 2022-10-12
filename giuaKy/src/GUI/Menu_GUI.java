@@ -120,8 +120,6 @@ public class Menu_GUI extends javax.swing.JFrame {
         clear_Table();
         Connection conn = dbUtil.getConnection();
         String sql = "select td.TenThucDon,ct.SoLuong, td.GiaTien from ThucDon as td join ChiTietHoaDon as ct on td.IDThucDon = ct.IDThucDon and ct.MaHoaDon in (select hd.MaHoaDon from HoaDon as hd where SoBan =" + idBan + "and TrangThai = 0)";
-      
-        
         try {
         ResultSet rs = dbUtil.ThucThiSelect(sql);
         DefaultTableModel tbModel = (DefaultTableModel) tbBill.getModel();
@@ -133,11 +131,9 @@ public class Menu_GUI extends javax.swing.JFrame {
                 obj[3] = rs.getInt("GiaTien");
                 tbModel.addRow(obj);
             }
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(new JFrame(), "Loi load Thuc Don Ban");
         }
-
     }
       private void clear_Table(){
         DefaultTableModel tbModel = (DefaultTableModel) tbBill.getModel();

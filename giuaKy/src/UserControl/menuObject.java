@@ -1,31 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package UserControl;
 
-import GUI.Menu_GUI;
-import Util.dbUtil;
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
 import java.awt.Image;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author tranbathien
- */
 public class menuObject extends javax.swing.JPanel {
     private String srcImage;
     private int gia;
