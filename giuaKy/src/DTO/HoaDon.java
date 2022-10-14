@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.Calendar;
 /**
  *
  * @author ThangIKCU
@@ -109,11 +110,13 @@ public class HoaDon {
     }    
  public static int InsertHoaDon(int soban, String manv){
         int insert = 0;
-        Connection cn = dbUtil.getConnection();
-        String sql = "Insert into HoaDon (SoBan,TrangThai, MaNhanVien ) values ('"+soban+"', 0 , '"+manv+"')";
+          Calendar c = Calendar.getInstance();
+        Connection conn = dbUtil.getConnection();
+        String sql = "Insert into HoaDon (SoBan,TrangThai, MaNhanVien, ThoiGianVao ) values ('"+soban+"', 0 , '"+manv+"',getdate())";
         try{
-            Statement st = cn.createStatement();
+            Statement st = conn.createStatement();
             insert = st.executeUpdate(sql);
+            dbUtil.CloseConnection(conn);
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(new JFrame(), "Loi Insert HoaDon");
         }
@@ -121,23 +124,25 @@ public class HoaDon {
     }
   public static int InsertChiTietHoaDon(int mathucdon, int soluong, int gia){
         int insert = 0;
-        Connection cn = dbUtil.getConnection();
+        Connection conn = dbUtil.getConnection();
         String sql = "Insert into ChiTietHoaDon (MaHoaDon,IDThucDon,SoLuong,TongTien) values ((select max(MaHoaDon) from HoaDon), '"+mathucdon+"', '"+soluong+"', '"+gia+"') ";
         try{
-            Statement st = cn.createStatement();
+            Statement st = conn.createStatement();
             insert = st.executeUpdate(sql);
+            dbUtil.CloseConnection(conn);
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(new JFrame(), "Loi Insert HoaDon");
         }
         return insert;
     }
-  public static int UpdateTrangThaiHoaDon(int maBan){
+  public static int UpdateTrangThaiHoaDon(int maBan, double TongTien){
   int update = 0;
-        Connection cn = dbUtil.getConnection();
-        String sql = "update HoaDon set TrangThai = 1 where SoBan ="+ maBan;
+        Connection conn = dbUtil.getConnection();
+        String sql = "update HoaDon set TrangThai = 1 where SoBan ="+ maBan+"; update HoaDon set ThoiGianRa = getdate() where SoBan ="+ maBan +"; update HoaDon set TongTien = "+TongTien+" where SoBan ="+maBan;
         try {
-            Statement st = cn.createStatement();
+            Statement st = conn.createStatement();
             update = st.executeUpdate(sql);
+            dbUtil.CloseConnection(conn);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(new JFrame(), "Loi Update Trang Thai Hoa Don");
         }

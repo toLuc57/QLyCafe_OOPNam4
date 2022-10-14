@@ -1,6 +1,13 @@
 
 package DTO;
 
+import Util.dbUtil;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 
 public class Ban {
     int maBan=0;
@@ -65,7 +72,21 @@ public class Ban {
     }
 
 
-  
+  public static int UpdateTrangThaiBan(int maBan){
+  int update = 0;
+        Connection conn = dbUtil.getConnection();
+        String sql = "update Ban set TinhTrang = 0 where SoBan ="+ maBan;
+        try {
+            Statement st = conn.createStatement();
+            update = st.executeUpdate(sql);
+            dbUtil.CloseConnection(conn);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "Loi Update Trang Thai Ban");
+        }
+        return update;
+
+  }
+
 
   
 }

@@ -28,10 +28,10 @@ public class ThucDon {
         this.Loai="";
         this.DonGia=0;
     }
-    public ThucDon(String mamon, String ten, String maloai, int gia, String dvt){
+    public ThucDon(String mamon, String ten, String loai, int gia, String dvt){
         this.MaMon=mamon;
         this.TenMon=ten;
-        this.Loai=maloai;
+        this.Loai=loai;
         this.DonGia=gia;       
     }
 
@@ -52,10 +52,10 @@ public class ThucDon {
     public String GetTenMon(){
         return this.TenMon;
     }
-    public void SetMaLoai(String maloai){
+    public void SetLoai(String maloai){
         this.Loai=maloai;
     }
-    public String GetMaLoai(){
+    public String GeLoai(){
         return this.Loai;
     }
     public void SetDonGia(int gia){
@@ -67,9 +67,5 @@ public class ThucDon {
  
 
     
-public static void AddMon(String maHoaDon){
-    Connection conn = dbUtil.getConnection();
-  
- 
-}    
+
 }

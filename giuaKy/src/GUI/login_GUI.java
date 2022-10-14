@@ -1,4 +1,3 @@
-
 package GUI;
 
 import DTO.NhanVien;
@@ -14,18 +13,18 @@ import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
+
 /**
  *
  * @author tranbathien
  */
 public class login_GUI extends javax.swing.JFrame {
-            
-   
-  
+
     public login_GUI() throws IOException {
         initComponents();
-        
+
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -213,13 +212,14 @@ public class login_GUI extends javax.swing.JFrame {
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
         int select = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn đóng ứng dụng chứ?");
-        if(select==0){
+        if (select == 0) {
             System.exit(0);
-        }   
+        }
     }//GEN-LAST:event_btnCloseMouseClicked
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         try {
+           
             Connection conn = dbUtil.getConnection();
             String name = txtUsername.getText();
             String pass = new String(passwordField1.getPassword());
@@ -229,34 +229,72 @@ public class login_GUI extends javax.swing.JFrame {
             ps.setString(1, txtUsername.getText());
             ps.setString(2, passwordField1.getText());
             ResultSet rs = ps.executeQuery();
-                    
-                    if(txtUsername.getText().equals("")){
-                        sb.append("Khong dc de trong ten \n");
-                    }
-                    if(passwordField1.getText().equals("")){
-                        sb.append("Khong dc de trong mat khau \n");
-                    }
-                    if(sb.length()>0){
-                        JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation",JOptionPane.ERROR_MESSAGE);
-                    }
-                    else if(rs.next()){
+
+            if (txtUsername.getText().equals("")) {
+                sb.append("Không được để trống tên! \n");
+            }
+            if (passwordField1.getText().equals("")) {
+                sb.append("Không được để trống mật khẩu! \n");
+
+            }
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation", JOptionPane.ERROR_MESSAGE);
+            
+             }
+            else if(isAdmin() == true && cbbPosition.getSelectedItem() == "Admin") {
+                    Management_GUI ql = new Management_GUI();
+                    ql.setVisible(true);
+             }
+            else if (rs.next() && (isAdmin() == false)) {
+                if (cbbPosition.getSelectedItem() == "Staff") {
                     NhanVien nv = new NhanVien();
                     nv.setMaNhanVien(name);
                     Home_GUI home = new Home_GUI();
                     home.setVisible(true);
-                    this.dispose();   
-                    JOptionPane.showMessageDialog(this,"Đăng nhập thành công với tài khoản: "+ txtUsername.getText());
-                    }
-                    else{
-                       JOptionPane.showMessageDialog(this,"Mat khau khong chinh xac");
-                    }
+                    this.dispose();
+                    JOptionPane.showMessageDialog(this, "Đăng nhập thành công với tài khoản: " + txtUsername.getText());
+
+                }   
+              
+
+           
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Mật khẩu không chính xác");
+            }
+            dbUtil.CloseConnection(conn);
         } catch (Exception e) {
             System.err.println("Loi Dang Nhap");
         }
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    public boolean isAdmin() {
+        boolean isAdmin = false;
+        String sql;
+        Connection conn = dbUtil.getConnection();
 
-    
+        sql = "Select isAdmin From NhanVien Where MaNhanVien = " + txtUsername.getText() + " AND Matkhau='" + passwordField1.getText() + "'";
+        try {
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            rs.next();
+            isAdmin = rs.getBoolean("isAdmin");
+            System.out.println(isAdmin);
+
+            if (isAdmin == true) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi !");
+        }
+
+        return false;
+
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnClose;

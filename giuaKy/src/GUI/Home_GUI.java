@@ -30,38 +30,92 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Home_GUI extends javax.swing.JFrame {
+
     int idtable = 0;
-    int mahd= 0;
-   
-    
+    int mahd = 0;
+    NhanVien nv = new NhanVien();
+    double totalmoney = 0;
     public Home_GUI() {
         initComponents();
-        NhanVien nv = new NhanVien();
+
+        loadTable();
         lbMaNV.setText(nv.getMaNhanVien());
+
+    }
+    // ----------------Load Table---------------------
+
+    public void loadTable() {
+        pnlListTables.removeAll();
+
         dbUtil conn = new dbUtil();
         dbUtil.getConnection();
         List<Ban> l = conn.GetBan();
+
         pnlListTables.setLayout(new WrapLayout(WrapLayout.LEFT, 20, 10));
         for (Ban item : l) {
             tableObject btn = new tableObject();
             btn.setIDTable(item.getMaBan());
             btn.setSlot(item.getSoLuongGhe());
-            btn.setStatusTable(String.valueOf(item.getTinhTrang()));
+            if (TonTaiBill(idtable)) {
+                btn.setStatusTable("1");
+            } else {
+                btn.setStatusTable(String.valueOf(item.getTinhTrang()));
+            }
+
+            //---------Click chon ban
             btn.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     idtable = btn.getIDTable();
+                    System.err.println("Mã bàn: " + idtable);
                     GetMaHD(idtable);
                     clear_Table();
                     try {
                         LoadHoaDonBan();
-                      
                     } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(new JFrame(), "Lỗi thêm món");
+                        Logger.getLogger(Home_GUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                   
+
+                    //-------- Cick CheckOut-----------
+                    btnCheckout.addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if(TonTaiBill(idtable)){
+                             HoaDon.UpdateTrangThaiHoaDon(idtable,totalmoney);
+                            Ban.UpdateTrangThaiBan(idtable);
+                            loadTable();
+                            clear_Table();
+                            lblTotalMoney.setText("0.00 VNÐ");
+                        }
+                            else{
+                                  JOptionPane.showMessageDialog(new JFrame(), "Bàn "+ idtable +" hiện đang trống hóa đơn!");
+                                    }
+                           
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
+
                 }
-            
+
                 @Override
                 public void mousePressed(MouseEvent e) {
 
@@ -69,105 +123,137 @@ public class Home_GUI extends javax.swing.JFrame {
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
                 }
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
                 }
+
             });
             pnlListTables.add(btn);
+            pnlListTables.repaint();
+            pnlListTables.revalidate();
+
         }
+        //--------------Them Mon- Mo Menu-------
+
         btnAdd.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                 System.out.println(idtable);
-                 if(idtable > 0){
-                  Menu_GUI menu = new Menu_GUI(idtable);
-                   menu.setVisible(true);
-                 }
-                 else{
-                 Menu_GUI menu = new Menu_GUI(idtable);
-                   menu.setVisible(false);
-                   JOptionPane.showMessageDialog(new JFrame(), "Vui long chon ban!");
-                 }
+                System.out.println(idtable);
+                if (idtable > 0) {
+                    Menu_GUI menu = new Menu_GUI(idtable);
+                    Home_GUI.this.dispose();
+                    menu.setVisible(true);
+
+                } else {
+
+                    JOptionPane.showMessageDialog(new JFrame(), "Vui lòng chọn bàn");
+                }
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+               
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                 // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+               
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+               
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-              // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+             
             }
         });
+
     }
 
-    
-    private void clear_Table(){
+    private void clear_Table() {
         DefaultTableModel tbModel = (DefaultTableModel) tbBill.getModel();
         tbModel.setNumRows(0);
     }
+
     public void LoadHoaDonBan() throws SQLException {
         Connection conn = dbUtil.getConnection();
-        String sql = "select p.TenThucDon,ct.SoLuong , p.GiaTien from HoaDon as hd,ChiTietHoaDon as ct, ThucDon as p where hd.SoBan = "+ idtable +"and ct.MaHoaDon = hd.MaHoaDon and ct.IDThucDon = p.IDThucDon;";
+       
+        lblTotalMoney.setText("0.00 VNÐ");
+        String sql = "select  p.TenThucDon,ct.SoLuong , p.GiaTien from HoaDon as hd,ChiTietHoaDon as ct, ThucDon as p where hd.SoBan = " + idtable + "and ct.MaHoaDon = hd.MaHoaDon and ct.IDThucDon = p.IDThucDon and hd.TrangThai=0;";
         ResultSet rs = dbUtil.ThucThiSelect(sql);
         DefaultTableModel tbModel = (DefaultTableModel) tbBill.getModel();
         Object[] obj = new Object[4];
         try {
             while (rs.next()) {
-     
-                obj[0] = tbBill.getRowCount()+1;  
+
+                obj[0] = tbBill.getRowCount() + 1;
                 obj[1] = rs.getString("TenThucDon");
                 obj[2] = rs.getInt("SoLuong");
                 obj[3] = rs.getInt("GiaTien");
                 tbModel.addRow(obj);
+                totalmoney += (rs.getInt("SoLuong") * rs.getInt("GiaTien"));
+                lblTotalMoney.setText(String.valueOf(totalmoney) + " VNÐ");
             }
+            dbUtil.CloseConnection(conn);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(new JFrame(), "Loi load Ban");
         }
 
     }
- 
-  public int GetMaHD(int idtable){
-      Connection conn = dbUtil.getConnection();
-      String sql = "Select * from HoaDon where SoBan = "+ idtable;
+
+    public boolean TonTaiBill(int Ban) {
+        String sql = "select * from HoaDon where SoBan= '" + Ban + "' and TrangThai=0";
+        Connection conn = dbUtil.getConnection();
+        ResultSet rs;
+        try {
+            rs = dbUtil.ThucThiSelect(sql);
+            if (rs.next()) {
+                return true;
+
+            }
+            dbUtil.CloseConnection(conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+
+    }
+
+    public int GetMaHD(int idtable) {
+        Connection conn = dbUtil.getConnection();
+        String sql = "Select * from HoaDon where SoBan = " + idtable;
         try {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
-             mahd = rs.getInt("MaHoaDon");
+            while (rs.next()) {
+                mahd = rs.getInt("MaHoaDon");
             }
-           
-            
+
+            dbUtil.CloseConnection(conn);
         } catch (SQLException ex) {
             System.out.println("Loi GetMaHD");
         }
         return mahd;
-  }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jpnMain = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         btnAcount = new javax.swing.JLabel();
@@ -199,9 +285,9 @@ public class Home_GUI extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(0, 51, 51));
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.white, new java.awt.Color(204, 204, 204), java.awt.Color.white));
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+        jpnMain.setBackground(new java.awt.Color(0, 51, 51));
+        jpnMain.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.white, new java.awt.Color(204, 204, 204), java.awt.Color.white));
+        jpnMain.setLayout(new javax.swing.BoxLayout(jpnMain, javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 51));
 
@@ -380,6 +466,11 @@ public class Home_GUI extends javax.swing.JFrame {
         btnCheckout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCheckout.setRound(40);
         btnCheckout.setStyle(UserControl.JButtonCustom.ButtonStyle.DESTRUCTIVE);
+        btnCheckout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckoutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -482,22 +573,34 @@ public class Home_GUI extends javax.swing.JFrame {
                     .addComponent(pnlShowTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        jPanel1.add(jPanel2);
+        jpnMain.add(jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpnMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpnMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSurchangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurchangeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSurchangeActionPerformed
+
+    private void lblTableIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTableIDMouseClicked
+
+    }//GEN-LAST:event_lblTableIDMouseClicked
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+
+    }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseExited
         ImageIcon ii = new ImageIcon(getClass().getResource("/Images/icons8_close_window_30px.png"));
@@ -522,43 +625,33 @@ public class Home_GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCloseMouseClicked
 
-    private void btnSurchangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurchangeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSurchangeActionPerformed
+    private void btnManagementMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManagementMouseExited
+        btnManagement.setForeground(Color.BLACK);
+    }//GEN-LAST:event_btnManagementMouseExited
 
     private void btnManagementMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManagementMouseEntered
         btnManagement.setForeground(Color.BLUE);
     }//GEN-LAST:event_btnManagementMouseEntered
 
-    private void btnManagementMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManagementMouseExited
-        btnManagement.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnManagementMouseExited
-
     private void btnManagementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManagementMouseClicked
         btnManagement.setForeground(Color.RED);
     }//GEN-LAST:event_btnManagementMouseClicked
-
-    private void btnAcountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcountMouseClicked
-        btnAcount.setForeground(Color.RED);
-    }//GEN-LAST:event_btnAcountMouseClicked
-
-    private void btnAcountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcountMouseEntered
-        btnAcount.setForeground(Color.BLUE);
-    }//GEN-LAST:event_btnAcountMouseEntered
 
     private void btnAcountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcountMouseExited
         btnAcount.setForeground(Color.BLACK);
     }//GEN-LAST:event_btnAcountMouseExited
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        
-        
-        
-    }//GEN-LAST:event_btnAddActionPerformed
+    private void btnAcountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcountMouseEntered
+        btnAcount.setForeground(Color.BLUE);
+    }//GEN-LAST:event_btnAcountMouseEntered
 
-    private void lblTableIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTableIDMouseClicked
+    private void btnAcountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcountMouseClicked
+        btnAcount.setForeground(Color.RED);
+    }//GEN-LAST:event_btnAcountMouseClicked
 
-    }//GEN-LAST:event_lblTableIDMouseClicked
+    private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
+
+    }//GEN-LAST:event_btnCheckoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -590,7 +683,7 @@ public class Home_GUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                 JFrame h = new Home_GUI();
+                JFrame h = new Home_GUI();
                 h.setVisible(true);
             }
         });
@@ -606,7 +699,6 @@ public class Home_GUI extends javax.swing.JFrame {
     private UserControl.JButtonCustom btnSurchange;
     private UserControl.JButtonCustom btnSwitch;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -614,6 +706,7 @@ public class Home_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jpnMain;
     private javax.swing.JLabel lbMaNV;
     private javax.swing.JTextField lblSurcharge;
     private javax.swing.JLabel lblTableID;
