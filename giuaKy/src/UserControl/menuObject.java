@@ -1,9 +1,30 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
 package UserControl;
 
+import GUI.Menu_GUI;
+import Util.dbUtil;
 import java.awt.Image;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
+/**
+ *
+ * @author tranbathien
+ */
 public class menuObject extends javax.swing.JPanel {
     private String srcImage;
     private int gia;
@@ -63,6 +84,8 @@ public class menuObject extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSpinner1 = new javax.swing.JSpinner();
+        jSpinner2 = new javax.swing.JSpinner();
         jPanel1 = new javax.swing.JPanel();
         imgMenu = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -96,15 +119,15 @@ public class menuObject extends javax.swing.JPanel {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         nbSL.setLabelText("Chọn số lượng");
+        nbSL.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                nbSLStateChanged(evt);
+            }
+        });
 
         btnAddtoBill.setText("Thêm vào hóa đơn");
         btnAddtoBill.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddtoBill.setStyle(UserControl.JButtonCustom.ButtonStyle.DESTRUCTIVE);
-        btnAddtoBill.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAddtoBillMouseClicked(evt);
-            }
-        });
         btnAddtoBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddtoBillActionPerformed(evt);
@@ -163,16 +186,14 @@ public class menuObject extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddtoBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddtoBillActionPerformed
-
-      
-      
+        JOptionPane.showMessageDialog(this, "btnAddtoBillActionPerformed");
     }//GEN-LAST:event_btnAddtoBillActionPerformed
 
-    private void btnAddtoBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddtoBillMouseClicked
-      
-        
-    }//GEN-LAST:event_btnAddtoBillMouseClicked
-
+    private void nbSLStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_nbSLStateChanged
+        int number = (int) nbSL.getValue();
+        if(number < 0)
+            nbSL.setValue(0);
+    }//GEN-LAST:event_nbSLStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private UserControl.JButtonCustom btnAddtoBill;
@@ -184,6 +205,8 @@ public class menuObject extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JLabel lblUniPrice;
     private UserControl.Spinner nbSL;
     private javax.swing.JLabel txtNameMenu;

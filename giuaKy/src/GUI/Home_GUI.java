@@ -80,7 +80,7 @@ public class Home_GUI extends javax.swing.JFrame {
                  System.out.println(idtable);
                  if(idtable > 0){
                   Menu_GUI menu = new Menu_GUI(idtable);
-                   menu.setVisible(true);
+                  menu.setVisible(true);
                  }
                  else{
                  Menu_GUI menu = new Menu_GUI(idtable);
@@ -215,6 +215,11 @@ public class Home_GUI extends javax.swing.JFrame {
         btnManagement.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         btnManagement.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnManagement.setText("Chủ quán");
+        btnManagement.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                btnManagementFocusGained(evt);
+            }
+        });
         btnManagement.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnManagementMouseClicked(evt);
@@ -489,6 +494,7 @@ public class Home_GUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //<editor-fold defaultstate="collapsed" desc="Event">
     private void btnCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseExited
         ImageIcon ii = new ImageIcon(getClass().getResource("/Images/icons8_close_window_30px.png"));
         btnClose.setIcon(ii);
@@ -500,18 +506,17 @@ public class Home_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseMouseEntered
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
-
         try {
             int select = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn đăng xuất không?");
             if (select == 0) {
                 this.dispose();
-                new login_GUI().setVisible(false);
+                new login_GUI().setVisible(true);
             }
         } catch (IOException ex) {
             Logger.getLogger(Home_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnCloseMouseClicked
-
+    
     private void btnSurchangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurchangeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSurchangeActionPerformed
@@ -525,7 +530,9 @@ public class Home_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnManagementMouseExited
 
     private void btnManagementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManagementMouseClicked
-        btnManagement.setForeground(Color.RED);
+        btnManagement.setForeground(Color.RED);  
+        Management_GUI obj = new Management_GUI();
+        obj.setVisible(true);
     }//GEN-LAST:event_btnManagementMouseClicked
 
     private void btnAcountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcountMouseClicked
@@ -541,15 +548,18 @@ public class Home_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAcountMouseExited
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        
-        
-        
+       
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void lblTableIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTableIDMouseClicked
 
     }//GEN-LAST:event_lblTableIDMouseClicked
 
+    private void btnManagementFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnManagementFocusGained
+        JOptionPane.showConfirmDialog(this, "btnManagementFocusGained");
+    }//GEN-LAST:event_btnManagementFocusGained
+    //</editor-fold>
+    
     /**
      * @param args the command line arguments
      */

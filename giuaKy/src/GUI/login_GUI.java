@@ -215,6 +215,7 @@ public class login_GUI extends javax.swing.JFrame {
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
         int select = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn đóng ứng dụng chứ?");
         if(select==0){
+            dbUtil.closeQuietly();
             System.exit(0);
         }   
     }//GEN-LAST:event_btnCloseMouseClicked
@@ -228,12 +229,12 @@ public class login_GUI extends javax.swing.JFrame {
             PreparedStatement ps = conn.prepareStatement(SQL);
             StringBuilder sb = new StringBuilder();
             ps.setString(1, txtUsername.getText());
-            ps.setString(2, passwordField1.getText());
+            ps.setString(2, pass);
             ResultSet rs = ps.executeQuery();
-            if(txtUsername.getText().equals("")){
+            if(name.equals("")){
                 sb.append("Khong dc de trong ten \n");
             }
-            if(passwordField1.getText().equals("")){
+            if(pass.equals("")){
                 sb.append("Khong dc de trong mat khau \n");
             }
             if(sb.length()>0){

@@ -32,6 +32,7 @@ public class tableObject extends javax.swing.JPanel {
         setFocusable(true);
     }
 
+    
     public int getIDTable() {
         return IDTable;
     }
@@ -44,16 +45,16 @@ public class tableObject extends javax.swing.JPanel {
     public void setStatusTable(String status){
         if(status.equals(TRONG)){
             setImage(SRC_TRONG);
-            txtStatusTable.setText(TRONG);
+            txtStatusTable.setText("Trống");
             txtStatusTable.setForeground(Color.GREEN);
         }else{
             if(status.equals(CO_KHACH)){
                 setImage(SRC_CO_KHACH);
-                txtStatusTable.setText(CO_KHACH);
+                txtStatusTable.setText("Có Khách");
                 txtStatusTable.setForeground(Color.YELLOW);
             }else{
                 setImage(SRC_DAT);
-                txtStatusTable.setText(DAT);
+                txtStatusTable.setText("Đã đặt");
                 txtStatusTable.setForeground(Color.RED);
             }
         }
@@ -61,6 +62,7 @@ public class tableObject extends javax.swing.JPanel {
 
     public void setIDTable(int IDTable) {
         this.IDTable = IDTable;
+        txtIdTable.setText(String.valueOf(IDTable));
     }
    
 

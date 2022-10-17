@@ -10,18 +10,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- *
- * @author ThangIKCU
- */
 public class ThucDon {
     private String MaMon;
     private String TenMon;
     private String Loai; 
     private int DonGia;
    
-   
-    
     public ThucDon(){
         this.MaMon="";
         this.TenMon="";

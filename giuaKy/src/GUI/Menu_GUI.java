@@ -99,21 +99,15 @@ public class Menu_GUI extends javax.swing.JFrame {
                        LoadHoaDonTable(table);
                    }    
                    }   
-                   
-                 
-               
                }else{
-                   JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nh?p s? lu?ng món");
+                   JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nh?p s? lu?ng món > 0");
                }
-                
-                 
-                
             });
         }
     }
 
     private Menu_GUI() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 // LoadHoaDonVaoTable
     public void LoadHoaDonTable(int idBan)  {
@@ -424,18 +418,7 @@ public class Menu_GUI extends javax.swing.JFrame {
         formShowMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         pnlShowMenu.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout pnlShowMenuLayout = new javax.swing.GroupLayout(pnlShowMenu);
-        pnlShowMenu.setLayout(pnlShowMenuLayout);
-        pnlShowMenuLayout.setHorizontalGroup(
-            pnlShowMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1334, Short.MAX_VALUE)
-        );
-        pnlShowMenuLayout.setVerticalGroup(
-            pnlShowMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 484, Short.MAX_VALUE)
-        );
-
+        pnlShowMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         formShowMenu.setViewportView(pnlShowMenu);
 
         rightBottomLeft.add(formShowMenu);
@@ -450,7 +433,7 @@ public class Menu_GUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(main, javax.swing.GroupLayout.DEFAULT_SIZE, 1350, Short.MAX_VALUE)
+            .addComponent(main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,7 +466,6 @@ public class Menu_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnXacNhanActionPerformed
    
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-
         loadMenu();
     }//GEN-LAST:event_btnFindActionPerformed
 

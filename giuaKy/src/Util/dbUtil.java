@@ -16,20 +16,30 @@ import javax.swing.JOptionPane;
  * @author tranbathien
  */
 public class dbUtil {
-    public static Connection conn = null;
-    public static Connection getConnection() {
+    private static Connection conn;
+    
+    static {
         String url = "jdbc:sqlserver://localhost:1433;databaseName=TheCoffee";
         String user = "sa";
-        String password ="sa";
+        String password ="1234";
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             conn = DriverManager.getConnection(url,user,password);
         } catch (Exception e) {
             e.printStackTrace();
+            conn = null;
         }
+    }
+    public static Connection getConnection() {
         return conn;
-}
-    public static ResultSet ThucThiSelect(String sql ) throws SQLException{
+    }
+    public static void closeQuietly() {
+        try {
+            conn.close();
+        } catch (Exception e) {
+        }
+    }
+    public static ResultSet ThucThiSelect(String sql) throws SQLException{
         Statement st;
         try {
             st = conn.createStatement();
