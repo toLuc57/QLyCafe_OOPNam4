@@ -225,10 +225,11 @@ public class login_GUI extends javax.swing.JFrame {
             Connection conn = dbUtil.getConnection();
             String name = txtUsername.getText();
             String pass = new String(passwordField1.getPassword());
-            String SQL = "select * from NhanVien where MaNhanVien = ? and Matkhau = ?";
+            String SQL = "select [HoTen],[NgaySinh],[DiaChi],[SDT],[isAdmin]"
+                    + " from NhanVien where MaNhanVien = ? and Matkhau = ?";
             PreparedStatement ps = conn.prepareStatement(SQL);
             StringBuilder sb = new StringBuilder();
-            ps.setString(1, txtUsername.getText());
+            ps.setString(1, name);
             ps.setString(2, pass);
             ResultSet rs = ps.executeQuery();
             if(name.equals("")){
@@ -243,6 +244,11 @@ public class login_GUI extends javax.swing.JFrame {
             else if(rs.next()){
                 NhanVien nv = new NhanVien();
                 nv.setMaNhanVien(name);
+                nv.setHoTen(rs.getString("HoTen"));
+                nv.setNgaySinh(rs.getString("NgaySinh"));
+                nv.setDiaChi(rs.getString("DiaChi"));
+                nv.setSDT(rs.getString("SDT"));
+                nv.setIsAdmin(rs.getBoolean("isAdmin"));
                 Home_GUI home = new Home_GUI();
                 home.setVisible(true);
                 this.dispose();   
