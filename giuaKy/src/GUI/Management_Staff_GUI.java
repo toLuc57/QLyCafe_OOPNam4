@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class Management_Staff_GUI extends javax.swing.JPanel {
-
+    private int idStaff;
     public Management_Staff_GUI() {
         initComponents();
         Connection conn = null;
@@ -26,7 +26,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         Vector vctData = new Vector();
         
         String sql = "SELECT [MaNhanVien],[HoTen],[NgaySinh],[DiaChi],[SDT],[Matkhau],[isAdmin]"
-                + " FROM [NhanVien]";
+                + " FROM [NhanVien] where isAdmin = 0";
         try {
             conn = dbUtil.getConnection();
             PreparedStatement pstm =  conn.prepareStatement(sql);
@@ -54,7 +54,6 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
                 record.add(SDT);
                 record.add(Matkhau);
                 record.add(ChucVu);
-                
                 vctData.add(record);
             }
             tableMenu.setModel(new DefaultTableModel(vctData, vctHeader));
@@ -117,11 +116,11 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
                 .addComponent(txtSearchStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addComponent(btnAddStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(77, 77, 77)
                 .addComponent(btnUpdateStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(71, 71, 71)
                 .addComponent(btnDeleteStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(257, Short.MAX_VALUE))
+                .addContainerGap(199, Short.MAX_VALUE))
         );
         TopLayout.setVerticalGroup(
             TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
