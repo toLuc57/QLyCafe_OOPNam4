@@ -77,16 +77,16 @@ public class Home_GUI extends javax.swing.JFrame {
         btnAdd.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                 System.out.println(idtable);
-                 if(idtable > 0){
-                  Menu_GUI menu = new Menu_GUI(idtable);
-                  menu.setVisible(true);
+                System.out.println(idtable);
+                if(idtable > 0){
+                    Menu_GUI menu = new Menu_GUI(idtable);
+                    menu.setVisible(true);
                  }
-                 else{
-                 Menu_GUI menu = new Menu_GUI(idtable);
-                   menu.setVisible(false);
-                   JOptionPane.showMessageDialog(new JFrame(), "Vui long chon ban!");
-                 }
+                else{
+                    Menu_GUI menu = new Menu_GUI(idtable);
+                    menu.setVisible(false);
+                    JOptionPane.showMessageDialog(new JFrame(), "Vui long chon ban!");
+                }
             }
 
             @Override
@@ -291,11 +291,6 @@ public class Home_GUI extends javax.swing.JFrame {
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAdd.setRound(30);
         btnAdd.setStyle(UserControl.JButtonCustom.ButtonStyle.DESTRUCTIVE);
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
-            }
-        });
 
         lblTableID.setFont(new java.awt.Font("UTM Alexander", 1, 18)); // NOI18N
         lblTableID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -546,10 +541,6 @@ public class Home_GUI extends javax.swing.JFrame {
     private void btnAcountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcountMouseExited
         btnAcount.setForeground(Color.BLACK);
     }//GEN-LAST:event_btnAcountMouseExited
-
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-       
-    }//GEN-LAST:event_btnAddActionPerformed
 
     private void lblTableIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTableIDMouseClicked
 
