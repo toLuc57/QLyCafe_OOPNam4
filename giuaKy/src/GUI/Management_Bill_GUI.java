@@ -26,19 +26,119 @@ public class Management_Bill_GUI extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1153, Short.MAX_VALUE)
+        Top = new javax.swing.JPanel();
+        txtSearchBill = new UserControl.TextFieldAnimation();
+        btnAddBill = new UserControl.GradientButtom();
+        btnRepairBill = new UserControl.GradientButtom();
+        btnDeleteBill = new UserControl.GradientButtom();
+        Bottom = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table_Bill_Management = new UserControl.TableDark();
+
+        setOpaque(false);
+        setLayout(new java.awt.BorderLayout());
+
+        Top.setBackground(new java.awt.Color(0, 102, 102));
+        Top.setOpaque(false);
+
+        txtSearchBill.setAnimationColor(new java.awt.Color(204, 0, 0));
+        txtSearchBill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchBillActionPerformed(evt);
+            }
+        });
+
+        btnAddBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_add_30px.png"))); // NOI18N
+        btnAddBill.setText("Thêm");
+        btnAddBill.setColor1(new java.awt.Color(51, 0, 153));
+        btnAddBill.setColor2(new java.awt.Color(102, 0, 102));
+        btnAddBill.setFont(new java.awt.Font("UTM Alexander", 0, 12)); // NOI18N
+
+        btnRepairBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_screwdriver_emoji_30px.png"))); // NOI18N
+        btnRepairBill.setText("Sửa");
+        btnRepairBill.setColor1(new java.awt.Color(0, 102, 102));
+        btnRepairBill.setColor2(new java.awt.Color(51, 102, 0));
+        btnRepairBill.setFont(new java.awt.Font("UTM Alexander", 0, 12)); // NOI18N
+
+        btnDeleteBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_delete_30px.png"))); // NOI18N
+        btnDeleteBill.setText("Xóa");
+        btnDeleteBill.setColor1(new java.awt.Color(255, 255, 0));
+        btnDeleteBill.setColor2(new java.awt.Color(255, 0, 0));
+        btnDeleteBill.setFont(new java.awt.Font("UTM Alexander", 0, 12)); // NOI18N
+
+        javax.swing.GroupLayout TopLayout = new javax.swing.GroupLayout(Top);
+        Top.setLayout(TopLayout);
+        TopLayout.setHorizontalGroup(
+            TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TopLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtSearchBill, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(btnAddBill, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(btnRepairBill, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(btnDeleteBill, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(178, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 567, Short.MAX_VALUE)
+        TopLayout.setVerticalGroup(
+            TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TopLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAddBill, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDeleteBill, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRepairBill, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSearchBill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
+
+        add(Top, java.awt.BorderLayout.PAGE_START);
+
+        Bottom.setBackground(new java.awt.Color(0, 0, 0));
+        Bottom.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane2.setBackground(new java.awt.Color(51, 51, 51));
+
+        table_Bill_Management.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nhân viên lập", "Bàn", "Thời gian vào", "Thời gian ra", "Tổng phụ thu", "Tổng tiền"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table_Bill_Management.setGridColor(new java.awt.Color(51, 51, 51));
+        table_Bill_Management.setRowHeight(50);
+        jScrollPane2.setViewportView(table_Bill_Management);
+
+        Bottom.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        add(Bottom, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtSearchBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchBillActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchBillActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Bottom;
+    private javax.swing.JPanel Top;
+    private UserControl.GradientButtom btnAddBill;
+    private UserControl.GradientButtom btnDeleteBill;
+    private UserControl.GradientButtom btnRepairBill;
+    private javax.swing.JScrollPane jScrollPane2;
+    private UserControl.TableDark table_Bill_Management;
+    private UserControl.TextFieldAnimation txtSearchBill;
     // End of variables declaration//GEN-END:variables
 }

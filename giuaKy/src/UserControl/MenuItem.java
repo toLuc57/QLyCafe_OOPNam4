@@ -1,5 +1,6 @@
 
 package UserControl;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -38,6 +39,7 @@ public class MenuItem extends JButton{
         setContentAreaFilled(false);
         setBorder(null);
         animation = new Animation(this);
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent me) {

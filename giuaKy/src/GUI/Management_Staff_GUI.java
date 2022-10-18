@@ -4,12 +4,15 @@
  */
 package GUI;
 
+import UserControl.Notification;
+import UserControl.SweetAlert;
+import java.awt.Frame;
+
 /**
  *
  * @author trant
  */
 public class Management_Staff_GUI extends javax.swing.JPanel {
-
     /**
      * Creates new form Management_Staff_GUI
      */
@@ -33,7 +36,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         btnDeleteStaff = new UserControl.GradientButtom();
         Bottom = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tableMenu = new UserControl.TableDark();
+        table_Staff_Management = new UserControl.TableDark();
 
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
@@ -59,6 +62,11 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         btnAddStaff.setColor1(new java.awt.Color(51, 0, 153));
         btnAddStaff.setColor2(new java.awt.Color(102, 0, 102));
         btnAddStaff.setFont(new java.awt.Font("UTM Alexander", 0, 12)); // NOI18N
+        btnAddStaff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddStaffActionPerformed(evt);
+            }
+        });
 
         btnDeleteStaff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_delete_30px.png"))); // NOI18N
         btnDeleteStaff.setText("Xóa");
@@ -100,7 +108,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
 
         jScrollPane2.setBackground(new java.awt.Color(51, 51, 51));
 
-        tableMenu.setModel(new javax.swing.table.DefaultTableModel(
+        table_Staff_Management.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "fáadas", "món 1", "dsa", "1232131", null, null, null},
                 {"2", "dá", "đá", "ád", "ádas", null, null, null},
@@ -120,11 +128,11 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tableMenu.setGridColor(new java.awt.Color(51, 51, 51));
-        tableMenu.setRowHeight(50);
-        jScrollPane2.setViewportView(tableMenu);
-        if (tableMenu.getColumnModel().getColumnCount() > 0) {
-            tableMenu.getColumnModel().getColumn(0).setResizable(false);
+        table_Staff_Management.setGridColor(new java.awt.Color(51, 51, 51));
+        table_Staff_Management.setRowHeight(50);
+        jScrollPane2.setViewportView(table_Staff_Management);
+        if (table_Staff_Management.getColumnModel().getColumnCount() > 0) {
+            table_Staff_Management.getColumnModel().getColumn(0).setResizable(false);
         }
 
         Bottom.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -136,6 +144,11 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchStaffActionPerformed
 
+    private void btnAddStaffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStaffActionPerformed
+        Notification n =new Notification(new Frame(), Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Nhan nut them");
+        n.showNotification();
+    }//GEN-LAST:event_btnAddStaffActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Bottom;
@@ -144,7 +157,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
     private UserControl.GradientButtom btnDeleteStaff;
     private UserControl.GradientButtom btnUpdateStaff;
     private javax.swing.JScrollPane jScrollPane2;
-    private UserControl.TableDark tableMenu;
+    private UserControl.TableDark table_Staff_Management;
     private UserControl.TextFieldAnimation txtSearchStaff;
     // End of variables declaration//GEN-END:variables
 }

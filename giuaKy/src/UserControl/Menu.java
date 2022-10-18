@@ -22,11 +22,12 @@ public class Menu extends javax.swing.JPanel{
         addSpace(20);
         addItem("drink", 0);
         addItem("staff", 1);
-        addItem("account", 2);
-        addItem("product", 3);
-        addItem("import", 4);
-        addItem("bill", 5);
-        addItem("static", 6);
+        addItem("product", 2);
+        addItem("import",3);
+        addItem("bill", 4);
+        addItem("table", 5);
+        addItem("extra", 6);
+        addItem("static", 7);
         addSpace(20);
         repaint();
         revalidate();

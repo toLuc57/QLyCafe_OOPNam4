@@ -1,7 +1,12 @@
-
 package GUI;
 
-;
+import UserControl.loading;
+import javax.swing.JFrame;
+import UserControl.showFormAddUpdate;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  *
@@ -9,11 +14,17 @@ package GUI;
  */
 public class Management_Menu_GUI extends javax.swing.JPanel {
 
+    private JFrame frame;
+    private boolean show;
+
     /**
      * Creates new form Management_Menu_GUI
+     *
+     * @param fram
      */
-    public Management_Menu_GUI() {
+    public Management_Menu_GUI(JFrame fram) {
         initComponents();
+        this.frame = fram;
     }
 
     /**
@@ -32,7 +43,7 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
         btnDeleteMenu = new UserControl.GradientButtom();
         Bottom = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tableMenu = new UserControl.TableDark();
+        table_Menu_Management = new UserControl.TableDark();
 
         setBackground(new java.awt.Color(0, 0, 0));
         setOpaque(false);
@@ -52,12 +63,22 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
         btnAddMenu.setColor1(new java.awt.Color(51, 0, 153));
         btnAddMenu.setColor2(new java.awt.Color(102, 0, 102));
         btnAddMenu.setFont(new java.awt.Font("UTM Alexander", 0, 12)); // NOI18N
+        btnAddMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddMenuMouseClicked(evt);
+            }
+        });
 
         btnRepairMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_screwdriver_emoji_30px.png"))); // NOI18N
         btnRepairMenu.setText("Sửa");
         btnRepairMenu.setColor1(new java.awt.Color(0, 102, 102));
         btnRepairMenu.setColor2(new java.awt.Color(51, 102, 0));
         btnRepairMenu.setFont(new java.awt.Font("UTM Alexander", 0, 12)); // NOI18N
+        btnRepairMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRepairMenuMouseClicked(evt);
+            }
+        });
 
         btnDeleteMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_delete_30px.png"))); // NOI18N
         btnDeleteMenu.setText("Xóa");
@@ -84,12 +105,12 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
             TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TopLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAddMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnDeleteMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnRepairMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnRepairMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
@@ -100,31 +121,29 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
 
         jScrollPane2.setBackground(new java.awt.Color(51, 51, 51));
 
-        tableMenu.setModel(new javax.swing.table.DefaultTableModel(
+        table_Menu_Management.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "fáadas", "món 1", "dsa", "1232131"},
-                {"2", "dá", "đá", "ád", "ádas"},
-                {"3", "dá", "ád", "ád", "ádasdas"},
-                {"4", "sad", "áda", "áda", "đấ"},
-                {"5", "ádas", "adasd", "đá", null}
+
             },
             new String [] {
-                "ID", "Hình ảnh", "Tên món", "Loại", "Giá tiền"
+                " ", " ", "ID", "Hình ảnh", "Tên món", "Loại", "Giá tiền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tableMenu.setGridColor(new java.awt.Color(51, 51, 51));
-        tableMenu.setRowHeight(50);
-        jScrollPane2.setViewportView(tableMenu);
-        if (tableMenu.getColumnModel().getColumnCount() > 0) {
-            tableMenu.getColumnModel().getColumn(0).setResizable(false);
+        table_Menu_Management.setGridColor(new java.awt.Color(51, 51, 51));
+        table_Menu_Management.setRowHeight(50);
+        jScrollPane2.setViewportView(table_Menu_Management);
+        if (table_Menu_Management.getColumnModel().getColumnCount() > 0) {
+            table_Menu_Management.getColumnModel().getColumn(0).setMaxWidth(50);
+            table_Menu_Management.getColumnModel().getColumn(1).setMaxWidth(50);
+            table_Menu_Management.getColumnModel().getColumn(2).setResizable(false);
         }
 
         Bottom.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -133,8 +152,79 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void btnAddMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMenuMouseClicked
+        if (!show) {
+            addUpdateMenu_GUI panel = new addUpdateMenu_GUI();
+            showFormAddUpdate a = new showFormAddUpdate(frame, panel);
+            a.show();
+            JButton btnSave = panel.getBtnSave();
+            btnSave.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    //viet ham thêm hoặc sửa ở đây
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    
+                }
+
+            });
+            JButton btnClose = panel.getBtnClose();
+            btnClose.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    a.hide();
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    
+                }
+
+            });
+        }
+
+
+    }//GEN-LAST:event_btnAddMenuMouseClicked
+
+    private void btnRepairMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRepairMenuMouseClicked
+        loading l = new loading();
+        l.show();
+    }//GEN-LAST:event_btnRepairMenuMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -144,7 +234,7 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
     private UserControl.GradientButtom btnDeleteMenu;
     private UserControl.GradientButtom btnRepairMenu;
     private javax.swing.JScrollPane jScrollPane2;
-    private UserControl.TableDark tableMenu;
+    private UserControl.TableDark table_Menu_Management;
     private UserControl.TextFieldAnimation txtSearch;
     // End of variables declaration//GEN-END:variables
 }

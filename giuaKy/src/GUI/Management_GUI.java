@@ -1,15 +1,16 @@
-
 package GUI;
 
-import UserControl.EventMenu;
+import UserControl.ExcuteLoad;
+import UserControl.MessageDialog;
+import UserControl.Notification;
+import UserControl.loading;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.io.IOException;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JLayeredPane;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import net.miginfocom.swing.MigLayout;
 
 /**
  *
@@ -17,39 +18,33 @@ import net.miginfocom.swing.MigLayout;
  */
 public class Management_GUI extends javax.swing.JFrame {
 
-
+    loading l = new loading();
     public Management_GUI() {
         initComponents();
         menu.addEvent((int index) -> {
             switch (index) {
-                case 0:
-                    showForm(new Management_Menu_GUI());
-                    break;
-                case 1:
+                case 0 ->
+                    showForm(new Management_Menu_GUI(this));
+                case 1 ->
                     showForm(new Management_Staff_GUI());
-                    break;
-                case 2:
-                    showForm(new Management_Account_GUI());
-                    break;
-                case 3:
+                case 2 ->
                     showForm(new Management_Product_GUI());
-                    break;
-                case 4:
+                case 3 ->
                     showForm(new Management_Import_GUI());
-                    break;
-                case 5:
+                case 4 ->
                     showForm(new Management_Bill_GUI());
-                    break;
-                case 6:
+                case 5 ->
+                    showForm(new Management_Tables_GUI());
+                case 6 ->
+                    showForm(new Management_extrafee_GUI());
+                case 7 ->
                     showForm(new Management_Statistical_GUI());
-                    break;
-                default:
-
-                    break;
+                default -> {
+                }
             }
         });
     }
-    
+
     private void showForm(Component com) {
         managementForm.removeAll();
         managementForm.add(com);
@@ -93,9 +88,9 @@ public class Management_GUI extends javax.swing.JFrame {
         leftLayout.setVerticalGroup(
             leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         mainForm.add(left, java.awt.BorderLayout.LINE_START);
@@ -157,11 +152,26 @@ public class Management_GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
-
-            int select = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn đăng xuất không?");
-            if(select==0){
-                this.dispose();
-            }
+        MessageDialog m = new MessageDialog(this);
+        m.showMessage("Khoan đã!", "Bạn có chắc chắn muốn đóng giao diện quản lý không?");
+        if (m.getMessageType() == MessageDialog.MessageType.OK) {
+            Thread load = new Thread(() -> {
+                l.setVisible(true);
+            });
+            Thread execute = new Thread(() -> {
+                Home_GUI h = new Home_GUI();
+                h.setVisible(true);
+            });
+            Thread check = new Thread(() -> {
+                if (execute.getState() == Thread.State.TERMINATED) {
+                    this.dispose();
+                    l.setVisible(false);
+                }
+            });
+            load.start();
+            execute.start();
+            check.start();
+        }
     }//GEN-LAST:event_btnCloseMouseClicked
 
     private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseEntered
