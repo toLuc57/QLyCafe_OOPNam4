@@ -4,6 +4,9 @@
  */
 package GUI;
 
+import chartStatics.ModelChart;
+import java.awt.Color;
+
 /**
  *
  * @author trant
@@ -15,6 +18,15 @@ public class Management_Statistical_GUI extends javax.swing.JPanel {
      */
     public Management_Statistical_GUI() {
         initComponents();
+        chart.addLegend("Thu vào", Color.YELLOW);
+        chart.addLegend("Chi ra", Color.RED);
+        chart.addLegend("Doanh thu", Color.GREEN);
+        chart.addData(new ModelChart("Ngày 3/12/2021", new double[]{350,100,250}));
+        chart.addData(new ModelChart("Ngày 4/12/2021", new double[]{750,200,550}));
+        chart.addData(new ModelChart("Ngày 5/12/2021", new double[]{450,200,250}));
+        chart.addData(new ModelChart("Ngày 6/12/2021", new double[]{350,100,250}));
+        chart.addData(new ModelChart("Ngày 7/12/2021", new double[]{550,300,250}));
+        chart.addData(new ModelChart("Ngày 8/12/2021", new double[]{850,200,650}));
     }
 
     /**
@@ -26,21 +38,30 @@ public class Management_Statistical_GUI extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        chart = new chartStatics.Chart();
+
+        setBackground(new java.awt.Color(0, 51, 51));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1108, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, 1096, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 522, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private chartStatics.Chart chart;
     // End of variables declaration//GEN-END:variables
 }

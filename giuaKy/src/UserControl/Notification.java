@@ -230,7 +230,7 @@ public class Notification extends JComponent{
         cmdClose = new javax.swing.JButton();
 
         lbIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javaswingdev/sucess.png"))); // NOI18N
+        lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sucess.png"))); // NOI18N
 
         panel.setOpaque(false);
 
@@ -262,7 +262,7 @@ public class Notification extends JComponent{
                 .addContainerGap())
         );
 
-        cmdClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javaswingdev/close.png"))); // NOI18N
+        cmdClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/close.png"))); // NOI18N
         cmdClose.setBorder(null);
         cmdClose.setContentAreaFilled(false);
         cmdClose.setFocusable(false);
