@@ -44,7 +44,6 @@ public class Management_GUI extends javax.swing.JFrame {
                     showForm(new Management_Statistical_GUI());
                     break;
                 default:
-
                     break;
             }
         });
