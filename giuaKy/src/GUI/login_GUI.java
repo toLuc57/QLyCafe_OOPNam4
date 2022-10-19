@@ -11,8 +11,9 @@ import javax.swing.ImageIcon;
  */
 public class login_GUI extends javax.swing.JFrame {
     private boolean loading = false;
-    public login_GUI(){
+    public login_GUI() throws InterruptedException{
         initComponents();
+        Thread.sleep(4000);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

@@ -1,12 +1,6 @@
 package GUI;
 
-import UserControl.loading;
-import javax.swing.JFrame;
-import UserControl.showFormAddUpdate;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import java.awt.Cursor;
 
 /**
  *
@@ -14,17 +8,14 @@ import javax.swing.JPanel;
  */
 public class Management_Menu_GUI extends javax.swing.JPanel {
 
-    private JFrame frame;
-    private boolean show;
-
     /**
      * Creates new form Management_Menu_GUI
      *
      * @param fram
      */
-    public Management_Menu_GUI(JFrame fram) {
+    public Management_Menu_GUI() {
         initComponents();
-        this.frame = fram;
+         ToggleEdit(false);
     }
 
     /**
@@ -44,6 +35,17 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
         Bottom = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_Menu_Management = new UserControl.TableDark();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        txtNameMenu = new UserControl.TextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtUnitPrice = new UserControl.TextField();
+        Image = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        cbbCategory = new UserControl.JComboboxCustom();
+        btnSave = new UserControl.JButtonCustom();
+        btnCancel = new UserControl.JButtonCustom();
+        btnchosseImage = new UserControl.JButtonCustom();
 
         setBackground(new java.awt.Color(0, 0, 0));
         setOpaque(false);
@@ -92,14 +94,14 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
             TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TopLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnAddMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(63, 63, 63)
                 .addComponent(btnRepairMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(71, 71, 71)
                 .addComponent(btnDeleteMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(208, Short.MAX_VALUE))
+                .addGap(75, 75, 75))
         );
         TopLayout.setVerticalGroup(
             TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,6 +150,121 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
 
         Bottom.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_dog_tag_50px.png"))); // NOI18N
+
+        txtNameMenu.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        txtNameMenu.setLabelText("Tên món");
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_price_50px.png"))); // NOI18N
+
+        txtUnitPrice.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        txtUnitPrice.setLabelText("Giá tiền");
+
+        Image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_cafe_96px.png"))); // NOI18N
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Categorize_50px.png"))); // NOI18N
+
+        cbbCategory.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Thức uống", "Đồ ăn" }));
+        cbbCategory.setSelectedIndex(-1);
+        cbbCategory.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        cbbCategory.setLabeText("Thể loại");
+
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_save_40px.png"))); // NOI18N
+        btnSave.setText("Lưu lại");
+        btnSave.setFont(new java.awt.Font("UTM Cookies", 0, 24)); // NOI18N
+        btnSave.setRound(20);
+        btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSaveMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSaveMouseEntered(evt);
+            }
+        });
+
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_close_30px_1_1.png"))); // NOI18N
+        btnCancel.setText("Hủy");
+        btnCancel.setFont(new java.awt.Font("UTM Cookies", 0, 24)); // NOI18N
+        btnCancel.setRound(20);
+        btnCancel.setStyle(UserControl.JButtonCustom.ButtonStyle.DESTRUCTIVE);
+        btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCancelMouseEntered(evt);
+            }
+        });
+
+        btnchosseImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_choose_40px.png"))); // NOI18N
+        btnchosseImage.setText("Chọn ảnh");
+        btnchosseImage.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnchosseImage.setRound(15);
+        btnchosseImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnchosseImageMouseEntered(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Image, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNameMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbbCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnchosseImage, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtUnitPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNameMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtUnitPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnchosseImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
+            .addComponent(Image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        Bottom.add(jPanel1, java.awt.BorderLayout.PAGE_END);
+
         add(Bottom, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -156,85 +273,66 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchActionPerformed
 
     private void btnAddMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMenuMouseClicked
-        if (!show) {
-            addUpdateMenu_GUI panel = new addUpdateMenu_GUI();
-            showFormAddUpdate a = new showFormAddUpdate(frame, panel);
-            a.show();
-            JButton btnSave = panel.getBtnSave();
-            btnSave.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    //viet ham thêm hoặc sửa ở đây
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    
-                }
-
-            });
-            JButton btnClose = panel.getBtnClose();
-            btnClose.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    a.hide();
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    
-                }
-
-            });
-        }
-
-
+        ToggleEdit(true);
     }//GEN-LAST:event_btnAddMenuMouseClicked
 
     private void btnRepairMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRepairMenuMouseClicked
-        loading l = new loading();
-        l.show();
+        ToggleEdit(true);
     }//GEN-LAST:event_btnRepairMenuMouseClicked
 
+    private void btnchosseImageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnchosseImageMouseEntered
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnchosseImageMouseEntered
+
+    private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSaveMouseEntered
+
+    private void btnCancelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseEntered
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnCancelMouseEntered
+
+    private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
+        ToggleEdit(false);
+    }//GEN-LAST:event_btnSaveMouseClicked
+
+    private void btnCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseClicked
+        ClearEdit();
+        ToggleEdit(false);
+    }//GEN-LAST:event_btnCancelMouseClicked
+    private void ToggleEdit(boolean state) {
+        btnchosseImage.setVisible(state);
+        btnCancel.setVisible(state);
+        btnSave.setVisible(state);
+        txtNameMenu.setEditable(state);
+        txtUnitPrice.setEditable(state);
+        cbbCategory.setEnabled(state);
+    }
+    private void ClearEdit() {
+        txtNameMenu.setText("");
+        txtUnitPrice.setText("");
+        cbbCategory.setSelectedItem(-1);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Bottom;
+    private javax.swing.JLabel Image;
     private javax.swing.JPanel Top;
     private UserControl.GradientButtom btnAddMenu;
+    private UserControl.JButtonCustom btnCancel;
     private UserControl.GradientButtom btnDeleteMenu;
     private UserControl.GradientButtom btnRepairMenu;
+    private UserControl.JButtonCustom btnSave;
+    private UserControl.JButtonCustom btnchosseImage;
+    private UserControl.JComboboxCustom cbbCategory;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private UserControl.TableDark table_Menu_Management;
+    private UserControl.TextField txtNameMenu;
     private UserControl.TextFieldAnimation txtSearch;
+    private UserControl.TextField txtUnitPrice;
     // End of variables declaration//GEN-END:variables
 }

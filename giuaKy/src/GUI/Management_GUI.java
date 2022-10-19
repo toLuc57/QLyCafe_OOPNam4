@@ -1,16 +1,10 @@
 package GUI;
-
-import UserControl.ExcuteLoad;
 import UserControl.MessageDialog;
-import UserControl.Notification;
 import UserControl.loading;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,10 +15,11 @@ public class Management_GUI extends javax.swing.JFrame {
     loading l = new loading();
     public Management_GUI() {
         initComponents();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         menu.addEvent((int index) -> {
             switch (index) {
                 case 0 ->
-                    showForm(new Management_Menu_GUI(this));
+                    showForm(new Management_Menu_GUI());
                 case 1 ->
                     showForm(new Management_Staff_GUI());
                 case 2 ->
