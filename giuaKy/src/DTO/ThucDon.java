@@ -9,6 +9,8 @@ import Util.dbUtil;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -65,7 +67,33 @@ public class ThucDon {
         return this.DonGia;
     }
  
-
+  public static boolean DeleteThucDon(int maTD){
+        boolean check = false;
+        Connection conn = dbUtil.getConnection();
+          String sql = "Delete From ThucDon Where IDThucDon = "+maTD;
+        try{     
+                Statement st = conn.createStatement();
+                st.executeUpdate(sql);
+                System.err.println("Xoa thanh cong");
+                check = true;
+                dbUtil.CloseConnection(conn);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(new JFrame(), "lỗi xóa món");
+        }
+        return check;
+    }
+   public static int InsertThucDon(String TenMon, String Loai, int GiaTien){
+        int insert = 0;
+         Connection conn = dbUtil.getConnection();
+        String sql = "Insert into ThucDon (TenThucDon, Loai, GiaTien, HinhAnh) values ('"+TenMon+"', '"+Loai+"', '"+GiaTien+"')";
+        try{
+            Statement st = conn.createStatement();
+            insert = st.executeUpdate(sql);
+            dbUtil.CloseConnection(conn);
+        }catch(SQLException ex){
+        }
+        return insert;
+    }
     
 
 }

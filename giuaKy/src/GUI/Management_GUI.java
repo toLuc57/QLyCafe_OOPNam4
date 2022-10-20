@@ -23,23 +23,31 @@ public class Management_GUI extends javax.swing.JFrame {
         initComponents();
         menu.addEvent((int index) -> {
             switch (index) {
-                case 0 ->
+                case 0:
                     showForm(new Management_Menu_GUI(this));
-                case 1 ->
+                    break;
+                case 1:
                     showForm(new Management_Staff_GUI());
-                case 2 ->
+                      break;
+                case 2:
                     showForm(new Management_Product_GUI());
-                case 3 ->
+                      break;
+                case 3:
                     showForm(new Management_Import_GUI());
-                case 4 ->
+                      break;
+                case 4:
                     showForm(new Management_Bill_GUI());
-                case 5 ->
+                      break;
+                case 5:
                     showForm(new Management_Tables_GUI());
-                case 6 ->
+                      break;
+                case 6:
                     showForm(new Management_extrafee_GUI());
-                case 7 ->
+                      break;
+                case 7:
                     showForm(new Management_Statistical_GUI());
-                default -> {
+                      break;
+                default: {
                 }
             }
         });
@@ -152,26 +160,27 @@ public class Management_GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
-        MessageDialog m = new MessageDialog(this);
-        m.showMessage("Khoan đã!", "Bạn có chắc chắn muốn đóng giao diện quản lý không?");
-        if (m.getMessageType() == MessageDialog.MessageType.OK) {
-            Thread load = new Thread(() -> {
-                l.setVisible(true);
-            });
-            Thread execute = new Thread(() -> {
-                Home_GUI h = new Home_GUI();
-                h.setVisible(true);
-            });
-            Thread check = new Thread(() -> {
-                if (execute.getState() == Thread.State.TERMINATED) {
-                    this.dispose();
-                    l.setVisible(false);
-                }
-            });
-            load.start();
-            execute.start();
-            check.start();
-        }
+this.dispose();
+//        MessageDialog m = new MessageDialog(this);
+//        m.showMessage("Khoan đã!", "Bạn có chắc chắn muốn đóng giao diện quản lý không?");
+//        if (m.getMessageType() == MessageDialog.MessageType.OK) {
+//            Thread load = new Thread(() -> {
+//                l.setVisible(true);
+//            });
+//            Thread execute = new Thread(() -> {
+//                Home_GUI h = new Home_GUI();
+//                h.setVisible(true);
+//            });
+//            Thread check = new Thread(() -> {
+//                if (execute.getState() == Thread.State.TERMINATED) {
+//                    this.dispose();
+//                    l.setVisible(false);
+//                }
+//            });
+//            load.start();
+//            execute.start();
+//            check.start();
+//        }
     }//GEN-LAST:event_btnCloseMouseClicked
 
     private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseEntered

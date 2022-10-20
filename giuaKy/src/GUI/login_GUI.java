@@ -255,9 +255,6 @@ public class login_GUI extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Đăng nhập thành công với tài khoản: " + txtUsername.getText());
 
                 }   
-              
-
-           
 
             } else {
                 JOptionPane.showMessageDialog(this, "Mật khẩu không chính xác");

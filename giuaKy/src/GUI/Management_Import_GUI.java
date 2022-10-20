@@ -142,10 +142,7 @@ public class Management_Import_GUI extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchImportActionPerformed
 
     private void txtSearchImportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSearchImportMouseClicked
-        if(txtSearchImport.isAnimState()){
-            JOptionPane j = new JOptionPane("hello");
-            j.show();
-        }
+       
         
     }//GEN-LAST:event_txtSearchImportMouseClicked
 

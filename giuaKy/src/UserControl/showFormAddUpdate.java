@@ -14,7 +14,7 @@ public class showFormAddUpdate {
     int margin = 2;
     public showFormAddUpdate(JFrame fram, JPanel pan){
         dialog = new JDialog(fram);
-        dialog.setUndecorated(true);
+        dialog.setUndecorated(false);
         dialog.setFocusableWindowState(false);
         dialog.add(pan);
         dialog.setSize(pan.getPreferredSize());

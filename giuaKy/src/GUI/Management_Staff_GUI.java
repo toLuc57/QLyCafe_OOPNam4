@@ -6,6 +6,7 @@ package GUI;
 
 import DTO.NhanVien;
 import UserControl.TextFieldAnimation;
+import UserControl.showFormAddUpdate;
 import Util.dbUtil;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,6 +33,8 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
     public Management_Staff_GUI() {
         initComponents();
         LoadDBNhanVien();
+     
+   
       
          
         
@@ -43,12 +47,12 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
             Connection conn = dbUtil.getConnection();
             String sql = "select * from NhanVien where HoTen like '%" + txtSearchStaff.getText() + "%'"+"or MaNhanVien like '%" + txtSearchStaff.getText() + "%'";
             ResultSet rs = dbUtil.ThucThiSelect(sql);
-            DefaultTableModel tbModel = (DefaultTableModel) tableMenu.getModel();
+            DefaultTableModel tbModel = (DefaultTableModel) table_Staff_Management.getModel();
             Object[] obj = new Object[8];
             try {
                 while (rs.next()) {
                     
-                    obj[0] = tableMenu.getRowCount() + 1;
+                    obj[0] = table_Staff_Management.getRowCount() + 1;
                     obj[1] = rs.getInt("MaNhanVien");
                     obj[2] = rs.getString("HoTen");
                     obj[3] = rs.getString("NgaySinh");
@@ -81,7 +85,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         btnDeleteStaff = new UserControl.GradientButtom();
         Bottom = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tableMenu = new UserControl.TableDark();
+        table_Staff_Management = new UserControl.TableDark();
 
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
@@ -107,6 +111,16 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         btnAddStaff.setColor1(new java.awt.Color(51, 0, 153));
         btnAddStaff.setColor2(new java.awt.Color(102, 0, 102));
         btnAddStaff.setFont(new java.awt.Font("UTM Alexander", 0, 12)); // NOI18N
+        btnAddStaff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddStaffMouseClicked(evt);
+            }
+        });
+        btnAddStaff.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAddStaffKeyPressed(evt);
+            }
+        });
 
         btnDeleteStaff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_delete_30px.png"))); // NOI18N
         btnDeleteStaff.setText("Xóa");
@@ -156,7 +170,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
 
         jScrollPane2.setBackground(new java.awt.Color(51, 51, 51));
 
-        tableMenu.setModel(new javax.swing.table.DefaultTableModel(
+        table_Staff_Management.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -172,16 +186,16 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tableMenu.setGridColor(new java.awt.Color(51, 51, 51));
-        tableMenu.setRowHeight(50);
-        tableMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+        table_Staff_Management.setGridColor(new java.awt.Color(51, 51, 51));
+        table_Staff_Management.setRowHeight(50);
+        table_Staff_Management.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableMenuMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tableMenu);
-        if (tableMenu.getColumnModel().getColumnCount() > 0) {
-            tableMenu.getColumnModel().getColumn(0).setResizable(false);
+        jScrollPane2.setViewportView(table_Staff_Management);
+        if (table_Staff_Management.getColumnModel().getColumnCount() > 0) {
+            table_Staff_Management.getColumnModel().getColumn(0).setResizable(false);
         }
 
         Bottom.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -196,14 +210,14 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchStaffActionPerformed
 
         private void clear_Table() {
-        DefaultTableModel tbModel = (DefaultTableModel) tableMenu.getModel();
+        DefaultTableModel tbModel = (DefaultTableModel) table_Staff_Management.getModel();
         tbModel.setNumRows(0);
     }
     private void tableMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMenuMouseClicked
-       int x = tableMenu.getSelectedRow();
+       int x = table_Staff_Management.getSelectedRow();
        if(x>=0){
            
-           nv.setMaNhanVien(String.valueOf(tableMenu.getValueAt(x, 1)));
+           nv.setMaNhanVien(String.valueOf(table_Staff_Management.getValueAt(x, 1)));
            System.err.println(nv.getMaNhanVien());
        
        }
@@ -218,6 +232,14 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
       
     }//GEN-LAST:event_btnDeleteStaffActionPerformed
 
+    private void btnAddStaffKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAddStaffKeyPressed
+      
+    }//GEN-LAST:event_btnAddStaffKeyPressed
+
+    private void btnAddStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddStaffMouseClicked
+      
+    }//GEN-LAST:event_btnAddStaffMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Bottom;
@@ -226,7 +248,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
     private UserControl.GradientButtom btnDeleteStaff;
     private UserControl.GradientButtom btnUpdateStaff;
     private javax.swing.JScrollPane jScrollPane2;
-    private UserControl.TableDark tableMenu;
+    private UserControl.TableDark table_Staff_Management;
     private UserControl.TextFieldAnimation txtSearchStaff;
     // End of variables declaration//GEN-END:variables
 }

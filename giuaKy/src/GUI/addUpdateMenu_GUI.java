@@ -4,15 +4,17 @@
  */
 package GUI;
 
+import DTO.ThucDon;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-/**
- *
- * @author trant
- */
+
 public class addUpdateMenu_GUI extends javax.swing.JPanel {
+    
+
+
+
     public addUpdateMenu_GUI() {
         initComponents();
     }
@@ -40,13 +42,13 @@ public class addUpdateMenu_GUI extends javax.swing.JPanel {
         boxImage = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txtPrice = new UserControl.TextField();
-        txtNameMenu = new UserControl.TextField();
         cbbCat = new UserControl.JComboboxCustom();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnCancle = new UserControl.GradientButtom();
         btnConfirm = new UserControl.GradientButtom();
+        txtNameMenu = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(new javax.swing.border.MatteBorder(null));
@@ -109,8 +111,6 @@ public class addUpdateMenu_GUI extends javax.swing.JPanel {
         txtPrice.setText("0.00 VND");
         txtPrice.setLabelText("Nhập đơn giá");
 
-        txtNameMenu.setLabelText("Tên món");
-
         cbbCat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Thức uống", "Đồ ăn" }));
         cbbCat.setSelectedIndex(-1);
         cbbCat.setLabeText("Chọn phân loại");
@@ -136,6 +136,11 @@ public class addUpdateMenu_GUI extends javax.swing.JPanel {
         btnConfirm.setColor1(new java.awt.Color(0, 0, 153));
         btnConfirm.setColor2(new java.awt.Color(102, 0, 102));
         btnConfirm.setFont(new java.awt.Font("UTM Alexander", 0, 14)); // NOI18N
+        btnConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -147,7 +152,7 @@ public class addUpdateMenu_GUI extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNameMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtNameMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(cbbCat, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -170,8 +175,8 @@ public class addUpdateMenu_GUI extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNameMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNameMenu))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cbbCat, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -191,8 +196,12 @@ public class addUpdateMenu_GUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancleMouseClicked
-        
+        this.setVisible(false);
     }//GEN-LAST:event_btnCancleMouseClicked
+
+    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
+     
+    }//GEN-LAST:event_btnConfirmActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -209,7 +218,7 @@ public class addUpdateMenu_GUI extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private UserControl.TextField txtNameMenu;
+    private javax.swing.JTextField txtNameMenu;
     private UserControl.TextField txtPrice;
     // End of variables declaration//GEN-END:variables
 }
