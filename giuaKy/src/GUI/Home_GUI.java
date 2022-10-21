@@ -3,17 +3,10 @@ package GUI;
 import DTO.Ban;
 import DTO.HoaDon;
 import DTO.NhanVien;
-import DTO.ThucDon;
-import UserControl.JButtonCustom;
 import UserControl.tableObject;
 import UserControl.WrapLayout;
 import Util.dbUtil;
-import static Util.dbUtil.conn;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
-import com.sun.org.apache.xerces.internal.xs.ItemPSVI;
 import java.awt.Color;
-import java.awt.Frame;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -614,14 +607,10 @@ public class Home_GUI extends javax.swing.JFrame {
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
 
-        try {
-            int select = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn đăng xuất không?");
-            if (select == 0) {
-                this.dispose();
-                new login_GUI().setVisible(false);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Home_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        int select = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn đăng xuất không?");
+        if (select == 0) {
+            this.dispose();
+            new login_GUI().setVisible(false);
         }
     }//GEN-LAST:event_btnCloseMouseClicked
 

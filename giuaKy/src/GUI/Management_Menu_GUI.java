@@ -97,11 +97,11 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
                 .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAddMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
+                .addGap(51, 51, 51)
                 .addComponent(btnRepairMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
+                .addGap(57, 57, 57)
                 .addComponent(btnDeleteMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75))
+                .addGap(101, 101, 101))
         );
         TopLayout.setVerticalGroup(
             TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,11 +128,11 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
 
             },
             new String [] {
-                " ", " ", "ID", "Hình ảnh", "Tên món", "Loại", "Giá tiền"
+                "ID", "Hình ảnh", "Tên món", "Loại", "Giá tiền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -144,8 +144,6 @@ public class Management_Menu_GUI extends javax.swing.JPanel {
         jScrollPane2.setViewportView(table_Menu_Management);
         if (table_Menu_Management.getColumnModel().getColumnCount() > 0) {
             table_Menu_Management.getColumnModel().getColumn(0).setMaxWidth(50);
-            table_Menu_Management.getColumnModel().getColumn(1).setMaxWidth(50);
-            table_Menu_Management.getColumnModel().getColumn(2).setResizable(false);
         }
 
         Bottom.add(jScrollPane2, java.awt.BorderLayout.CENTER);

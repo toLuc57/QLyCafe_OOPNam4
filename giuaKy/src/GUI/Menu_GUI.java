@@ -1,24 +1,17 @@
 package GUI;
 
-import DTO.Ban;
 import DTO.HoaDon;
 import DTO.NhanVien;
 import DTO.ThucDon;
 import DTO.addMenu;
 import UserControl.MessagerCustom.MessageDialog;
-import UserControl.Spinner;
 import UserControl.WrapLayout;
 import UserControl.menuObject;
 import Util.dbUtil;
 import static Util.dbUtil.conn;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -28,15 +21,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.event.MouseInputListener;
 import javax.swing.table.DefaultTableModel;
-import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
-import javafx.geometry.HPos;
-import javax.swing.Action;
-import sun.security.util.Length;
 
 public class Menu_GUI extends javax.swing.JFrame {
 
@@ -82,7 +69,7 @@ public class Menu_GUI extends javax.swing.JFrame {
         pnlShowMenu.setLayout(new WrapLayout(WrapLayout.LEFT, 5, 5));
         for (ThucDon item : l) {
             menuObject t = new menuObject();
-            t.setMaMon(item.GetMaMon());
+            t.setMamon(item.GetMaMon());
             t.setNameMenu(item.GetTenMon());
             t.setSrcImage("/Images/bacxiu.jpg");
             t.setGia(String.valueOf(item.GetDonGia()));
@@ -94,7 +81,7 @@ public class Menu_GUI extends javax.swing.JFrame {
             //--------------Nut Them Mon----------
             s.addActionListener((ActionEvent e) -> {
                 if (t.getSoLuongMon() > 0) {
-                     addMenu m = new addMenu(item.GetTenMon(), Integer.parseInt(t.getMaMon()), t.getSoLuongMon(), item.GetDonGia());
+                     addMenu m = new addMenu(item.GetTenMon(), Integer.parseInt(t.getMamon()), t.getSoLuongMon(), item.GetDonGia());
                     if (listmenu.isEmpty()) {
                         listmenu.add(m);
                         cloneLoadTable();

@@ -7,6 +7,7 @@ package UserControl;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 /**
@@ -17,6 +18,16 @@ public class menuObject extends javax.swing.JPanel {
     private String srcImage;
     private String gia;
     private String nameMenu;
+    private String mamon;
+    private int Soluongmon;
+
+    public String getMamon() {
+        return mamon;
+    }
+
+    public void setMamon(String mamon) {
+        this.mamon = mamon;
+    }
     public menuObject() {
         initComponents();
     }   
@@ -46,7 +57,17 @@ public class menuObject extends javax.swing.JPanel {
     public void setNameMenu(String nameMenu) {
         this.txtNameMenu.setText(nameMenu);
     }
-    
+
+    public int getSoLuongMon() {
+        return Soluongmon;
+    }
+
+    public void setSoLuongMon(int Soluongmon) {
+        this.Soluongmon = Soluongmon;
+    }
+    public JButton getBtnAdd(){
+        return btnAddtoBill;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
