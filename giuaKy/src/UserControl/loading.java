@@ -3,6 +3,8 @@ package UserControl;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -14,12 +16,20 @@ public class loading extends javax.swing.JFrame {
     /**
      * Creates new form loading
      */
-    public loading() {
+    public loading(){
         initComponents();
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x1 = (int) ((dimension.getWidth() - this.getWidth()) / 2);
         int y1 = (int) ((dimension.getHeight() - this.getHeight()) / 2);
         this.setLocation(x1, y1);
+        for(int i=1;i>=100;i++){
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(loading.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        this.dispose();
     }
 
     /**
