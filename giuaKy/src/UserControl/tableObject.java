@@ -17,13 +17,13 @@ import javax.swing.border.LineBorder;
  */
 public class tableObject extends javax.swing.JPanel {
 
-    private static final String CO_KHACH = "Có khách";
-    private static final String TRONG = "Trống";
-    private static final String DAT = "Đặt trước";
+    private static final String CO_KHACH = "1";
+    private static final String TRONG = "0";
+    private static final String DAT = "2";
     private static final String SRC_CO_KHACH = "/Images/icons8_table_top_view_100px_1.png";
     private static final String SRC_TRONG = "/Images/icons8_table_top_view_100px.png";
     private static final String SRC_DAT = "/Images/icons8_table_top_view_100px_2.png";
-    private String IDTable;
+    private int IDTable;
     private int slot;
     private int freeSlot;
     public tableObject() {
@@ -32,7 +32,8 @@ public class tableObject extends javax.swing.JPanel {
         setFocusable(true);
     }
 
-    public String getIDTable() {
+    
+    public int getIDTable() {
         return IDTable;
     }
     private void setImage(String src){
@@ -44,24 +45,26 @@ public class tableObject extends javax.swing.JPanel {
     public void setStatusTable(String status){
         if(status.equals(TRONG)){
             setImage(SRC_TRONG);
-            txtStatusTable.setText(TRONG);
+            txtStatusTable.setText("Trống");
             txtStatusTable.setForeground(Color.GREEN);
         }else{
             if(status.equals(CO_KHACH)){
                 setImage(SRC_CO_KHACH);
-                txtStatusTable.setText(CO_KHACH);
+                txtStatusTable.setText("Có Khách");
                 txtStatusTable.setForeground(Color.YELLOW);
             }else{
                 setImage(SRC_DAT);
-                txtStatusTable.setText(DAT);
+                txtStatusTable.setText("Đã đặt");
                 txtStatusTable.setForeground(Color.RED);
             }
         }
     }
-    public void setIDTable(String IDTable) {
+
+    public void setIDTable(int IDTable) {
         this.IDTable = IDTable;
-        txtIdTable.setText(IDTable);
+        txtIdTable.setText(String.valueOf(IDTable));
     }
+   
 
     public int getSlot() {
         return slot;
@@ -79,6 +82,7 @@ public class tableObject extends javax.swing.JPanel {
     public void setFreeSlot(int customer) {
         this.freeSlot = this.slot - customer;
     }
+
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

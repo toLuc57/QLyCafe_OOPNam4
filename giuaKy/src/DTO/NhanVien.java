@@ -4,6 +4,15 @@
  */
 package DTO;
 
+import Util.dbUtil;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Calendar;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author lenha
@@ -85,5 +94,33 @@ public class NhanVien {
 
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+     public static int InsertNhanVien(int maNV, String hoTen, String ngaySinh, String diaChi, String SDT, String Matkhau, int isAdmin ){
+        int insert = 0;
+        Connection conn = dbUtil.getConnection();
+        String sql = "Insert into NhanVien (MaNhanVien, HoTen, NgaySinh, DiaChi, SDT, Matkhau, isAdmin) values ('"+maNV+"','"+hoTen+"', '"+ngaySinh+"','"+diaChi+"','"+SDT+"','"+Matkhau+"','"+isAdmin+"')";
+        try{
+            Statement st = conn.createStatement();
+            insert = st.executeUpdate(sql);
+            dbUtil.CloseConnection(conn);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(new JFrame(), "Loi Insert Nhan Vien");
+        }
+        return insert;
+    }
+      public static boolean DeleteNhanVien(int MaNV){
+        boolean check = false;
+        Connection conn = dbUtil.getConnection();
+          String sql = "Delete From NhanVien Where MaNhanVien = "+MaNV;
+        try{     
+                Statement st = conn.createStatement();
+                st.executeUpdate(sql);
+                System.err.println("Xoa thanh cong");
+                check = true;
+                dbUtil.CloseConnection(conn);
+        }catch(SQLException ex){
+            
+        }
+        return check;
     }
 }

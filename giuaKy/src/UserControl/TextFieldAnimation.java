@@ -1,5 +1,5 @@
-package UserControl;
 
+package UserControl;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -11,14 +11,13 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -27,13 +26,8 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-/**
- *
- * @author tranbathien
- */
-public class TextFieldAnimation extends JTextField {
-
-    public String getHintText() {
+public class TextFieldAnimation extends JTextField{
+     public String getHintText() {
         return hintText;
     }
 
@@ -61,7 +55,6 @@ public class TextFieldAnimation extends JTextField {
     private EventCallBack callBack;
     private Thread thread;
     private final Animator animator;
-    private boolean animState = false;
 
     public TextFieldAnimation() {
         super.setBackground(new Color(255, 255, 255, 0)); //  Remove background
@@ -89,27 +82,36 @@ public class TextFieldAnimation extends JTextField {
             public void mousePressed(MouseEvent me) {
                 if (SwingUtilities.isLeftMouseButton(me)) {
                     if (checkMouseOver(me.getPoint())) {
-                        execute();
+                        if (!animator.isRunning()) {
+                            if (show) {
+                                setEditable(true);
+                                show = false;
+                                location = 0;
+                                animator.start();
+                                if (thread != null) {
+                                    thread.interrupt();
+                                }
+                                if (event != null) {
+                                    event.onCancel();
+                                }
+                            } else {
+                                setEditable(false);
+                                show = true;
+                                location = getWidth();
+                                animator.start();
+                                if (event != null) {
+                                    thread = new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            event.onPressed(callBack);
+                                        }
+                                    });
+                                    thread.start();
+                                }
+                            }
+                        }
                     }
                 }
-            }
-        });
-        addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    execute();
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
             }
         });
         callBack = new EventCallBack() {
@@ -119,7 +121,6 @@ public class TextFieldAnimation extends JTextField {
                 show = false;
                 location = 0;
                 animator.start();
-                animState = false;
             }
         };
         TimingTarget target = new TimingTargetAdapter() {
@@ -138,40 +139,6 @@ public class TextFieldAnimation extends JTextField {
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
         animator.setDeceleration(0.5f);
-    }
-
-    private void execute() {
-        if (!animator.isRunning()) {
-            if (show) {
-                setEditable(true);
-                show = false;
-                location = 0;
-                animator.start();
-                animState = false;
-                if (thread != null) {
-                    thread.interrupt();
-                }
-                if (event != null) {
-                    event.onCancel();
-                }
-            } else {
-                setEditable(false);
-                show = true;
-                location = getWidth();
-                animator.start();
-                animState = true;
-                if (event != null) {
-                    thread = new Thread(() -> {
-                        event.onPressed(callBack);
-                    });
-                    thread.start();
-                }
-            }
-        }
-    }
-
-    public boolean isAnimState() {
-        return animState;
     }
 
     @Override
