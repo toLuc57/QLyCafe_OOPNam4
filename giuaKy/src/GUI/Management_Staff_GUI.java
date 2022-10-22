@@ -22,7 +22,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         txtAddress.setEditable(state);
         txtEmail.setEditable(state);
         txtPassword.setEditable(state);
-        txtSDT.setEditable(state);
+        txtStaffCode.setEditable(state);
         cbbChooseGender.setEnabled(state);
         cbbLevel.setEnabled(state);
         btnChooseImage.setEnabled(state);
@@ -32,7 +32,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         txtAddress.setText("");
         txtEmail.setText("");
         txtPassword.setText("");
-        txtSDT.setText("");
+        txtStaffCode.setText("");
         cbbChooseGender.setSelectedItem(-1);
         cbbLevel.setSelectedItem(-1);
     }
@@ -55,7 +55,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         btnChooseImage = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         txtName = new UserControl.TextField();
-        txtSDT = new UserControl.TextField();
+        txtStaffCode = new UserControl.TextField();
         txtDatebirth = new UserControl.TextField();
         cbbChooseGender = new UserControl.JComboboxCustom();
         txtPassword = new UserControl.TextField();
@@ -64,6 +64,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         txtAddress = new UserControl.TextField();
         btnSave = new UserControl.JButtonCustom();
         btnCancel = new UserControl.JButtonCustom();
+        txtSDT1 = new UserControl.TextField();
 
         datetimepicker.setTextRefernce(txtDatebirth);
 
@@ -210,7 +211,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
 
         txtName.setLabelText("Tên nhân viên");
 
-        txtSDT.setLabelText("Số điện thoại");
+        txtStaffCode.setLabelText("Mã nhân viên");
 
         txtDatebirth.setLabelText("Ngày sinh");
 
@@ -255,6 +256,8 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
             }
         });
 
+        txtSDT1.setLabelText("Số điện thoại");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -271,8 +274,10 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(txtStaffCode, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtSDT1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -288,16 +293,18 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtDatebirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbbChooseGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(cbbLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbbLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtStaffCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtSDT1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -391,7 +398,8 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
     private UserControl.TextField txtEmail;
     private UserControl.TextField txtName;
     private UserControl.TextField txtPassword;
-    private UserControl.TextField txtSDT;
+    private UserControl.TextField txtSDT1;
     private UserControl.TextFieldAnimation txtSearchStaff;
+    private UserControl.TextField txtStaffCode;
     // End of variables declaration//GEN-END:variables
 }

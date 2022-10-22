@@ -30,7 +30,6 @@ public class Home_GUI extends javax.swing.JFrame {
     double totalmoney = 0;
     public Home_GUI() {
         initComponents();
-
         loadTable();
         lbMaNV.setText(nv.getMaNhanVien());
 

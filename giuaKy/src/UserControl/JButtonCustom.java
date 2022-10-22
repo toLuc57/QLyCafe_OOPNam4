@@ -1,6 +1,7 @@
 
 package UserControl;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -67,6 +68,7 @@ public class JButtonCustom extends JButton{
             @Override
             public void mousePressed(MouseEvent me) {
                 animationPress.start(currentStyle.background, getStyle().backgroundPress);
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
 
             @Override

@@ -381,8 +381,10 @@
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
-                                          <Component id="txtSDT" min="-2" pref="261" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="txtStaffCode" min="-2" pref="204" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="txtSDT1" min="-2" pref="189" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="txtPassword" max="32767" attributes="0"/>
                                       </Group>
                                       <Component id="txtEmail" max="32767" attributes="0"/>
@@ -405,10 +407,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtPassword" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtSDT" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="txtPassword" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="txtName" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -416,7 +415,13 @@
                                       <Component id="cbbChooseGender" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="cbbLevel" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="cbbLevel" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                                          <Component id="txtStaffCode" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtSDT1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -445,9 +450,9 @@
                     <Property name="labelText" type="java.lang.String" value="T&#xea;n nh&#xe2;n vi&#xea;n"/>
                   </Properties>
                 </Component>
-                <Component class="UserControl.TextField" name="txtSDT">
+                <Component class="UserControl.TextField" name="txtStaffCode">
                   <Properties>
-                    <Property name="labelText" type="java.lang.String" value="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
+                    <Property name="labelText" type="java.lang.String" value="M&#xe3; nh&#xe2;n vi&#xea;n"/>
                   </Properties>
                 </Component>
                 <Component class="UserControl.TextField" name="txtDatebirth">
@@ -529,6 +534,11 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCancelMouseClicked"/>
                     <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCancelMouseEntered"/>
                   </Events>
+                </Component>
+                <Component class="UserControl.TextField" name="txtSDT1">
+                  <Properties>
+                    <Property name="labelText" type="java.lang.String" value="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

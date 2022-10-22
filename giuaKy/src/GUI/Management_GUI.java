@@ -3,6 +3,8 @@ import UserControl.MessageDialog;
 import UserControl.loading;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -11,8 +13,6 @@ import javax.swing.JFrame;
  * @author tranbathien
  */
 public class Management_GUI extends javax.swing.JFrame {
-
-    loading l = new loading();
     public Management_GUI() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -150,22 +150,10 @@ public class Management_GUI extends javax.swing.JFrame {
         MessageDialog m = new MessageDialog(this);
         m.showMessage("Khoan đã!", "Bạn có chắc chắn muốn đóng giao diện quản lý không?");
         if (m.getMessageType() == MessageDialog.MessageType.OK) {
-            Thread load = new Thread(() -> {
-                l.setVisible(true);
-            });
-            Thread execute = new Thread(() -> {
-                Home_GUI h = new Home_GUI();
-                h.setVisible(true);
-            });
-            Thread check = new Thread(() -> {
-                if (execute.getState() == Thread.State.TERMINATED) {
-                    this.dispose();
-                    l.setVisible(false);
-                }
-            });
-            load.start();
-            execute.start();
-            check.start();
+            this.setVisible(false);
+            this.dispose();
+            Home_GUI h = new Home_GUI();
+            h.setVisible(true);
         }
     }//GEN-LAST:event_btnCloseMouseClicked
 

@@ -26,15 +26,18 @@ public class Management_Bill_GUI extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        date = new DateTimePicker.DateChooser();
         Top = new javax.swing.JPanel();
         btnExportList = new UserControl.GradientButtom();
         cbbFilterStaff = new UserControl.JComboboxCustom();
         cbbFilterIdTable = new UserControl.JComboboxCustom();
-        cbbFilterTimeBill = new UserControl.JComboboxCustom();
         btnFilter = new UserControl.GradientButtom();
+        txtDate = new UserControl.TextField();
         Bottom = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_Bill_Management = new UserControl.TableDark();
+
+        date.setTextRefernce(txtDate);
 
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
@@ -49,22 +52,19 @@ public class Management_Bill_GUI extends javax.swing.JPanel {
         btnExportList.setFont(new java.awt.Font("UTM Alexander", 0, 12)); // NOI18N
 
         cbbFilterStaff.setBackground(new java.awt.Color(254, 201, 149));
-        cbbFilterStaff.setSelectedIndex(-1);
         cbbFilterStaff.setLabeText("Nhân viên lập");
 
         cbbFilterIdTable.setBackground(new java.awt.Color(254, 201, 149));
-        cbbFilterIdTable.setSelectedIndex(-1);
         cbbFilterIdTable.setLabeText("Số bàn");
-
-        cbbFilterTimeBill.setBackground(new java.awt.Color(254, 201, 149));
-        cbbFilterTimeBill.setSelectedIndex(-1);
-        cbbFilterTimeBill.setLabeText("Ngày lập hóa đơn");
 
         btnFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_filter_30px.png"))); // NOI18N
         btnFilter.setText("Lọc");
         btnFilter.setColor1(new java.awt.Color(102, 102, 255));
         btnFilter.setColor2(new java.awt.Color(153, 0, 255));
         btnFilter.setFont(new java.awt.Font("UTM Alexander", 0, 12)); // NOI18N
+
+        txtDate.setBackground(new java.awt.Color(254, 201, 149));
+        txtDate.setLabelText("Thời gian xuất hóa đơn");
 
         javax.swing.GroupLayout TopLayout = new javax.swing.GroupLayout(Top);
         Top.setLayout(TopLayout);
@@ -74,7 +74,7 @@ public class Management_Bill_GUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(cbbFilterStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(cbbFilterTimeBill, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(cbbFilterIdTable, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -87,14 +87,15 @@ public class Management_Bill_GUI extends javax.swing.JPanel {
             TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TopLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbbFilterIdTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnExportList, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cbbFilterStaff, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbbFilterTimeBill, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbbFilterIdTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnExportList, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbbFilterStaff, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         add(Top, java.awt.BorderLayout.PAGE_START);
@@ -137,8 +138,9 @@ public class Management_Bill_GUI extends javax.swing.JPanel {
     private UserControl.GradientButtom btnFilter;
     private UserControl.JComboboxCustom cbbFilterIdTable;
     private UserControl.JComboboxCustom cbbFilterStaff;
-    private UserControl.JComboboxCustom cbbFilterTimeBill;
+    private DateTimePicker.DateChooser date;
     private javax.swing.JScrollPane jScrollPane2;
     private UserControl.TableDark table_Bill_Management;
+    private UserControl.TextField txtDate;
     // End of variables declaration//GEN-END:variables
 }
