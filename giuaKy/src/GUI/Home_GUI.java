@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -31,8 +32,6 @@ public class Home_GUI extends javax.swing.JFrame {
     public Home_GUI() {
         initComponents();
         loadTable();
-        lbMaNV.setText(nv.getMaNhanVien());
-
     }
     // ----------------Load Table---------------------
 
@@ -251,7 +250,6 @@ public class Home_GUI extends javax.swing.JFrame {
         btnAcount = new javax.swing.JLabel();
         btnManagement = new javax.swing.JLabel();
         btnClose = new javax.swing.JLabel();
-        lbMaNV = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         btnSwitch = new UserControl.JButtonCustom();
@@ -329,8 +327,6 @@ public class Home_GUI extends javax.swing.JFrame {
             }
         });
 
-        lbMaNV.setText("Mã nhân viên");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -340,23 +336,20 @@ public class Home_GUI extends javax.swing.JFrame {
                 .addComponent(btnManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAcount, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(177, 177, 177)
-                .addComponent(lbMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnClose))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAcount)
-                    .addComponent(btnManagement)
-                    .addComponent(lbMaNV))
+                    .addComponent(btnManagement))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel4.setOpaque(false);
@@ -635,6 +628,8 @@ public class Home_GUI extends javax.swing.JFrame {
 
     private void btnAcountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcountMouseClicked
         btnAcount.setForeground(Color.RED);
+        Infomation info = new Infomation();
+        info.setVisible(true);
     }//GEN-LAST:event_btnAcountMouseClicked
 
     private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
@@ -695,7 +690,6 @@ public class Home_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpnMain;
-    private javax.swing.JLabel lbMaNV;
     private javax.swing.JTextField lblSurcharge;
     private javax.swing.JLabel lblTableID;
     private javax.swing.JLabel lblTotalMoney;
