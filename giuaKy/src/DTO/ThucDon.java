@@ -74,7 +74,7 @@ public class ThucDon {
         try{     
                 Statement st = conn.createStatement();
                 st.executeUpdate(sql);
-                System.err.println("Xoa thanh cong");
+                 JOptionPane.showMessageDialog(new JFrame(), "Xóa món thành công");
                 check = true;
                 dbUtil.CloseConnection(conn);
         }catch(SQLException ex){
@@ -85,15 +85,31 @@ public class ThucDon {
    public static int InsertThucDon(String TenMon, String Loai, int GiaTien){
         int insert = 0;
          Connection conn = dbUtil.getConnection();
-        String sql = "Insert into ThucDon (TenThucDon, Loai, GiaTien, HinhAnh) values ('"+TenMon+"', '"+Loai+"', '"+GiaTien+"')";
+        String sql = "Insert into ThucDon (TenThucDon, Loai, GiaTien, HinhAnh) values (N'"+TenMon+"', N'"+Loai+"', "+GiaTien+",null)";
         try{
             Statement st = conn.createStatement();
             insert = st.executeUpdate(sql);
+            JOptionPane.showMessageDialog(new JFrame(), "Thêm món thành công");
             dbUtil.CloseConnection(conn);
         }catch(SQLException ex){
+            JOptionPane.showMessageDialog(new JFrame(), "Thêm món không thành công :(");
         }
         return insert;
     }
     
+   public static int EditThucDon(int maMon,String TenMon, String Loai, int GiaTien){
+        int insert = 0;
+         Connection conn = dbUtil.getConnection();
+        String sql = "Update ThucDon set TenThucDon= N'"+TenMon+"', Loai=N'"+Loai+"', GiaTien= "+GiaTien+" where IDThucDon ="+maMon;
+        try{
+            Statement st = conn.createStatement();
+            insert = st.executeUpdate(sql);
+            JOptionPane.showMessageDialog(new JFrame(), "Sửa món thành công");
+            dbUtil.CloseConnection(conn);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(new JFrame(), "Sửa món không thành công :(");
+        }
+        return insert;
+    }
 
 }

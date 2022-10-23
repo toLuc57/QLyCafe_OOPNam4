@@ -1,16 +1,10 @@
 package GUI;
-
-import UserControl.ExcuteLoad;
 import UserControl.MessageDialog;
-import UserControl.Notification;
 import UserControl.loading;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,33 +15,34 @@ public class Management_GUI extends javax.swing.JFrame {
     loading l = new loading();
     public Management_GUI() {
         initComponents();
+        setExtendedState(JFrame.NORMAL);
         menu.addEvent((int index) -> {
             switch (index) {
-                case 0:
-                    showForm(new Management_Menu_GUI(this));
+                case 0 :
+                    showForm(new Management_Menu_GUI());
                     break;
-                case 1:
+                case 1 :
                     showForm(new Management_Staff_GUI());
-                      break;
-                case 2:
+                        break;
+                case 2 :
                     showForm(new Management_Product_GUI());
-                      break;
-                case 3:
+                        break;
+                case 3 :
                     showForm(new Management_Import_GUI());
-                      break;
-                case 4:
+                        break;
+                case 4 :
                     showForm(new Management_Bill_GUI());
-                      break;
-                case 5:
+                        break;
+                case 5 :
                     showForm(new Management_Tables_GUI());
-                      break;
-                case 6:
+                        break;
+                case 6 :
                     showForm(new Management_extrafee_GUI());
-                      break;
-                case 7:
+                        break;
+                case 7 :
                     showForm(new Management_Statistical_GUI());
-                      break;
-                default: {
+                        break;
+                default : {
                 }
             }
         });
@@ -160,7 +155,6 @@ public class Management_GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
-this.dispose();
 //        MessageDialog m = new MessageDialog(this);
 //        m.showMessage("Khoan đã!", "Bạn có chắc chắn muốn đóng giao diện quản lý không?");
 //        if (m.getMessageType() == MessageDialog.MessageType.OK) {
@@ -177,10 +171,11 @@ this.dispose();
 //                    l.setVisible(false);
 //                }
 //            });
-//            load.start();
+//            //load.start();
 //            execute.start();
 //            check.start();
 //        }
+        this.dispose();
     }//GEN-LAST:event_btnCloseMouseClicked
 
     private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseEntered
@@ -198,35 +193,7 @@ this.dispose();
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Management_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Management_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Management_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Management_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Management_GUI().setVisible(true);
-            }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

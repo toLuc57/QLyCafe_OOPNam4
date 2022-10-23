@@ -24,9 +24,27 @@ public class NhanVien {
     static String DiaChi="";
     static String SDT="";
     static String Matkhau="";
+    static String Email="";
+    static String GioiTinh="";
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String Email) {
+        NhanVien.Email = Email;
+    }
+
+    public String getGioiTinh() {
+        return GioiTinh;
+    }
+
+    public void setGioiTinh(String GioiTinh) {
+        NhanVien.GioiTinh = GioiTinh;
+    }
     boolean isAdmin;
     
-    public NhanVien(String MaNhanVien, String HoTen, String NgaySinh, String DiaChi, String SDT, String Matkhau, boolean isAdmin) {
+    public NhanVien(String MaNhanVien, String HoTen, String NgaySinh, String DiaChi, String SDT, String Matkhau, boolean isAdmin, String Email, String GioiTinh) {
         this.MaNhanVien = MaNhanVien;
         this.HoTen = HoTen;
         this.NgaySinh = NgaySinh;
@@ -34,6 +52,8 @@ public class NhanVien {
         this.SDT = SDT;
         this.Matkhau = Matkhau;
         this.isAdmin = isAdmin;
+        this.Email = Email;
+        this.GioiTinh = GioiTinh;
     }
 
 
@@ -88,20 +108,21 @@ public class NhanVien {
         this.Matkhau = Matkhau;
     }
 
-    public boolean isIsAdmin() {
+    public boolean getIsIsAdmin() {
         return isAdmin;
     }
 
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-     public static int InsertNhanVien(int maNV, String hoTen, String ngaySinh, String diaChi, String SDT, String Matkhau, int isAdmin ){
+     public static int InsertNhanVien( int MaNV, String hoTen, String ngaySinh, String diaChi, String SDT, String Matkhau, int isAdmin, String Email, String GioiTinh ){
         int insert = 0;
         Connection conn = dbUtil.getConnection();
-        String sql = "Insert into NhanVien (MaNhanVien, HoTen, NgaySinh, DiaChi, SDT, Matkhau, isAdmin) values ('"+maNV+"','"+hoTen+"', '"+ngaySinh+"','"+diaChi+"','"+SDT+"','"+Matkhau+"','"+isAdmin+"')";
+        String sql = "Insert into NhanVien (MaNhanVien, HoTen, NgaySinh, DiaChi, SDT, Matkhau, isAdmin, Email, GioiTinh) values ("+MaNV+",N'"+hoTen+"', CONVERT(datetime,'"+ngaySinh+"',105),N'"+diaChi+"','"+SDT+"','"+Matkhau+"',"+isAdmin+",'"+Email+"',N'"+GioiTinh+"')";
         try{
             Statement st = conn.createStatement();
             insert = st.executeUpdate(sql);
+            JOptionPane.showMessageDialog(new JFrame(), "Thêm Nhân viên  thành công");
             dbUtil.CloseConnection(conn);
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(new JFrame(), "Loi Insert Nhan Vien");
@@ -115,12 +136,26 @@ public class NhanVien {
         try{     
                 Statement st = conn.createStatement();
                 st.executeUpdate(sql);
-                System.err.println("Xoa thanh cong");
+                JOptionPane.showMessageDialog(new JFrame(), "Xóa nhân viên thành công");
                 check = true;
                 dbUtil.CloseConnection(conn);
         }catch(SQLException ex){
-            
+            JOptionPane.showMessageDialog(new JFrame(), "Loi xóa nhân viên");
         }
         return check;
+    }
+      public static int EditNhanVien(String HoTenNhanVien, String NgaySinh, String DiaChi, String SDT, String Matkhau, int isAdmin, String GioiTinh, String Email, int maNhanVien){
+        int insert = 0;
+         Connection conn = dbUtil.getConnection();
+        String sql = "Update NhanVien set HoTen= N'"+HoTenNhanVien+"', CONVERT(datetime,'"+NgaySinh+"',105), DiaChi= N'"+DiaChi+"', SDT= N'"+SDT+"',Matkhau= N'"+Matkhau+"',isAdmin= "+isAdmin+",GioiTinh= N'"+GioiTinh+"',Email= '"+Email+"' where MaNhanVien ="+maNhanVien;
+        try{
+            Statement st = conn.createStatement();
+            insert = st.executeUpdate(sql);
+            JOptionPane.showMessageDialog(new JFrame(), "Sửa Nhân viên thành công");
+            dbUtil.CloseConnection(conn);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(new JFrame(), "Sửa Nhân viên không thành công :(");
+        }
+        return insert;
     }
 }

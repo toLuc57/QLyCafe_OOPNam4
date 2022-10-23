@@ -556,7 +556,6 @@ public class Menu_GUI extends javax.swing.JFrame {
 
     private void btnXacNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXacNhanMouseClicked
         this.dispose();
-  
         AddMontoDatabase();
         Home_GUI home = new Home_GUI();
         home.setVisible(true);

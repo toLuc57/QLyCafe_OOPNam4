@@ -4,6 +4,8 @@ import DTO.NhanVien;
 import java.io.IOException;
 import UserControl.PasswordField;
 import Util.dbUtil;
+
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +15,8 @@ import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
+import sun.net.www.http.KeepAliveCache;
 
 /**
  *
@@ -22,6 +26,8 @@ public class login_GUI extends javax.swing.JFrame {
 
     public login_GUI() throws IOException {
         initComponents();
+  
+       
 
     }
 
@@ -241,9 +247,17 @@ public class login_GUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation", JOptionPane.ERROR_MESSAGE);
             
              }
-            else if(isAdmin() == true && cbbPosition.getSelectedItem() == "Admin") {
+             if(isAdmin() == true && cbbPosition.getSelectedItem() == "Admin") {
                     Management_GUI ql = new Management_GUI();
                     ql.setVisible(true);
+             }
+             else if(isAdmin() == true && cbbPosition.getSelectedItem() == "Staff") {
+                    Home_GUI home = new Home_GUI();
+                    home.setVisible(true);
+                    NhanVien nv = new NhanVien();
+                    nv.setMaNhanVien(name);
+
+                    JOptionPane.showMessageDialog(this, "Đăng nhập thành công với tài khoản Admin: " + txtUsername.getText());
              }
             else if (rs.next() && (isAdmin() == false)) {
                 if (cbbPosition.getSelectedItem() == "Staff") {
