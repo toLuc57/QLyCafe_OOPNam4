@@ -3,9 +3,11 @@ package GUI;
 import DTO.Ban;
 import DTO.HoaDon;
 import DTO.NhanVien;
+import UserControl.JComboboxCustom;
 import UserControl.tableObject;
 import UserControl.WrapLayout;
 import Util.dbUtil;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -31,7 +34,45 @@ public class Home_GUI extends javax.swing.JFrame {
     double totalmoney = 0;
     public Home_GUI() {
         initComponents();
-        loadTable();
+        //loadTable();
+        pnlListTables.setLayout(new WrapLayout(WrapLayout.LEFT, 20, 10));
+        for(int i=1;i<=5;i++){
+            tableObject btn = new tableObject();
+            btn.setStatusTable("0");
+            btn.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                     if(e.getButton()==MouseEvent.BUTTON3){
+                         //chuột phải lấy cả mã bàn và dùng để hiện menu
+                         popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                         
+                     }else{
+                         //chuot trái chỉ đùng để lấy mã bàn
+                     }
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+               
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                     
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                     
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    
+                }
+            });
+            pnlListTables.add(btn);
+        }
     }
     // ----------------Load Table---------------------
 
@@ -244,6 +285,9 @@ public class Home_GUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupMenu = new javax.swing.JPopupMenu();
+        checkTable = new javax.swing.JMenuItem();
+        swichTable = new javax.swing.JPopupMenu();
         jpnMain = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -268,6 +312,17 @@ public class Home_GUI extends javax.swing.JFrame {
         pnlShowTable = new javax.swing.JPanel();
         srctable = new javax.swing.JScrollPane();
         pnlListTables = new javax.swing.JPanel();
+
+        checkTable.setBackground(new java.awt.Color(255, 255, 255));
+        checkTable.setFont(new java.awt.Font("UTM Alexander", 0, 18)); // NOI18N
+        checkTable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_reserve_30px.png"))); // NOI18N
+        checkTable.setText("Đặt bàn này");
+        checkTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkTableActionPerformed(evt);
+            }
+        });
+        popupMenu.add(checkTable);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
@@ -361,6 +416,16 @@ public class Home_GUI extends javax.swing.JFrame {
         btnSwitch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSwitch.setRound(30);
         btnSwitch.setStyle(UserControl.JButtonCustom.ButtonStyle.DESTRUCTIVE);
+        btnSwitch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSwitchMouseClicked(evt);
+            }
+        });
+        btnSwitch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSwitchActionPerformed(evt);
+            }
+        });
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Add_Property_50px.png"))); // NOI18N
         btnAdd.setText("Thêm món");
@@ -636,6 +701,24 @@ public class Home_GUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnCheckoutActionPerformed
 
+    private void checkTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkTableActionPerformed
+        // viet code dat ban
+    }//GEN-LAST:event_checkTableActionPerformed
+
+    private void btnSwitchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSwitchActionPerformed
+        
+    }//GEN-LAST:event_btnSwitchActionPerformed
+
+    private void btnSwitchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSwitchMouseClicked
+        swichTable.removeAll();
+        JComboboxCustom j = new JComboboxCustom();
+        j.addItem("1");
+        j.addItem("2");
+        j.addItem("3");
+        swichTable.add(j);
+        swichTable.show(evt.getComponent(), evt.getX(), evt.getY());
+    }//GEN-LAST:event_btnSwitchMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -681,6 +764,7 @@ public class Home_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel btnManagement;
     private UserControl.JButtonCustom btnSurchange;
     private UserControl.JButtonCustom btnSwitch;
+    private javax.swing.JMenuItem checkTable;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -695,7 +779,9 @@ public class Home_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblTotalMoney;
     private javax.swing.JPanel pnlListTables;
     private javax.swing.JPanel pnlShowTable;
+    private javax.swing.JPopupMenu popupMenu;
     private javax.swing.JScrollPane srctable;
+    private javax.swing.JPopupMenu swichTable;
     private javax.swing.JTable tbBill;
     // End of variables declaration//GEN-END:variables
 }
