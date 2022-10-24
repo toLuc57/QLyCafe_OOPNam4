@@ -1,5 +1,6 @@
 package GUI;
 import UserControl.MessageDialog;
+import UserControl.loading;
 import java.awt.Component;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
@@ -10,28 +11,38 @@ import javax.swing.JFrame;
  * @author tranbathien
  */
 public class Management_GUI extends javax.swing.JFrame {
+
+    loading l = new loading();
     public Management_GUI() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         menu.addEvent((int index) -> {
             switch (index) {
-                case 0 ->
+                case 0 :
                     showForm(new Management_Menu_GUI());
-                case 1 ->
+                    break;
+                case 1 :
                     showForm(new Management_Staff_GUI());
-                case 2 ->
+                        break;
+                case 2 :
                     showForm(new Management_Product_GUI());
-                case 3 ->
+                        break;
+                case 3 :
                     showForm(new Management_Import_GUI());
-                case 4 ->
+                        break;
+                case 4 :
                     showForm(new Management_Bill_GUI());
-                case 5 ->
+                        break;
+                case 5 :
                     showForm(new Management_Tables_GUI());
-                case 6 ->
+                        break;
+                case 6 :
                     showForm(new Management_extrafee_GUI());
-                case 7 ->
+                        break;
+                case 7 :
                     showForm(new Management_Statistical_GUI());
-                default -> {
+                        break;
+                default : {
                 }
             }
         });
@@ -144,14 +155,27 @@ public class Management_GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
-        MessageDialog m = new MessageDialog(this);
-        m.showMessage("Khoan đã!", "Bạn có chắc chắn muốn đóng giao diện quản lý không?");
-        if (m.getMessageType() == MessageDialog.MessageType.OK) {
-            this.setVisible(false);
-            this.dispose();
-            Home_GUI h = new Home_GUI();
-            h.setVisible(true);
-        }
+//        MessageDialog m = new MessageDialog(this);
+//        m.showMessage("Khoan đã!", "Bạn có chắc chắn muốn đóng giao diện quản lý không?");
+//        if (m.getMessageType() == MessageDialog.MessageType.OK) {
+//            Thread load = new Thread(() -> {
+//                l.setVisible(true);
+//            });
+//            Thread execute = new Thread(() -> {
+//                Home_GUI h = new Home_GUI();
+//                h.setVisible(true);
+//            });
+//            Thread check = new Thread(() -> {
+//                if (execute.getState() == Thread.State.TERMINATED) {
+//                    this.dispose();
+//                    l.setVisible(false);
+//                }
+//            });
+//            //load.start();
+//            execute.start();
+//            check.start();
+//        }
+        this.dispose();
     }//GEN-LAST:event_btnCloseMouseClicked
 
     private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseEntered
@@ -169,35 +193,7 @@ public class Management_GUI extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Management_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Management_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Management_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Management_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Management_GUI().setVisible(true);
-            }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

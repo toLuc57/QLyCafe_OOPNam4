@@ -25,14 +25,11 @@ public class loading extends javax.swing.JFrame {
         for(int i=1;i>=100;i++){
             try {
                 Thread.sleep(50);
-                if(i==100){
-                    this.setVisible(false);
-                    this.dispose();
-                }
             } catch (InterruptedException ex) {
                 Logger.getLogger(loading.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        this.dispose();
     }
 
     /**

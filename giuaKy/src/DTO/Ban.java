@@ -86,7 +86,47 @@ public class Ban {
         return update;
 
   }
-
-
-  
+ public static boolean DeleteBan(int maBan){
+        boolean check = false;
+        Connection conn = dbUtil.getConnection();
+          String sql = "Delete From Ban Where SoBan = "+maBan;
+        try{     
+                Statement st = conn.createStatement();
+                st.executeUpdate(sql);
+                 JOptionPane.showMessageDialog(new JFrame(), "Xóa Bàn thành công");
+                check = true;
+                dbUtil.CloseConnection(conn);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(new JFrame(), "lỗi xóa Bàn");
+        }
+        return check;
+    }
+ public static int InsertBan(){
+        int insert = 0;
+         Connection conn = dbUtil.getConnection();
+        String sql = "Insert into Ban (LoaiBan, TinhTrang, SoGhe) values (N'Ngồi',0,4)";
+        try{
+            Statement st = conn.createStatement();
+            insert = st.executeUpdate(sql);
+            JOptionPane.showMessageDialog(new JFrame(), "Thêm Bàn thành công");
+            dbUtil.CloseConnection(conn);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(new JFrame(), "Thêm Bàn không thành công :(");
+        }
+        return insert;
+    }
+   public static int EditBan(int maMon,String TenMon, String Loai, int GiaTien){
+        int insert = 0;
+         Connection conn = dbUtil.getConnection();
+        String sql = "Update  set TenThucDon= N'"+TenMon+"', Loai=N'"+Loai+"', GiaTien= "+GiaTien+" where IDThucDon ="+maMon;
+        try{
+            Statement st = conn.createStatement();
+            insert = st.executeUpdate(sql);
+            JOptionPane.showMessageDialog(new JFrame(), "Sửa Bàn thành công");
+            dbUtil.CloseConnection(conn);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(new JFrame(), "Sửa Bàn không thành công :(");
+        }
+        return insert;
+    }
 }

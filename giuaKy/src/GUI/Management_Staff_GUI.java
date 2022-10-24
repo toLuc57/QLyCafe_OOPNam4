@@ -1,16 +1,75 @@
-
 package GUI;
+
+import DTO.NhanVien;
+import DTO.ThucDon;
+import Util.dbUtil;
+import java.awt.Color;
 import java.awt.Cursor;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author tranbathien
  */
 public class Management_Staff_GUI extends javax.swing.JPanel {
+
     private boolean isEdit;
+    int xacNhan;
+    NhanVien nv = new NhanVien();
+
     public Management_Staff_GUI() {
         initComponents();
         ToggleEdit(false);
+        LoadDBNhanVien();
+        txtStaffCode.setVisible(false);
+
+    }
+
+    public void LoadDBNhanVien() {
+        try {
+            clear_Table();
+            Connection conn = dbUtil.getConnection();
+            String sql = "select * from NhanVien where HoTen like '%" + txtSearchStaff.getText() + "%'" + "or MaNhanVien like '%" + txtSearchStaff.getText() + "%'";
+            ResultSet rs = dbUtil.ThucThiSelect(sql);
+            DefaultTableModel tbModel = (DefaultTableModel) table_Staff_Management.getModel();
+            Object[] obj = new Object[10];
+            while (rs.next()) {
+                obj[0] = table_Staff_Management.getRowCount() + 1;
+                obj[1] = rs.getInt("MaNhanVien");
+                obj[2] = rs.getString("HoTen");
+                obj[3] = rs.getString("GioiTinh");
+                obj[4] = rs.getString("NgaySinh");
+                obj[5] = rs.getString("DiaChi");
+                obj[6] = rs.getString("Email");
+                obj[7] = rs.getString("SDT");
+                obj[8] = rs.getString("Matkhau");
+
+                if ("0".equals(rs.getString("isAdmin"))) {
+                    obj[9] = "Nhân viên";
+                } else {
+                    obj[9] = "Quản lý";
+                }
+                tbModel.addRow(obj);
+
+            }
+            dbUtil.CloseConnection(conn);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Management_Staff_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void clear_Table() {
+        DefaultTableModel tbModel = (DefaultTableModel) table_Staff_Management.getModel();
+        tbModel.setNumRows(0);
     }
 
     private void ToggleEdit(boolean state) {
@@ -22,20 +81,22 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         txtAddress.setEditable(state);
         txtEmail.setEditable(state);
         txtPassword.setEditable(state);
-        txtStaffCode.setEditable(state);
+        txtSDT.setEditable(state);
         cbbChooseGender.setEnabled(state);
         cbbLevel.setEnabled(state);
         btnChooseImage.setEnabled(state);
     }
+
     private void ClearEdit() {
         txtName.setText("");
         txtAddress.setText("");
         txtEmail.setText("");
         txtPassword.setText("");
-        txtStaffCode.setText("");
+        txtSDT.setText("");
         cbbChooseGender.setSelectedItem(-1);
         cbbLevel.setSelectedItem(-1);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -64,7 +125,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         txtAddress = new UserControl.TextField();
         btnSave = new UserControl.JButtonCustom();
         btnCancel = new UserControl.JButtonCustom();
-        txtSDT1 = new UserControl.TextField();
+        txtSDT = new UserControl.TextField();
 
         datetimepicker.setTextRefernce(txtDatebirth);
 
@@ -108,6 +169,11 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         btnDeleteStaff.setColor1(new java.awt.Color(255, 255, 0));
         btnDeleteStaff.setColor2(new java.awt.Color(255, 0, 0));
         btnDeleteStaff.setFont(new java.awt.Font("UTM Alexander", 0, 12)); // NOI18N
+        btnDeleteStaff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteStaffActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout TopLayout = new javax.swing.GroupLayout(Top);
         Top.setLayout(TopLayout);
@@ -145,18 +211,14 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
 
         table_Staff_Management.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "fáadas", "món 1", "dsa", "1232131", null, null, null},
-                {"2", "dá", "đá", "ád", "ádas", null, null, null},
-                {"3", "dá", "ád", "ád", "ádasdas", null, null, null},
-                {"4", "sad", "áda", "áda", "đấ", null, null, null},
-                {"5", "ádas", "adasd", "đá", null, null, null, null}
+
             },
             new String [] {
-                "ID", "Mã nhân viên", "Họ tên", "Ngày sinh", "Địa chỉ", "Email", "Số điện thoại", "Chức vụ"
+                "ID", "Mã nhân viên", "Họ tên", "Giới tính", "Ngày sinh", "Địa chỉ", "Email", "Số điện thoại", "Mật khẩu", "Chức vụ"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, true, false, false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -165,6 +227,11 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
         });
         table_Staff_Management.setGridColor(new java.awt.Color(51, 51, 51));
         table_Staff_Management.setRowHeight(50);
+        table_Staff_Management.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_Staff_ManagementMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(table_Staff_Management);
         if (table_Staff_Management.getColumnModel().getColumnCount() > 0) {
             table_Staff_Management.getColumnModel().getColumn(0).setResizable(false);
@@ -213,6 +280,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
 
         txtStaffCode.setLabelText("Mã nhân viên");
 
+        txtDatebirth.setText("");
         txtDatebirth.setLabelText("Ngày sinh");
 
         cbbChooseGender.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nam", "Nữ", "Khác" }));
@@ -241,6 +309,11 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
                 btnSaveMouseEntered(evt);
             }
         });
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_close_30px_1_1.png"))); // NOI18N
         btnCancel.setText("Hủy");
@@ -256,7 +329,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
             }
         });
 
-        txtSDT1.setLabelText("Số điện thoại");
+        txtSDT.setLabelText("Số điện thoại");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -276,8 +349,8 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(txtStaffCode, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtSDT1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -293,7 +366,9 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -302,9 +377,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbbLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtStaffCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtSDT1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(txtStaffCode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -341,12 +414,15 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtSearchStaffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchStaffActionPerformed
-        // TODO add your handling code here:
+        LoadDBNhanVien();
     }//GEN-LAST:event_txtSearchStaffActionPerformed
 
     private void btnAddStaffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStaffActionPerformed
-        ClearEdit();
         ToggleEdit(true);
+        txtStaffCode.setVisible(true);
+        xacNhan = 0;
+        txtName.requestFocus();
+
     }//GEN-LAST:event_btnAddStaffActionPerformed
 
     private void btnChooseImageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChooseImageMouseEntered
@@ -354,7 +430,78 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnChooseImageMouseEntered
 
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
-        ToggleEdit(false);
+        int cv;
+        if (cbbLevel.getSelectedItem().equals("Nhân viên")) {
+            cv = 0;
+        } else {
+            cv = 1;
+        }
+        //-----------Insert----------//
+        if (xacNhan == 0) {
+            if (txtName.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập tên Nhân viên");
+            }
+            if (txtStaffCode.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập Mã Nhân viên");
+            }
+            if (cbbChooseGender.getSelectedItem().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng chọn giới tính");
+            }
+            if (txtDatebirth.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập ngày sinh");
+            }
+            if (txtSDT.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập Số điện thoại");
+            }
+            if (txtPassword.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập Mật khẩu");
+            }
+            if (txtEmail.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập Email");
+            }
+            if (txtAddress.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập địa chỉ");
+            }
+            if (cbbLevel.getSelectedItem().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng chọn chức");
+            } else {
+                NhanVien.InsertNhanVien(Integer.parseInt(txtStaffCode.getText()), txtName.getText(), txtDatebirth.getText(), txtAddress.getText(), txtSDT.getText(), txtPassword.getText(), cv, txtEmail.getText(), String.valueOf(cbbChooseGender.getSelectedItem()));
+            }
+            LoadDBNhanVien();
+            ToggleEdit(false);
+            ClearEdit();
+            txtStaffCode.setVisible(false);
+
+            //------------Edit-----------//
+        } else if (xacNhan == 1) {
+            if (txtName.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập tên Nhân viên");
+            } else if (cbbChooseGender.getSelectedItem().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng chọn giới tính");
+            } else if (txtDatebirth.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập ngày sinh");
+            } else if (txtSDT.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập Số điện thoại");
+            } else if (txtPassword.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập Mật khẩu");
+            } else if (txtEmail.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập Email");
+            } else if (txtAddress.getText().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập địa chỉ");
+            } else if (cbbLevel.getSelectedItem().equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Vui lòng chọn chức");
+            } else {
+                NhanVien.EditNhanVien(txtName.getText(), txtDatebirth.getText(), txtAddress.getText(), txtSDT.getText(), txtPassword.getText(), cv, String.valueOf(cbbChooseGender.getSelectedItem()), txtEmail.getText(), Integer.parseInt(nv.getMaNhanVien()));
+            }
+            LoadDBNhanVien();
+            ToggleEdit(false);
+            ClearEdit();
+            txtStaffCode.setVisible(false);
+
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập đủ thông tin");
+        }
+
     }//GEN-LAST:event_btnSaveMouseClicked
 
     private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
@@ -371,8 +518,66 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelMouseEntered
 
     private void btnUpdateStaffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStaffActionPerformed
-        ToggleEdit(true);
+
+        if (nv.getMaNhanVien() == "") {
+            JOptionPane.showMessageDialog(new JFrame(), "Vui lòng chọn nhân viên");
+        } else {
+            ToggleEdit(true);
+            txtStaffCode.setEnabled(false);
+            xacNhan = 1;
+            txtName.requestFocus();
+            txtStaffCode.setText(nv.getMaNhanVien());
+            txtName.setText(nv.getHoTen());
+            txtDatebirth.setText(nv.getNgaySinh());
+            txtAddress.setText(nv.getDiaChi());
+            txtEmail.setText(nv.getEmail());
+            txtSDT.setText(nv.getSDT());
+            if ("Nam".equals(nv.getGioiTinh())) {
+                cbbChooseGender.setSelectedIndex(0);
+            }
+            if ("Nữ".equals(nv.getGioiTinh())) {
+                cbbChooseGender.setSelectedIndex(1);
+            } else {
+                cbbChooseGender.setSelectedIndex(2);
+            }
+        }
+        if (nv.getIsIsAdmin()) {
+            cbbLevel.setSelectedIndex(1);
+        } else {
+            cbbLevel.setSelectedIndex(0);
+        }
     }//GEN-LAST:event_btnUpdateStaffActionPerformed
+
+    private void table_Staff_ManagementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_Staff_ManagementMouseClicked
+        int x = table_Staff_Management.getSelectedRow();
+        if (x >= 0) {
+            nv.setMaNhanVien(String.valueOf(table_Staff_Management.getValueAt(x, 1)));
+            nv.setHoTen(String.valueOf(table_Staff_Management.getValueAt(x, 2)));
+            nv.setGioiTinh(String.valueOf(table_Staff_Management.getValueAt(x, 3)));
+            nv.setNgaySinh(String.valueOf(table_Staff_Management.getValueAt(x, 4)));
+            nv.setDiaChi(String.valueOf(table_Staff_Management.getValueAt(x, 5)));
+            nv.setEmail(String.valueOf(table_Staff_Management.getValueAt(x, 6)));
+            nv.setSDT(String.valueOf(table_Staff_Management.getValueAt(x, 7)));
+            nv.setMatkhau(String.valueOf(table_Staff_Management.getValueAt(x, 8)));
+            nv.setIsAdmin(Boolean.parseBoolean(String.valueOf(table_Staff_Management.getValueAt(x, 9))));
+            System.err.println(nv.getMaNhanVien());
+
+        }
+    }//GEN-LAST:event_table_Staff_ManagementMouseClicked
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnDeleteStaffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteStaffActionPerformed
+        if (nv.getMaNhanVien() == "") {
+            JOptionPane.showMessageDialog(new JFrame(), "Vui lòng chọn món");
+
+        } else {
+            NhanVien.DeleteNhanVien(Integer.parseInt(nv.getMaNhanVien()));
+            LoadDBNhanVien();
+        }
+    }//GEN-LAST:event_btnDeleteStaffActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -398,7 +603,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
     private UserControl.TextField txtEmail;
     private UserControl.TextField txtName;
     private UserControl.TextField txtPassword;
-    private UserControl.TextField txtSDT1;
+    private UserControl.TextField txtSDT;
     private UserControl.TextFieldAnimation txtSearchStaff;
     private UserControl.TextField txtStaffCode;
     // End of variables declaration//GEN-END:variables

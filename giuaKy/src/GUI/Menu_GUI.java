@@ -1,17 +1,22 @@
 package GUI;
 
+import DTO.Ban;
 import DTO.HoaDon;
 import DTO.NhanVien;
 import DTO.ThucDon;
 import DTO.addMenu;
 import UserControl.MessagerCustom.MessageDialog;
+
 import UserControl.WrapLayout;
 import UserControl.menuObject;
 import Util.dbUtil;
 import static Util.dbUtil.conn;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.sql.Connection;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -21,7 +26,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 import javax.swing.table.DefaultTableModel;
+
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -57,6 +64,7 @@ public class Menu_GUI extends javax.swing.JFrame {
         System.err.println("Mã bàn: " + table);
 
         loadMenu();
+        
 
     }
 
@@ -65,11 +73,11 @@ public class Menu_GUI extends javax.swing.JFrame {
         pnlShowMenu.removeAll();
         dbUtil conn = new dbUtil();
         dbUtil.getConnection();
-        List<ThucDon> l = conn.GetThucDon(txtFind.getText(), cbbType.getSelectedItem().toString());
+        List<ThucDon> l = conn.GetThucDon(txtSearch.getText(), cbbType.getSelectedItem().toString());
         pnlShowMenu.setLayout(new WrapLayout(WrapLayout.LEFT, 5, 5));
         for (ThucDon item : l) {
             menuObject t = new menuObject();
-            t.setMamon(item.GetMaMon());
+            t.setMaMon(item.GetMaMon());
             t.setNameMenu(item.GetTenMon());
             t.setSrcImage("/Images/bacxiu.jpg");
             t.setGia(String.valueOf(item.GetDonGia()));
@@ -81,12 +89,12 @@ public class Menu_GUI extends javax.swing.JFrame {
             //--------------Nut Them Mon----------
             s.addActionListener((ActionEvent e) -> {
                 if (t.getSoLuongMon() > 0) {
-                     addMenu m = new addMenu(item.GetTenMon(), Integer.parseInt(t.getMamon()), t.getSoLuongMon(), item.GetDonGia());
+                    addMenu m = new addMenu(item.GetTenMon(), Integer.parseInt(t.getMaMon()), t.getSoLuongMon(), item.GetDonGia());
                     if (listmenu.isEmpty()) {
                         listmenu.add(m);
                         cloneLoadTable();
-                    } else {    
-                        FindIDMon(t.getSoLuongMon(),m);
+                    } else {
+                        FindIDMon(t.getSoLuongMon(), m);
                         cloneLoadTable();
                     }
                 } else {
@@ -96,10 +104,10 @@ public class Menu_GUI extends javax.swing.JFrame {
             });
         }
     }
-
+    
     private void cloneLoadTable() {
-        clear_Table(); 
-       double  totalmoney = 0;
+        clear_Table();
+        double totalmoney = 0;
         DefaultTableModel tbModel = (DefaultTableModel) tbBill.getModel();
         Object[] obj = new Object[4];
         for (addMenu item2 : listmenu) {
@@ -108,10 +116,10 @@ public class Menu_GUI extends javax.swing.JFrame {
             obj[2] = item2.getSoluong();
             obj[3] = item2.getGia();
             tbModel.addRow(obj);
-           
-       totalmoney += (item2.getSoluong() * item2.getGia());
-       txtTotalmoney.setText(String.valueOf(totalmoney)+" VNÐ");
-    
+
+            totalmoney += (item2.getSoluong() * item2.getGia());
+            //txtTotalmoney.setText(String.valueOf(totalmoney)+" VNÐ");
+
         }
     }
 
@@ -127,15 +135,15 @@ public class Menu_GUI extends javax.swing.JFrame {
                     HoaDon.InsertChiTietHoaDon(t.getMamon(), t.getSoluong(), t.getGia());
                     LoadHoaDonTable(table);
                 } else {
-                    UpdateSoLuong(t.getSoluong(), String.valueOf(t.getMamon()));
+                    UpdateSoLuong(t.getSoluong(), String.valueOf(t.getMamon()),table);
                     LoadHoaDonTable(table);
                 }
             }
 
         }
     }
-
-    private void FindIDMon(int SL,addMenu m) {
+//-------------fINDIDMON------------
+    private void FindIDMon(int SL, addMenu m) {
         List<addMenu> l = new ArrayList<>();
         boolean exist = false;
         for (addMenu item : listmenu) {
@@ -147,7 +155,7 @@ public class Menu_GUI extends javax.swing.JFrame {
                 l.add(item);
             }
         }
-        if(!exist){
+        if (!exist) {
             l.add(m);
         }
         listmenu = l;
@@ -187,11 +195,11 @@ public class Menu_GUI extends javax.swing.JFrame {
     }
 
 //---------------ton tai mon
-    public boolean TonTaiMon(String TenMon, int Ban) {
+    public boolean TonTaiMon(String idmon, int Ban) {
         int KT;
 
         Connection conn = dbUtil.getConnection();
-        String sql = "select count(IDThucDon) as count from ChiTietHoaDon as ct where ct.IDThucDon  = (select td.IDThucDon from ThucDon as td where td.TenThucDon =N'" + TenMon + "') and MaHoaDon in (select MaHoaDon from HoaDon as hd where hd.SoBan =" + Ban + " and hd.TrangThai = 0)";
+        String sql = "select count(IDThucDon) as count from ChiTietHoaDon where IDThucDon = "+idmon+" and MaHoaDon = (select MaHoaDon from HoaDon where SoBan = "+Ban+" and TrangThai = 0)";
         ResultSet rs;
         try {
             rs = dbUtil.ThucThiSelect(sql);
@@ -229,16 +237,16 @@ public class Menu_GUI extends javax.swing.JFrame {
     }
 
     //-------------UpdateSoluong
-    public int UpdateSoLuong(int sl, String idThucDon) {
+    public int UpdateSoLuong(int sl, String idThucDon, int table) {
         int update = 0;
         Connection cn = dbUtil.getConnection();
-        String sql = "update ChiTietHoaDon set SoLuong = SoLuong+" + sl + "where IDThucDon=" + idThucDon + "and MaHoaDon= (select Max(MaHoaDon) from HoaDon)";
+        String sql = "update ChiTietHoaDon set SoLuong = SoLuong+" + sl + "where IDThucDon=" + idThucDon + "and MaHoaDon = (select MaHoaDon from HoaDon where SoBan ="+ table +" and TrangThai = 0)";
         try {
             Statement st = cn.createStatement();
             update = st.executeUpdate(sql);
             dbUtil.CloseConnection(conn);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(new JFrame(), "Loi Insert HoaDon");
+            JOptionPane.showMessageDialog(new JFrame(), "Loi Update so Luong HoaDon");
         }
         return update;
     }
@@ -252,7 +260,7 @@ public class Menu_GUI extends javax.swing.JFrame {
             update = st.executeUpdate(sql);
             dbUtil.CloseConnection(conn);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(new JFrame(), "Loi Insert HoaDon");
+            JOptionPane.showMessageDialog(new JFrame(), "Loi Update TinhTrang HoaDon");
         }
         return update;
     }
@@ -267,22 +275,20 @@ public class Menu_GUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         pnlOption = new javax.swing.JPanel();
         cbbType = new UserControl.JComboboxCustom();
-        cbbTypeCat = new UserControl.JComboboxCustom();
         btnMenuHot = new UserControl.JButtonCustom();
         barRight = new javax.swing.JPanel();
         rightTop = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        txtFind = new UserControl.TextField();
-        btnFind = new UserControl.JButtonCustom();
         btnClose = new javax.swing.JLabel();
-        btnXacNhan = new javax.swing.JButton();
+        txtSearch = new UserControl.TextFieldAnimation();
         rightBottom = new javax.swing.JPanel();
         rightBottomRight = new javax.swing.JPanel();
         rBottomRightBottom = new javax.swing.JPanel();
-        txtTotalmoney = new javax.swing.JLabel();
+        btnHuy = new UserControl.JButtonCustom();
+        btnXacNhan = new UserControl.JButtonCustom();
         rBottomRightTop = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbBill = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbBill = new UserControl.TableDark();
         rightBottomLeft = new javax.swing.JPanel();
         formShowMenu = new javax.swing.JScrollPane();
         pnlShowMenu = new javax.swing.JPanel();
@@ -314,9 +320,6 @@ public class Menu_GUI extends javax.swing.JFrame {
         cbbType.setFocusable(false);
         cbbType.setLabeText("Chọn loại");
 
-        cbbTypeCat.setFocusable(false);
-        cbbTypeCat.setLabeText("Chọn chi tiết");
-
         btnMenuHot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_hot_springs_60px.png"))); // NOI18N
         btnMenuHot.setText("Món hot");
         btnMenuHot.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
@@ -330,21 +333,18 @@ public class Menu_GUI extends javax.swing.JFrame {
             .addGroup(pnlOptionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbbTypeCat, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                    .addComponent(cbbType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMenuHot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnMenuHot, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                    .addComponent(cbbType, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlOptionLayout.setVerticalGroup(
             pnlOptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlOptionLayout.createSequentialGroup()
-                .addGap(70, 70, 70)
+                .addGap(67, 67, 67)
                 .addComponent(cbbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(cbbTypeCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(btnMenuHot, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addComponent(btnMenuHot, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
 
         barLeft.add(pnlOption, java.awt.BorderLayout.CENTER);
@@ -358,15 +358,6 @@ public class Menu_GUI extends javax.swing.JFrame {
         rightTop.setForeground(new java.awt.Color(255, 255, 255));
 
         jPanel7.setLayout(new java.awt.BorderLayout());
-
-        txtFind.setLabelText("Tìm món");
-
-        btnFind.setText("Tìm kiếm");
-        btnFind.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindActionPerformed(evt);
-            }
-        });
 
         btnClose.setBackground(new java.awt.Color(255, 255, 255));
         btnClose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -383,10 +374,12 @@ public class Menu_GUI extends javax.swing.JFrame {
             }
         });
 
-        btnXacNhan.setText("Xác nhan");
-        btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
+        txtSearch.setBackground(new java.awt.Color(204, 255, 255));
+        txtSearch.setAnimationColor(new java.awt.Color(0, 51, 51));
+        txtSearch.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXacNhanActionPerformed(evt);
+                txtSearchActionPerformed(evt);
             }
         });
 
@@ -395,19 +388,11 @@ public class Menu_GUI extends javax.swing.JFrame {
         rightTopLayout.setHorizontalGroup(
             rightTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightTopLayout.createSequentialGroup()
-                .addGroup(rightTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rightTopLayout.createSequentialGroup()
-                        .addGap(624, 624, 624)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 475, Short.MAX_VALUE))
-                    .addGroup(rightTopLayout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 400, Short.MAX_VALUE)
-                        .addComponent(btnXacNhan)
-                        .addGap(176, 176, 176)))
+                .addGap(54, 54, 54)
+                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 619, Short.MAX_VALUE)
                 .addComponent(btnClose)
                 .addContainerGap())
         );
@@ -417,14 +402,12 @@ public class Menu_GUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(rightTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(rightTopLayout.createSequentialGroup()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(rightTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnXacNhan))))
-                .addGap(24, 24, 24))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(62, 62, 62))
+            .addGroup(rightTopLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         barRight.add(rightTop, java.awt.BorderLayout.PAGE_START);
@@ -439,40 +422,51 @@ public class Menu_GUI extends javax.swing.JFrame {
         rBottomRightBottom.setFont(new java.awt.Font("UTM Colossalis", 0, 24)); // NOI18N
         rBottomRightBottom.setLayout(new java.awt.BorderLayout());
 
-        txtTotalmoney.setFont(new java.awt.Font("UD Digi Kyokasho NK-B", 1, 36)); // NOI18N
-        txtTotalmoney.setForeground(new java.awt.Color(255, 255, 255));
-        txtTotalmoney.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtTotalmoney.setText("0.00 VND");
-        rBottomRightBottom.add(txtTotalmoney, java.awt.BorderLayout.CENTER);
+        btnHuy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_close_30px_1.png"))); // NOI18N
+        btnHuy.setText("Hủy");
+        btnHuy.setFont(new java.awt.Font("UTM Amherst", 1, 18)); // NOI18N
+        btnHuy.setStyle(UserControl.JButtonCustom.ButtonStyle.DESTRUCTIVE);
+        btnHuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyActionPerformed(evt);
+            }
+        });
+        rBottomRightBottom.add(btnHuy, java.awt.BorderLayout.LINE_END);
+
+        btnXacNhan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sucess.png"))); // NOI18N
+        btnXacNhan.setText("Xác nhận");
+        btnXacNhan.setFont(new java.awt.Font("UTM Americana EB", 0, 18)); // NOI18N
+        btnXacNhan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXacNhanMouseClicked(evt);
+            }
+        });
+        rBottomRightBottom.add(btnXacNhan, java.awt.BorderLayout.CENTER);
 
         rightBottomRight.add(rBottomRightBottom, java.awt.BorderLayout.PAGE_END);
 
         rBottomRightTop.setBackground(new java.awt.Color(255, 255, 255));
         rBottomRightTop.setLayout(new javax.swing.BoxLayout(rBottomRightTop, javax.swing.BoxLayout.LINE_AXIS));
 
-        tbBill.setFont(new java.awt.Font("UTM Aptima", 0, 14)); // NOI18N
         tbBill.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Tên món", "Số lượng", "Đơn giá"
+                "ID", "Tên món", "Số lượng"
             }
-        ));
-        tbBill.setEnabled(false);
-        tbBill.setGridColor(new java.awt.Color(0, 51, 51));
-        tbBill.setIntercellSpacing(new java.awt.Dimension(0, 10));
-        tbBill.setRowHeight(30);
-        tbBill.setSelectionBackground(new java.awt.Color(255, 51, 51));
-        tbBill.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        tbBill.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tbBill.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tbBill.setShowGrid(true);
-        tbBill.setShowVerticalLines(false);
-        tbBill.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tbBill);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
-        rBottomRightTop.add(jScrollPane1);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tbBill);
+
+        rBottomRightTop.add(jScrollPane2);
 
         rightBottomRight.add(rBottomRightTop, java.awt.BorderLayout.CENTER);
 
@@ -541,19 +535,31 @@ public class Menu_GUI extends javax.swing.JFrame {
         btnClose.setIcon(ii);
     }//GEN-LAST:event_btnCloseMouseExited
 
-    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
+    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
+
+
+    }//GEN-LAST:event_btnFindActionPerformed
+
+    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCustom2ActionPerformed
+       
+    }//GEN-LAST:event_jButtonCustom2ActionPerformed
+
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
+        loadMenu();
+    }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        this.dispose();
+        Home_GUI home = new Home_GUI();
+        home.setVisible(true);
+    }//GEN-LAST:event_btnHuyActionPerformed
+
+    private void btnXacNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXacNhanMouseClicked
         this.dispose();
         AddMontoDatabase();
         Home_GUI home = new Home_GUI();
         home.setVisible(true);
-
-
-    }//GEN-LAST:event_btnXacNhanActionPerformed
-
-    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-
-        loadMenu();
-    }//GEN-LAST:event_btnFindActionPerformed
+    }//GEN-LAST:event_btnXacNhanMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -593,15 +599,14 @@ public class Menu_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel barLeft;
     private javax.swing.JPanel barRight;
     private javax.swing.JLabel btnClose;
-    private UserControl.JButtonCustom btnFind;
+    private UserControl.JButtonCustom btnHuy;
     private UserControl.JButtonCustom btnMenuHot;
-    private javax.swing.JButton btnXacNhan;
+    private UserControl.JButtonCustom btnXacNhan;
     private UserControl.JComboboxCustom cbbType;
-    private UserControl.JComboboxCustom cbbTypeCat;
     private javax.swing.JScrollPane formShowMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel main;
     private javax.swing.JPanel pnlLogo;
     private javax.swing.JPanel pnlOption;
@@ -612,8 +617,7 @@ public class Menu_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel rightBottomLeft;
     private javax.swing.JPanel rightBottomRight;
     private javax.swing.JPanel rightTop;
-    private javax.swing.JTable tbBill;
-    private UserControl.TextField txtFind;
-    private javax.swing.JLabel txtTotalmoney;
+    private UserControl.TableDark tbBill;
+    private UserControl.TextFieldAnimation txtSearch;
     // End of variables declaration//GEN-END:variables
 }

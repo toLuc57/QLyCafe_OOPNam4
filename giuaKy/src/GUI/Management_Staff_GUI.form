@@ -139,6 +139,9 @@
               <Font name="UTM Alexander" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteStaffActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -176,50 +179,32 @@
             <Component class="UserControl.TableDark" name="table_Staff_Management">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="8" rowCount="5">
-                    <Column editable="false" title="ID" type="java.lang.Object">
-                      <Data value="1"/>
-                      <Data value="2"/>
-                      <Data value="3"/>
-                      <Data value="4"/>
-                      <Data value="5"/>
-                    </Column>
-                    <Column editable="false" title="M&#xe3; nh&#xe2;n vi&#xea;n" type="java.lang.Object">
-                      <Data value="f&#xe1;adas"/>
-                      <Data value="d&#xe1;"/>
-                      <Data value="d&#xe1;"/>
-                      <Data value="sad"/>
-                      <Data value="&#xe1;das"/>
-                    </Column>
-                    <Column editable="false" title="H&#x1ecd; t&#xea;n" type="java.lang.Object">
-                      <Data value="m&#xf3;n 1"/>
-                      <Data value="&#x111;&#xe1;"/>
-                      <Data value="&#xe1;d"/>
-                      <Data value="&#xe1;da"/>
-                      <Data value="adasd"/>
-                    </Column>
-                    <Column editable="false" title="Ng&#xe0;y sinh" type="java.lang.Object">
-                      <Data value="dsa"/>
-                      <Data value="&#xe1;d"/>
-                      <Data value="&#xe1;d"/>
-                      <Data value="&#xe1;da"/>
-                      <Data value="&#x111;&#xe1;"/>
-                    </Column>
-                    <Column editable="false" title="&#x110;&#x1ecb;a ch&#x1ec9;" type="java.lang.Object">
-                      <Data value="1232131"/>
-                      <Data value="&#xe1;das"/>
-                      <Data value="&#xe1;dasdas"/>
-                      <Data value="&#x111;&#x1ea5;"/>
-                      <Data value="null"/>
-                    </Column>
+                  <Table columnCount="10" rowCount="0">
+                    <Column editable="false" title="ID" type="java.lang.Object"/>
+                    <Column editable="false" title="M&#xe3; nh&#xe2;n vi&#xea;n" type="java.lang.Object"/>
+                    <Column editable="false" title="H&#x1ecd; t&#xea;n" type="java.lang.Object"/>
+                    <Column editable="true" title="Gi&#x1edb;i t&#xed;nh" type="java.lang.Object"/>
+                    <Column editable="false" title="Ng&#xe0;y sinh" type="java.lang.Object"/>
+                    <Column editable="false" title="&#x110;&#x1ecb;a ch&#x1ec9;" type="java.lang.Object"/>
                     <Column editable="false" title="Email" type="java.lang.Object"/>
                     <Column editable="false" title="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i" type="java.lang.Object"/>
+                    <Column editable="true" title="M&#x1ead;t kh&#x1ea9;u" type="java.lang.Object"/>
                     <Column editable="false" title="Ch&#x1ee9;c v&#x1ee5;" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -269,6 +254,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="table_Staff_ManagementMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -383,8 +371,8 @@
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="txtStaffCode" min="-2" pref="204" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="txtSDT1" min="-2" pref="189" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="txtSDT" min="-2" pref="201" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
                                           <Component id="txtPassword" max="32767" attributes="0"/>
                                       </Group>
                                       <Component id="txtEmail" max="32767" attributes="0"/>
@@ -407,7 +395,10 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="txtPassword" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtSDT" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="txtName" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -417,10 +408,7 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="cbbLevel" min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                                          <Component id="txtStaffCode" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtSDT1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="txtStaffCode" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -514,6 +502,7 @@
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSaveMouseClicked"/>
                     <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSaveMouseEntered"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="UserControl.JButtonCustom" name="btnCancel">
@@ -535,7 +524,7 @@
                     <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCancelMouseEntered"/>
                   </Events>
                 </Component>
-                <Component class="UserControl.TextField" name="txtSDT1">
+                <Component class="UserControl.TextField" name="txtSDT">
                   <Properties>
                     <Property name="labelText" type="java.lang.String" value="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
                   </Properties>
