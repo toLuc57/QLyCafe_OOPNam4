@@ -76,7 +76,7 @@ public class Management_Import_GUI extends javax.swing.JPanel {
             clear_TableReal();
             Connection conn = dbUtil.getConnection();
             String sql;
-            if("".equals(txtDateFrom.getText()) && "".equals(txtDateto.getText()))
+            if("".equals(txtDateFrom.getText()) || "".equals(txtDateto.getText()))
             {
                sql= "select * from PhieuNhap,ChiTietNhap,SanPhamTho where ChiTietNhap.SoPhieuNhap = PhieuNhap.SoPhieuNhap and SanPhamTho.MaSanPham = ChiTietNhap.MaSanPham and SanPhamTho.MaSanPham like N'%"+ txtSearchImport.getText()+"%' and SanPhamTho.TenSanPham like N'%"+nameProduct+"%' and PhieuNhap.MaNhanVien like '%"+nameStaff+"%'";
             }

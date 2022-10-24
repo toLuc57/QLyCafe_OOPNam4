@@ -253,15 +253,17 @@ public class login_GUI extends javax.swing.JFrame {
                     ql.setVisible(true);
                     NhanVien nv = new NhanVien();
                     nv.setMaNhanVien(name);
-                    this.dispose();
-                    
+                    nv.setMatkhau(pass);
+                    this.dispose();  
              }
+ 
     
             else if(isAdmin() == true && cbbPosition.getSelectedItem() == "Staff") {
                     Home_GUI home = new Home_GUI();
                     home.setVisible(true);
                     NhanVien nv = new NhanVien();
                     nv.setMaNhanVien(name);
+                    nv.setMatkhau(pass);
                     this.dispose();
                     JOptionPane.showMessageDialog(this, "Đăng nhập thành công với tài khoản Admin: " + txtUsername.getText());
              }
@@ -269,6 +271,7 @@ public class login_GUI extends javax.swing.JFrame {
                 if (cbbPosition.getSelectedItem() == "Staff") {
                     NhanVien nv = new NhanVien();
                     nv.setMaNhanVien(name);
+                    nv.setMatkhau(pass);
                     Home_GUI home = new Home_GUI();
                     home.setVisible(true);
                     this.dispose();

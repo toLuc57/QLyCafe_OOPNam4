@@ -158,4 +158,19 @@ public class NhanVien {
         }
         return insert;
     }
+      
+       public static int UpdateMatKhau(int manv, String newPass){
+  int update = 0;
+        Connection conn = dbUtil.getConnection();
+        String sql = "update NhanVien set Matkhau = '"+newPass+"' where MaNhanVien ="+ manv;
+        try {
+            Statement st = conn.createStatement();
+            update = st.executeUpdate(sql);
+            dbUtil.CloseConnection(conn);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "Lỗi Update Mật khẩu nhân viên");
+        }
+        return update;
+
+  }
 }

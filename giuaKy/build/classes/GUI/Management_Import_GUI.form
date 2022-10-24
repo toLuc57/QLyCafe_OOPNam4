@@ -218,8 +218,14 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtDateFrom">
+          <Properties>
+            <Property name="text" type="java.lang.String" value=""/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtDateto">
+          <Properties>
+            <Property name="text" type="java.lang.String" value=""/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>

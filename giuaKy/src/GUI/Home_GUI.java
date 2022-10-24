@@ -7,7 +7,6 @@ import UserControl.MessageDialog;
 import UserControl.tableObject;
 import UserControl.WrapLayout;
 import Util.dbUtil;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -19,14 +18,18 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.border.Border;
+import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class Home_GUI extends javax.swing.JFrame {
@@ -36,6 +39,7 @@ public class Home_GUI extends javax.swing.JFrame {
     NhanVien nv = new NhanVien();
     private static JFrame bill1=null;
     double totalmoney;
+   
    
     
     public double getTotalmoney() {
@@ -51,17 +55,41 @@ public class Home_GUI extends javax.swing.JFrame {
 
     public Home_GUI() {
         initComponents();
+        this.setExtendedState(Frame.MAXIMIZED_BOTH);
         loadTable();
     }
 
     @SuppressWarnings("unchecked")
+    public void ClockExample() {
+   
+    
+        try {
+            while (true) {
+                Calendar calendar = Calendar.getInstance();
+                String hour = (calendar.getTime().getHours() > 9) ? 
+                        "" + calendar.getTime().getHours() + ""
+                        : "0" + calendar.getTime().getHours();
+                String minute = (calendar.getTime().getMinutes() > 9) ? 
+                        "" + calendar.getTime().getMinutes() + ""
+                        : "0" + calendar.getTime().getMinutes();
+                String second = (calendar.getTime().getSeconds() > 9) ? 
+                        "" + calendar.getTime().getSeconds() + ""
+                        : "0" + calendar.getTime().getSeconds();
+               // labelClock.setText(hour + ":" + minute + ":" + second);
+                Thread.sleep(1000);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+ 
+    
     
     public void loadTable() {
         pnlListTables.removeAll();
         dbUtil conn = new dbUtil();
         dbUtil.getConnection();
         List<Ban> l = conn.GetBan();
-        //this.setExtendedState(Frame.MAXIMIZED_BOTH);
         pnlListTables.setLayout(new WrapLayout(WrapLayout.LEFT, 25, 10));
         for (Ban item : l) {
             tableObject btn = new tableObject();
@@ -78,7 +106,6 @@ public class Home_GUI extends javax.swing.JFrame {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     idtable = btn.getIDTable();
-                    
                     System.err.println("Mã bàn: " + idtable);
                     GetMaHD(idtable);
                     clear_Table();
@@ -144,15 +171,17 @@ public class Home_GUI extends javax.swing.JFrame {
                 }
                 
                 public void mouseReleased(MouseEvent e) {
-                    
+                   
                 }
                 
+                @Override
                 public void mouseEntered(MouseEvent e) {
-                    
+                    btn.setBorder(new MatteBorder(2,2,2,2,Color.PINK));
                 }
                 
+                @Override
                 public void mouseExited(MouseEvent e) {
-                    
+                     btn.setBorder(new MatteBorder(2,2,2,2,Color.black));
                 }
                 
             });
@@ -489,11 +518,7 @@ public class Home_GUI extends javax.swing.JFrame {
         btnSurchange.setText("Phụ thu");
         btnSurchange.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         btnSurchange.setRound(10);
-        btnSurchange.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSurchangeActionPerformed(evt);
-            }
-        });
+        btnSurchange.addActionListener(this::btnSurchangeActionPerformed);
         
         btnCheckout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_checkout_50px.png"))); // NOI18N
         btnCheckout.setText("Thanh toán");
@@ -601,6 +626,10 @@ public class Home_GUI extends javax.swing.JFrame {
 
     private void btnAcount4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcount4MouseClicked
         btnAcount4.setForeground(Color.RED);
+        Infomation inf = new Infomation(btnAcount4);
+        inf.setVisible(true);
+        btnAcount4.setEnabled(false);
+        
     }//GEN-LAST:event_btnAcount4MouseClicked
 
     private void btnAcount4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcount4MouseEntered
@@ -609,10 +638,14 @@ public class Home_GUI extends javax.swing.JFrame {
 
     private void btnAcount4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcount4MouseExited
         btnAcount4.setForeground(Color.BLACK);
+        
+    
     }//GEN-LAST:event_btnAcount4MouseExited
 
     private void btnManagement4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManagement4MouseClicked
         btnManagement4.setForeground(Color.RED);
+       
+        
     }//GEN-LAST:event_btnManagement4MouseClicked
 
     private void btnManagement4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManagement4MouseEntered
