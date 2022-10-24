@@ -445,7 +445,6 @@
                 </Component>
                 <Component class="UserControl.TextField" name="txtDatebirth">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value=""/>
                     <Property name="labelText" type="java.lang.String" value="Ng&#xe0;y sinh"/>
                   </Properties>
                 </Component>

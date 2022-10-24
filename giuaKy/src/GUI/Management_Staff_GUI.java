@@ -50,12 +50,11 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
                 obj[6] = rs.getString("Email");
                 obj[7] = rs.getString("SDT");
                 obj[8] = rs.getString("Matkhau");
-               
-                if("0".equals(rs.getString("isAdmin"))){
-                 obj[9] = "Nhân viên";
-                }
-                else{
-                 obj[9] = "Quản lý";
+
+                if ("0".equals(rs.getString("isAdmin"))) {
+                    obj[9] = "Nhân viên";
+                } else {
+                    obj[9] = "Quản lý";
                 }
                 tbModel.addRow(obj);
 
@@ -492,7 +491,6 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
             } else if (cbbLevel.getSelectedItem().equals("")) {
                 JOptionPane.showMessageDialog(new JFrame(), "Vui lòng chọn chức");
             } else {
-
                 NhanVien.EditNhanVien(txtName.getText(), txtDatebirth.getText(), txtAddress.getText(), txtSDT.getText(), txtPassword.getText(), cv, String.valueOf(cbbChooseGender.getSelectedItem()), txtEmail.getText(), Integer.parseInt(nv.getMaNhanVien()));
             }
             LoadDBNhanVien();
@@ -500,6 +498,8 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
             ClearEdit();
             txtStaffCode.setVisible(false);
 
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "Vui lòng nhập đủ thông tin");
         }
 
     }//GEN-LAST:event_btnSaveMouseClicked
@@ -518,35 +518,33 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelMouseEntered
 
     private void btnUpdateStaffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStaffActionPerformed
-  
-        if(nv.getMaNhanVien()=="")
-        {
-         JOptionPane.showMessageDialog(new JFrame(), "Vui lòng chọn nhân viên");
+
+        if (nv.getMaNhanVien() == "") {
+            JOptionPane.showMessageDialog(new JFrame(), "Vui lòng chọn nhân viên");
+        } else {
+            ToggleEdit(true);
+            txtStaffCode.setEnabled(false);
+            xacNhan = 1;
+            txtName.requestFocus();
+            txtStaffCode.setText(nv.getMaNhanVien());
+            txtName.setText(nv.getHoTen());
+            txtDatebirth.setText(nv.getNgaySinh());
+            txtAddress.setText(nv.getDiaChi());
+            txtEmail.setText(nv.getEmail());
+            txtSDT.setText(nv.getSDT());
+            if ("Nam".equals(nv.getGioiTinh())) {
+                cbbChooseGender.setSelectedIndex(0);
+            }
+            if ("Nữ".equals(nv.getGioiTinh())) {
+                cbbChooseGender.setSelectedIndex(1);
+            } else {
+                cbbChooseGender.setSelectedIndex(2);
+            }
         }
-        else{
-        ToggleEdit(true);
-        txtStaffCode.setEnabled(false);
-        xacNhan = 1;
-        txtName.requestFocus();
-        txtStaffCode.setText(nv.getMaNhanVien());
-        txtName.setText(nv.getHoTen());
-        txtDatebirth.setText(nv.getNgaySinh());
-        txtAddress.setText(nv.getDiaChi());
-        txtEmail.setText(nv.getEmail());
-        txtSDT.setText(nv.getSDT());
-       if("Nam".equals(nv.getGioiTinh())){
-       cbbChooseGender.setSelectedIndex(0);
-       }if("Nữ".equals(nv.getGioiTinh())){
-       cbbChooseGender.setSelectedIndex(1);
-       }else{
-       cbbChooseGender.setSelectedIndex(2);
-        }
-        }
-        if(nv.getIsIsAdmin()){
-        cbbLevel.setSelectedIndex(1);
-        }
-        else{
-        cbbLevel.setSelectedIndex(0);
+        if (nv.getIsIsAdmin()) {
+            cbbLevel.setSelectedIndex(1);
+        } else {
+            cbbLevel.setSelectedIndex(0);
         }
     }//GEN-LAST:event_btnUpdateStaffActionPerformed
 
@@ -563,7 +561,7 @@ public class Management_Staff_GUI extends javax.swing.JPanel {
             nv.setMatkhau(String.valueOf(table_Staff_Management.getValueAt(x, 8)));
             nv.setIsAdmin(Boolean.parseBoolean(String.valueOf(table_Staff_Management.getValueAt(x, 9))));
             System.err.println(nv.getMaNhanVien());
-                     
+
         }
     }//GEN-LAST:event_table_Staff_ManagementMouseClicked
 

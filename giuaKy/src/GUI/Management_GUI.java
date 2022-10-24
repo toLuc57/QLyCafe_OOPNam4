@@ -15,7 +15,7 @@ public class Management_GUI extends javax.swing.JFrame {
     loading l = new loading();
     public Management_GUI() {
         initComponents();
-        setExtendedState(JFrame.NORMAL);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         menu.addEvent((int index) -> {
             switch (index) {
                 case 0 :

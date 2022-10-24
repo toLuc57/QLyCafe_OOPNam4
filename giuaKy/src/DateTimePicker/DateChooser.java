@@ -245,7 +245,7 @@ public class DateChooser extends JPanel{
         header.setMaximumSize(new java.awt.Dimension(262, 40));
 
         cmdForward.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cmdForward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/forward.png"))); // NOI18N
+        cmdForward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/previous.png"))); // NOI18N
         cmdForward.setFocusable(true);
         cmdForward.setPaintBackground(false);
         cmdForward.addActionListener(new java.awt.event.ActionListener() {

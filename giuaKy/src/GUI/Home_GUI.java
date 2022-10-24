@@ -33,8 +33,10 @@ public class Home_GUI extends javax.swing.JFrame {
 
     int idtable = 0;
     int mahd = 0;
-    double totalmoney;
     NhanVien nv = new NhanVien();
+    private static JFrame bill1=null;
+    double totalmoney;
+   
     
     public double getTotalmoney() {
         return totalmoney;
@@ -80,20 +82,26 @@ public class Home_GUI extends javax.swing.JFrame {
                     System.err.println("Mã bàn: " + idtable);
                     GetMaHD(idtable);
                     clear_Table();
+                    
                     try {
                         
                         LoadHoaDonBan();
                     } catch (SQLException ex) {
                         Logger.getLogger(Home_GUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
+                    Checkout bill = new Checkout(getTotalmoney(), idtable);
                     //-------- Cick CheckOut-----------
+                    if(bill.isDisplayable()){
+                    btnCheckout.enable(false);
+                    }
                     btnCheckout.addMouseListener(new MouseListener() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             if (TonTaiBill(idtable)) {
-                                Bill bill = new Bill(getTotalmoney(), idtable);
-                                bill.setVisible(true);
+                                if(bill1==null){
+                                bill1 = bill;
+                                }      
+                               bill1.setVisible(true);
                                 checkout = bill.getbtnAccept();
                                 checkout.addActionListener(new ActionListener() {
                                     @Override

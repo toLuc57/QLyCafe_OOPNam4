@@ -151,6 +151,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="95" green="c9" red="fe" type="rgb"/>
             </Property>
+            <Property name="text" type="java.lang.String" value=""/>
             <Property name="labelText" type="java.lang.String" value="Th&#x1edd;i gian xu&#x1ea5;t h&#xf3;a &#x111;&#x1a1;n"/>
           </Properties>
           <Events>

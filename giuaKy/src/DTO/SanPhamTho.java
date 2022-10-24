@@ -24,6 +24,14 @@ public class SanPhamTho {
 
     public SanPhamTho() {
     }
+  public SanPhamTho(int maSanPham,String tenSanPham, int soLuong, String donVitinh, int giaTien) {
+        this.maSanPhan = maSanPham;
+        this.tenSanPham = tenSanPham;
+        this. soLuong  = soLuong;
+        this.donViTinh = donVitinh;
+        this.GiaTien = giaTien;
+    }
+   
 
     public int getMaSanPhan() {
         return maSanPhan;
@@ -72,33 +80,33 @@ public class SanPhamTho {
         try{     
                 Statement st = conn.createStatement();
                 st.executeUpdate(sql);
-                 JOptionPane.showMessageDialog(new JFrame(), "Xóa món thành công");
+                 JOptionPane.showMessageDialog(new JFrame(), "Xóa Sản Phẩm thành công");
                 check = true;
                 dbUtil.CloseConnection(conn);
         }catch(SQLException ex){
-            JOptionPane.showMessageDialog(new JFrame(), "lỗi xóa món");
+            JOptionPane.showMessageDialog(new JFrame(), "lỗi xóa Sản phẩm");
         }
         return check;
     }
-   public static int InsertSanPham(String TenSP, String Loai, int GiaTien){
+   public static int InsertSanPham(String TenSP, int Soluong,String donViTinh, int GiaTien){
         int insert = 0;
          Connection conn = dbUtil.getConnection();
-        String sql = "Insert into ThucDon (TenThucDon, Loai, GiaTien, HinhAnh) values (N'"+TenSP+"', N'"+Loai+"', "+GiaTien+",null)";
+        String sql = "Insert into SanPhamTho (TenSanPham, SoLuong , DonViTinh, GiaTien) values (N'"+TenSP+"',"+Soluong+", N'"+donViTinh+"', "+GiaTien+")";
         try{
             Statement st = conn.createStatement();
             insert = st.executeUpdate(sql);
-            JOptionPane.showMessageDialog(new JFrame(), "Thêm món thành công");
+            JOptionPane.showMessageDialog(new JFrame(), "Thêm Sản phẩm thành công");
             dbUtil.CloseConnection(conn);
         }catch(SQLException ex){
-            JOptionPane.showMessageDialog(new JFrame(), "Thêm món không thành công :(");
+            JOptionPane.showMessageDialog(new JFrame(), "Thêm sản phẩm không thành công :(");
         }
         return insert;
     }
     
-   public static int EditThucDon(int maMon,String TenMon, String Loai, int GiaTien){
+   public static int EditSanPham(String TenSP, int Soluong,String donViTinh, int GiaTien, int maSP){
         int insert = 0;
          Connection conn = dbUtil.getConnection();
-        String sql = "Update ThucDon set TenThucDon= N'"+TenMon+"', Loai=N'"+Loai+"', GiaTien= "+GiaTien+" where IDThucDon ="+maMon;
+        String sql = "Update SanPhamTho set TenSanPham= N'"+TenSP+"', SoLuong="+ Soluong +", DonViTinh= N'"+donViTinh+"',GiaTien= "+GiaTien+" where IDThucDon ="+maSP;
         try{
             Statement st = conn.createStatement();
             insert = st.executeUpdate(sql);

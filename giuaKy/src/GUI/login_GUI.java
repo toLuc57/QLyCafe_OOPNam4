@@ -238,6 +238,7 @@ public class login_GUI extends javax.swing.JFrame {
 
             if (txtUsername.getText().equals("")) {
                 sb.append("Không được để trống tên! \n");
+               
             }
             if (passwordField1.getText().equals("")) {
                 sb.append("Không được để trống mật khẩu! \n");
@@ -247,16 +248,21 @@ public class login_GUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation", JOptionPane.ERROR_MESSAGE);
             
              }
-             if(isAdmin() == true && cbbPosition.getSelectedItem() == "Admin") {
+            else if(isAdmin() == true && cbbPosition.getSelectedItem() == "Admin") {
                     Management_GUI ql = new Management_GUI();
                     ql.setVisible(true);
+                    NhanVien nv = new NhanVien();
+                    nv.setMaNhanVien(name);
+                    this.dispose();
+                    
              }
-             else if(isAdmin() == true && cbbPosition.getSelectedItem() == "Staff") {
+    
+            else if(isAdmin() == true && cbbPosition.getSelectedItem() == "Staff") {
                     Home_GUI home = new Home_GUI();
                     home.setVisible(true);
                     NhanVien nv = new NhanVien();
                     nv.setMaNhanVien(name);
-
+                    this.dispose();
                     JOptionPane.showMessageDialog(this, "Đăng nhập thành công với tài khoản Admin: " + txtUsername.getText());
              }
             else if (rs.next() && (isAdmin() == false)) {
@@ -299,7 +305,7 @@ public class login_GUI extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi !");
+        
         }
 
         return false;

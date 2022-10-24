@@ -142,7 +142,7 @@ public class Menu_GUI extends javax.swing.JFrame {
 
         }
     }
-
+//-------------fINDIDMON------------
     private void FindIDMon(int SL, addMenu m) {
         List<addMenu> l = new ArrayList<>();
         boolean exist = false;

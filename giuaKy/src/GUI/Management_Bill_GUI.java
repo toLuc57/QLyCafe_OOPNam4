@@ -192,6 +192,7 @@ public class Management_Bill_GUI extends javax.swing.JPanel {
         });
 
         txtDate.setBackground(new java.awt.Color(254, 201, 149));
+        txtDate.setText("");
         txtDate.setLabelText("Thời gian xuất hóa đơn");
         txtDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
